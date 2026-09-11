@@ -1,0 +1,15 @@
+Decision Tree:
+Accuracy=1.0000
+Precision=1.0000
+Recall=1.0000
+F1-score=1.0000
+ConfusionMatrix=[[61, 0, 0], [0, 24, 0], [0, 0, 75]]
+
+Random Forest:
+Accuracy=0.9938
+Precision=0.9939
+Recall=0.9938
+F1-score=0.9937
+ConfusionMatrix=[[61, 0, 0], [1, 23, 0], [0, 0, 75]]
+
+BestModel=Decision Tree

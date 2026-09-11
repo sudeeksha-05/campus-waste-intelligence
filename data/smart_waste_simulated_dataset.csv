@@ -1,0 +1,801 @@
+Bin_ID,Location,Timestamp,Current_Fill_Level,Previous_Fill_Level,Fill_Rate,Day_of_Week,Hour,Waste_Type,Historical_Average_Fill,Collection_Due,Overflow_Status
+LIB-05,Library,2026-09-04T13:00:00,26.7,29.59,2.16,Friday,7,Paper,41.35,No,No Overflow
+AB-A-07,Academic Block A,2026-09-23T00:00:00,17.86,16.96,2.0,Wednesday,18,Paper,50.06,No,No Overflow
+AB-A-02,Academic Block A,2026-09-03T16:00:00,61.02,58.16,2.0,Thursday,10,Paper,38.19,No,No Overflow
+CAN-02,Canteen,2026-09-22T00:00:00,40.64,27.64,11.76,Tuesday,18,Mixed,66.81,Yes,Likely Overflow
+CAN-08,Canteen,2026-09-28T13:00:00,30.09,22.77,8.4,Monday,7,Mixed,70.66,Yes,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-05T16:00:00,35.23,36.93,4.0,Saturday,10,Organic,64.23,No,No Overflow
+AB-A-07,Academic Block A,2026-09-13T02:00:00,15.46,17.86,0.9,Sunday,20,Paper,40.19,No,No Overflow
+AB-A-03,Academic Block A,2026-09-24T20:00:00,88.15,87.85,2.0,Thursday,14,Paper,43.65,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-11T02:00:00,84.54,80.84,5.64,Friday,20,Organic,61.32,Yes,Likely Overflow
+AB-B-05,Academic Block B,2026-09-23T14:00:00,27.78,28.23,2.5,Wednesday,8,Paper,37.82,No,No Overflow
+AB-A-06,Academic Block A,2026-09-28T16:00:00,41.76,40.41,2.0,Monday,10,Paper,49.6,No,No Overflow
+CAN-10,Canteen,2026-09-12T15:00:00,32.6,26.76,9.1,Saturday,9,Mixed,63.66,Yes,Likely Overflow
+CA-06,Common Area,2026-09-22T23:00:00,64.58,60.8,3.3,Tuesday,17,Plastic,43.29,No,No Overflow
+AB-B-08,Academic Block B,2026-09-06T20:00:00,92.25,89.16,1.12,Sunday,14,Paper,43.83,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-08T23:00:00,92.48,84.54,4.18,Tuesday,17,Organic,55.84,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-09T02:00:00,33.98,35.24,2.0,Wednesday,20,Paper,34.58,No,No Overflow
+AB-B-06,Academic Block B,2026-09-30T22:00:00,39.85,35.17,2.5,Wednesday,16,Paper,52.77,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-30T03:00:00,22.32,21.43,5.94,Wednesday,21,Organic,58.57,No,No Overflow
+CAN-04,Canteen,2026-09-18T21:00:00,70.74,56.77,8.4,Friday,15,Mixed,61.73,Yes,Likely Overflow
+HB1-10,Hostel Block 1,2026-09-12T16:00:00,21.26,22.32,4.0,Saturday,10,Organic,64.95,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-04T01:00:00,26.2,18.77,5.64,Friday,19,Organic,50.85,No,No Overflow
+CAN-07,Canteen,2026-09-22T19:00:00,53.88,40.78,11.76,Tuesday,13,Mixed,67.74,Yes,Likely Overflow
+HB2-04,Hostel Block 2,2026-09-17T17:00:00,76.2,78.86,4.18,Thursday,11,Organic,67.48,Yes,Likely Overflow
+CAN-03,Canteen,2026-09-04T23:00:00,82.23,70.07,8.4,Friday,17,Mixed,72.93,Yes,Likely Overflow
+HB1-06,Hostel Block 1,2026-09-04T17:00:00,57.05,46.3,4.4,Friday,11,Organic,54.83,No,No Overflow
+CA-03,Common Area,2026-09-24T17:00:00,74.36,70.96,3.3,Thursday,11,Plastic,59.49,No,Likely Overflow
+AB-A-07,Academic Block A,2026-09-28T23:00:00,19.41,15.46,2.0,Monday,17,Paper,39.37,No,No Overflow
+LIB-03,Library,2026-09-07T15:00:00,31.43,22.92,2.16,Monday,9,Paper,34.73,No,No Overflow
+CA-06,Common Area,2026-09-18T03:00:00,65.42,64.58,3.3,Friday,21,Plastic,42.01,No,No Overflow
+AB-A-02,Academic Block A,2026-09-05T03:00:00,68.71,61.02,0.9,Saturday,21,Paper,40.53,No,No Overflow
+CAN-08,Canteen,2026-09-10T16:00:00,43.78,30.09,8.4,Thursday,10,Mixed,58.04,Yes,Likely Overflow
+CA-07,Common Area,2026-09-03T14:00:00,85.27,75.28,3.3,Thursday,8,Plastic,55.17,Yes,Overflowed
+HB2-09,Hostel Block 2,2026-09-25T15:00:00,52.9,48.02,4.18,Friday,9,Organic,52.31,No,No Overflow
+HB1-01,Hostel Block 1,2026-09-18T02:00:00,99.09,87.15,5.94,Friday,20,Organic,57.92,Yes,Overflowed
+CAN-05,Canteen,2026-09-25T00:00:00,53.63,34.94,11.76,Friday,18,Mixed,60.62,Yes,Likely Overflow
+LIB-06,Library,2026-09-12T20:00:00,43.49,46.12,0.9,Saturday,14,Paper,44.19,No,No Overflow
+AB-A-05,Academic Block A,2026-09-11T13:00:00,26.49,28.41,2.0,Friday,7,Paper,44.59,No,No Overflow
+AB-A-05,Academic Block A,2026-09-23T23:00:00,22.43,26.49,2.0,Wednesday,17,Paper,35.06,No,No Overflow
+AB-A-03,Academic Block A,2026-09-28T18:00:00,86.48,88.15,2.0,Monday,12,Paper,35.28,Yes,Overflowed
+LIB-07,Library,2026-09-16T16:00:00,75.38,67.87,2.16,Wednesday,10,Paper,37.71,Yes,Likely Overflow
+LIB-01,Library,2026-09-16T16:00:00,72.43,74.6,2.16,Wednesday,10,Paper,42.12,No,Likely Overflow
+AB-A-07,Academic Block A,2026-09-22T19:00:00,20.17,19.41,2.0,Tuesday,13,Paper,40.38,No,No Overflow
+CA-02,Common Area,2026-09-24T13:00:00,86.41,88.73,3.3,Thursday,7,Plastic,54.12,Yes,Overflowed
+HB1-10,Hostel Block 1,2026-09-24T18:00:00,20.19,21.26,4.4,Thursday,12,Organic,61.41,No,No Overflow
+AB-B-05,Academic Block B,2026-09-07T21:00:00,29.19,27.78,2.5,Monday,15,Paper,45.08,No,No Overflow
+HB1-02,Hostel Block 1,2026-09-15T16:00:00,33.69,35.23,4.4,Tuesday,10,Organic,62.74,No,No Overflow
+CAN-08,Canteen,2026-09-29T02:00:00,49.25,43.78,11.76,Tuesday,20,Mixed,66.91,Yes,Likely Overflow
+HB2-09,Hostel Block 2,2026-09-27T13:00:00,64.0,52.9,5.13,Sunday,7,Organic,67.44,No,No Overflow
+CA-01,Common Area,2026-09-08T15:00:00,56.91,48.51,3.3,Tuesday,9,Plastic,49.32,No,No Overflow
+CA-04,Common Area,2026-09-02T15:00:00,88.84,88.82,3.3,Wednesday,9,Plastic,48.82,Yes,Overflowed
+CAN-07,Canteen,2026-09-26T20:00:00,69.37,53.88,12.74,Saturday,14,Mixed,62.13,Yes,Likely Overflow
+CAN-03,Canteen,2026-09-26T21:00:00,91.14,82.23,9.1,Saturday,15,Mixed,68.91,Yes,Overflowed
+AB-B-05,Academic Block B,2026-09-10T16:00:00,32.8,29.19,2.5,Thursday,10,Paper,54.44,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-03T00:00:00,63.34,64.0,5.64,Thursday,18,Organic,55.64,No,No Overflow
+HB2-05,Hostel Block 2,2026-09-18T03:00:00,34.69,22.59,5.64,Friday,21,Organic,65.35,No,No Overflow
+AB-A-06,Academic Block A,2026-09-28T15:00:00,37.71,41.76,2.0,Monday,9,Paper,35.23,No,No Overflow
+CA-02,Common Area,2026-09-08T19:00:00,95.17,86.41,3.3,Tuesday,13,Plastic,44.16,Yes,Overflowed
+AB-B-08,Academic Block B,2026-09-19T22:00:00,87.52,92.25,1.12,Saturday,16,Paper,37.72,Yes,Overflowed
+LIB-07,Library,2026-09-19T22:00:00,82.37,75.38,0.9,Saturday,16,Paper,37.41,Yes,Likely Overflow
+AB-B-06,Academic Block B,2026-09-23T00:00:00,39.07,39.85,2.5,Wednesday,18,Paper,42.66,No,No Overflow
+AB-B-01,Academic Block B,2026-09-22T23:00:00,41.32,35.29,2.5,Tuesday,17,Paper,42.4,No,No Overflow
+AB-A-05,Academic Block A,2026-09-01T20:00:00,25.31,22.43,2.0,Tuesday,14,Paper,45.18,No,No Overflow
+AB-A-07,Academic Block A,2026-09-03T21:00:00,18.88,20.17,2.0,Thursday,15,Paper,37.84,No,No Overflow
+CA-06,Common Area,2026-09-13T03:00:00,64.48,65.42,2.64,Sunday,21,Plastic,43.24,No,No Overflow
+HB1-03,Hostel Block 1,2026-09-06T20:00:00,71.85,66.28,4.0,Sunday,14,Organic,62.01,No,Likely Overflow
+CAN-08,Canteen,2026-09-21T21:00:00,62.09,49.25,8.4,Monday,15,Mixed,57.14,Yes,Likely Overflow
+HB1-04,Hostel Block 1,2026-09-30T23:00:00,81.35,80.25,4.4,Wednesday,17,Organic,48.86,Yes,Likely Overflow
+CA-03,Common Area,2026-09-05T00:00:00,73.81,74.36,2.64,Saturday,18,Plastic,51.96,No,Likely Overflow
+LIB-03,Library,2026-09-08T00:00:00,36.21,31.43,2.16,Tuesday,18,Paper,34.17,No,No Overflow
+CA-01,Common Area,2026-09-09T21:00:00,65.88,56.91,3.3,Wednesday,15,Plastic,50.79,No,No Overflow
+CA-01,Common Area,2026-09-02T14:00:00,73.79,65.88,3.3,Wednesday,8,Plastic,53.42,No,Likely Overflow
+AB-A-03,Academic Block A,2026-09-01T18:00:00,90.4,86.48,2.0,Tuesday,12,Paper,47.88,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-07T00:00:00,100,99.09,5.94,Monday,18,Organic,54.95,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-01T14:00:00,100,92.48,5.64,Tuesday,8,Organic,51.35,Yes,Overflowed
+CA-04,Common Area,2026-09-05T21:00:00,89.65,88.84,2.64,Saturday,15,Plastic,42.65,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-05T19:00:00,100,100,3.8,Saturday,13,Organic,52.29,Yes,Overflowed
+CA-04,Common Area,2026-10-01T01:00:00,86.51,89.65,3.3,Thursday,19,Plastic,59.5,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-09-07T23:00:00,26.55,18.22,4.4,Monday,17,Organic,51.49,No,No Overflow
+CA-03,Common Area,2026-09-28T19:00:00,80.6,73.81,3.3,Monday,13,Plastic,59.53,Yes,Likely Overflow
+CA-06,Common Area,2026-09-30T16:00:00,74.45,64.48,3.3,Wednesday,10,Plastic,57.56,No,Likely Overflow
+CAN-08,Canteen,2026-09-07T03:00:00,66.0,62.09,8.4,Monday,21,Mixed,64.42,Yes,Likely Overflow
+CA-06,Common Area,2026-09-12T01:00:00,81.32,74.45,2.64,Saturday,19,Plastic,58.75,Yes,Likely Overflow
+CA-02,Common Area,2026-09-25T01:00:00,93.7,95.17,3.3,Friday,19,Plastic,46.47,Yes,Overflowed
+CAN-01,Canteen,2026-09-04T19:00:00,86.56,78.69,11.76,Friday,13,Mixed,72.7,Yes,Overflowed
+CAN-09,Canteen,2026-09-30T20:00:00,92.6,75.64,11.76,Wednesday,14,Mixed,63.29,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-01T23:00:00,43.86,36.26,2.5,Tuesday,17,Paper,40.48,No,No Overflow
+CA-08,Common Area,2026-09-25T17:00:00,56.57,50.75,3.3,Friday,11,Plastic,48.32,No,No Overflow
+CAN-10,Canteen,2026-09-18T18:00:00,38.97,32.6,11.76,Friday,12,Mixed,73.91,Yes,Likely Overflow
+HB1-01,Hostel Block 1,2026-09-06T22:00:00,100,100,4.0,Sunday,16,Organic,64.33,Yes,Overflowed
+AB-A-07,Academic Block A,2026-09-20T19:00:00,23.79,18.88,0.9,Sunday,13,Paper,40.22,No,No Overflow
+HB2-02,Hostel Block 2,2026-09-20T21:00:00,81.42,81.96,3.8,Sunday,15,Organic,52.08,Yes,Likely Overflow
+AB-A-03,Academic Block A,2026-09-23T19:00:00,98.36,90.4,2.0,Wednesday,13,Paper,34.03,Yes,Overflowed
+HB2-09,Hostel Block 2,2026-09-23T00:00:00,72.3,63.34,5.64,Wednesday,18,Organic,66.92,No,Likely Overflow
+AB-B-05,Academic Block B,2026-09-12T19:00:00,36.22,32.8,1.12,Saturday,13,Paper,38.26,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-20T18:00:00,55.79,57.05,4.0,Sunday,12,Organic,58.94,No,No Overflow
+CA-04,Common Area,2026-09-10T21:00:00,88.53,86.51,3.3,Thursday,15,Plastic,47.57,Yes,Overflowed
+HB1-10,Hostel Block 1,2026-09-23T17:00:00,20.28,20.19,4.4,Wednesday,11,Organic,56.98,No,No Overflow
+LIB-07,Library,2026-09-13T23:00:00,78.71,82.37,0.9,Sunday,17,Paper,41.47,Yes,Likely Overflow
+LIB-01,Library,2026-09-10T19:00:00,67.6,72.43,2.16,Thursday,13,Paper,37.86,No,No Overflow
+HB1-03,Hostel Block 1,2026-09-07T19:00:00,77.74,71.85,4.4,Monday,13,Organic,61.14,Yes,Likely Overflow
+HB1-05,Hostel Block 1,2026-09-15T20:00:00,31.12,27.1,4.4,Tuesday,14,Organic,54.96,No,No Overflow
+CA-04,Common Area,2026-09-27T00:00:00,85.36,88.53,2.64,Sunday,18,Plastic,45.05,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-22T23:00:00,27.98,17.47,4.18,Tuesday,17,Organic,61.15,No,No Overflow
+AB-B-08,Academic Block B,2026-09-22T17:00:00,85.81,87.52,2.5,Tuesday,11,Paper,41.04,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-02T16:00:00,72.27,68.71,2.0,Wednesday,10,Paper,51.71,No,Likely Overflow
+CAN-06,Canteen,2026-09-03T20:00:00,67.86,60.38,11.76,Thursday,14,Mixed,64.46,Yes,Likely Overflow
+CAN-01,Canteen,2026-09-13T20:00:00,94.37,86.56,12.74,Sunday,14,Mixed,64.19,Yes,Overflowed
+CAN-01,Canteen,2026-09-02T03:00:00,100,94.37,8.4,Wednesday,21,Mixed,70.52,Yes,Overflowed
+AB-A-07,Academic Block A,2026-09-25T19:00:00,30.05,23.79,2.0,Friday,13,Paper,37.94,No,No Overflow
+CAN-01,Canteen,2026-09-17T20:00:00,100,100,11.76,Thursday,14,Mixed,57.9,Yes,Overflowed
+CA-01,Common Area,2026-09-04T20:00:00,76.6,73.79,3.3,Friday,14,Plastic,44.4,Yes,Likely Overflow
+HB2-08,Hostel Block 2,2026-09-18T22:00:00,73.8,70.42,4.18,Friday,16,Organic,55.71,No,Likely Overflow
+CAN-09,Canteen,2026-09-25T03:00:00,100,92.6,8.4,Friday,21,Mixed,66.09,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-16T03:00:00,100,100,5.64,Wednesday,21,Organic,52.86,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-10T01:00:00,70.38,61.01,5.64,Thursday,19,Organic,54.45,No,Likely Overflow
+HB2-08,Hostel Block 2,2026-09-16T23:00:00,77.14,73.8,4.18,Wednesday,17,Organic,54.31,Yes,Likely Overflow
+CAN-02,Canteen,2026-09-10T16:00:00,46.52,40.64,8.4,Thursday,10,Mixed,61.89,Yes,Likely Overflow
+HB2-09,Hostel Block 2,2026-09-03T15:00:00,74.84,72.3,4.18,Thursday,9,Organic,52.71,No,Likely Overflow
+AB-B-02,Academic Block B,2026-09-23T16:00:00,45.7,42.61,2.5,Wednesday,10,Paper,38.16,No,No Overflow
+HB2-01,Hostel Block 2,2026-09-02T16:00:00,49.12,41.16,4.18,Wednesday,10,Organic,64.99,No,No Overflow
+CA-07,Common Area,2026-09-23T13:00:00,92.29,85.27,3.3,Wednesday,7,Plastic,57.42,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-16T13:00:00,38.29,33.89,5.94,Wednesday,7,Organic,63.97,No,No Overflow
+CA-04,Common Area,2026-09-27T19:00:00,91.28,85.36,2.64,Sunday,13,Plastic,51.69,Yes,Overflowed
+CAN-08,Canteen,2026-09-21T03:00:00,70.47,66.0,8.4,Monday,21,Mixed,60.97,Yes,Likely Overflow
+HB2-02,Hostel Block 2,2026-09-16T13:00:00,89.43,81.42,5.64,Wednesday,7,Organic,57.0,Yes,Overflowed
+CAN-08,Canteen,2026-09-14T00:00:00,81.77,70.47,11.76,Monday,18,Mixed,59.97,Yes,Likely Overflow
+AB-B-01,Academic Block B,2026-09-20T21:00:00,40.96,41.32,1.12,Sunday,15,Paper,37.49,No,No Overflow
+LIB-01,Library,2026-09-22T13:00:00,68.76,67.6,2.16,Tuesday,7,Paper,29.51,No,No Overflow
+CA-02,Common Area,2026-09-15T15:00:00,95.31,93.7,3.3,Tuesday,9,Plastic,42.91,Yes,Overflowed
+AB-B-06,Academic Block B,2026-09-15T18:00:00,46.88,39.07,2.5,Tuesday,12,Paper,43.08,No,No Overflow
+HB1-02,Hostel Block 1,2026-09-26T02:00:00,43.78,33.69,5.4,Saturday,20,Organic,54.59,No,No Overflow
+HB2-05,Hostel Block 2,2026-09-02T00:00:00,47.33,34.69,5.64,Wednesday,18,Organic,59.71,No,No Overflow
+HB1-07,Hostel Block 1,2026-09-08T23:00:00,37.35,26.55,4.4,Tuesday,17,Organic,48.24,No,No Overflow
+AB-A-03,Academic Block A,2026-09-25T13:00:00,96.15,98.36,2.0,Friday,7,Paper,51.09,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-20T15:00:00,72.8,72.27,0.9,Sunday,9,Paper,38.29,No,Likely Overflow
+AB-A-08,Academic Block A,2026-09-19T16:00:00,29.56,30.5,0.9,Saturday,10,Paper,42.37,No,No Overflow
+LIB-03,Library,2026-09-21T00:00:00,42.26,36.21,2.16,Monday,18,Paper,40.93,No,No Overflow
+AB-B-03,Academic Block B,2026-09-10T14:00:00,87.87,84.31,2.5,Thursday,8,Paper,47.42,Yes,Overflowed
+CA-05,Common Area,2026-09-13T19:00:00,29.8,25.87,2.64,Sunday,13,Plastic,58.95,No,No Overflow
+CAN-10,Canteen,2026-09-21T16:00:00,51.18,38.97,8.4,Monday,10,Mixed,58.83,Yes,Likely Overflow
+CA-01,Common Area,2026-09-22T22:00:00,84.05,76.6,3.3,Tuesday,16,Plastic,56.5,Yes,Likely Overflow
+LIB-01,Library,2026-09-26T13:00:00,68.66,68.76,0.9,Saturday,7,Paper,34.25,No,No Overflow
+HB1-08,Hostel Block 1,2026-09-03T21:00:00,14.29,11.01,4.4,Thursday,15,Organic,58.66,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-04T19:00:00,32.28,26.2,4.18,Friday,13,Organic,67.29,No,No Overflow
+CAN-10,Canteen,2026-09-16T00:00:00,58.41,51.18,11.76,Wednesday,18,Mixed,59.75,Yes,Likely Overflow
+HB2-08,Hostel Block 2,2026-09-21T17:00:00,87.19,77.14,4.18,Monday,11,Organic,61.09,Yes,Overflowed
+CAN-06,Canteen,2026-09-16T20:00:00,82.85,67.86,11.76,Wednesday,14,Mixed,64.84,Yes,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-12T02:00:00,55.26,43.78,5.4,Saturday,20,Organic,51.42,No,No Overflow
+HB1-02,Hostel Block 1,2026-09-29T20:00:00,59.17,55.26,4.4,Tuesday,14,Organic,51.39,No,No Overflow
+LIB-04,Library,2026-09-22T19:00:00,49.25,49.54,2.16,Tuesday,13,Paper,34.06,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-07T18:00:00,34.22,32.28,4.18,Monday,12,Organic,64.36,No,No Overflow
+CA-03,Common Area,2026-09-21T00:00:00,84.68,80.6,3.3,Monday,18,Plastic,57.84,Yes,Likely Overflow
+HB2-08,Hostel Block 2,2026-09-07T14:00:00,91.52,87.19,5.64,Monday,8,Organic,54.34,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-25T16:00:00,100,100,4.18,Friday,10,Organic,62.43,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-16T01:00:00,36.98,34.22,5.64,Wednesday,19,Organic,50.31,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-23T16:00:00,25.82,20.28,4.4,Wednesday,10,Organic,52.51,No,No Overflow
+HB2-05,Hostel Block 2,2026-09-18T21:00:00,58.46,47.33,4.18,Friday,15,Organic,56.19,No,No Overflow
+HB2-10,Hostel Block 2,2026-09-11T18:00:00,100,100,4.18,Friday,12,Organic,62.65,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-08T14:00:00,100,100,5.94,Tuesday,8,Organic,59.98,Yes,Overflowed
+CAN-04,Canteen,2026-09-19T01:00:00,79.16,70.74,12.74,Saturday,19,Mixed,69.42,Yes,Likely Overflow
+CAN-04,Canteen,2026-09-16T17:00:00,97.59,79.16,11.76,Wednesday,11,Mixed,70.04,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-20T17:00:00,99.98,91.52,3.8,Sunday,11,Organic,67.65,Yes,Overflowed
+HB1-03,Hostel Block 1,2026-09-08T18:00:00,75.34,77.74,4.4,Tuesday,12,Organic,50.23,Yes,Likely Overflow
+HB2-09,Hostel Block 2,2026-09-05T17:00:00,72.4,74.84,3.8,Saturday,11,Organic,50.82,No,Likely Overflow
+HB1-03,Hostel Block 1,2026-09-23T15:00:00,83.28,75.34,4.4,Wednesday,9,Organic,58.48,Yes,Likely Overflow
+AB-A-07,Academic Block A,2026-09-28T13:00:00,31.62,30.05,2.0,Monday,7,Paper,44.33,No,No Overflow
+HB2-03,Hostel Block 2,2026-09-11T15:00:00,71.09,70.38,4.18,Friday,9,Organic,67.38,No,Likely Overflow
+CA-02,Common Area,2026-09-16T14:00:00,97.22,95.31,3.3,Wednesday,8,Plastic,56.8,Yes,Overflowed
+AB-A-05,Academic Block A,2026-09-19T23:00:00,21.33,25.31,0.9,Saturday,17,Paper,46.36,No,No Overflow
+CAN-08,Canteen,2026-09-19T17:00:00,90.98,81.77,12.74,Saturday,11,Mixed,58.53,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-25T19:00:00,100,100,4.18,Friday,13,Organic,60.91,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-25T21:00:00,52.08,43.86,2.5,Friday,15,Paper,43.85,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-28T22:00:00,83.03,81.35,4.4,Monday,16,Organic,64.82,Yes,Likely Overflow
+LIB-04,Library,2026-09-02T22:00:00,45.8,49.25,2.16,Wednesday,16,Paper,45.28,No,No Overflow
+CAN-05,Canteen,2026-09-07T23:00:00,64.28,53.63,8.4,Monday,17,Mixed,60.8,Yes,Likely Overflow
+AB-B-03,Academic Block B,2026-09-08T15:00:00,85.56,87.87,2.5,Tuesday,9,Paper,46.94,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-16T00:00:00,51.84,49.12,5.64,Wednesday,18,Organic,60.69,No,No Overflow
+AB-B-07,Academic Block B,2026-09-11T00:00:00,59.61,52.08,2.5,Friday,18,Paper,42.09,No,No Overflow
+AB-A-05,Academic Block A,2026-09-22T16:00:00,27.36,21.33,2.0,Tuesday,10,Paper,50.63,No,No Overflow
+LIB-05,Library,2026-09-19T23:00:00,23.37,26.7,0.9,Saturday,17,Paper,42.47,No,No Overflow
+AB-A-08,Academic Block A,2026-09-18T16:00:00,37.28,29.56,2.0,Friday,10,Paper,45.66,No,No Overflow
+CAN-09,Canteen,2026-09-05T14:00:00,100,100,9.1,Saturday,8,Mixed,58.07,Yes,Overflowed
+LIB-03,Library,2026-09-25T02:00:00,41.46,42.26,2.16,Friday,20,Paper,38.25,No,No Overflow
+AB-A-08,Academic Block A,2026-09-16T00:00:00,37.92,37.28,2.0,Wednesday,18,Paper,39.47,No,No Overflow
+HB1-02,Hostel Block 1,2026-09-17T21:00:00,57.7,59.17,4.4,Thursday,15,Organic,55.89,No,No Overflow
+AB-A-03,Academic Block A,2026-09-29T19:00:00,99.6,96.15,2.0,Tuesday,13,Paper,47.22,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-03T16:00:00,79.5,72.8,2.0,Thursday,10,Paper,51.31,Yes,Likely Overflow
+LIB-01,Library,2026-09-19T13:00:00,71.97,68.66,0.9,Saturday,7,Paper,45.99,No,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-19T13:00:00,58.55,57.7,5.4,Saturday,7,Organic,60.74,No,No Overflow
+HB2-08,Hostel Block 2,2026-09-21T20:00:00,99.7,99.98,4.18,Monday,14,Organic,66.49,Yes,Overflowed
+LIB-02,Library,2026-09-14T23:00:00,89.26,87.52,2.16,Monday,17,Paper,42.66,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-11T18:00:00,61.03,51.84,4.18,Friday,12,Organic,62.06,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-15T00:00:00,64.01,55.79,5.94,Tuesday,18,Organic,55.92,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-28T01:00:00,31.13,25.82,5.94,Monday,19,Organic,56.9,No,No Overflow
+HB1-05,Hostel Block 1,2026-09-09T18:00:00,39.34,31.12,4.4,Wednesday,12,Organic,49.09,No,No Overflow
+CA-02,Common Area,2026-09-18T02:00:00,100,97.22,3.3,Friday,20,Plastic,59.79,Yes,Overflowed
+HB2-09,Hostel Block 2,2026-09-15T19:00:00,76.84,72.4,4.18,Tuesday,13,Organic,50.98,Yes,Likely Overflow
+LIB-04,Library,2026-09-25T20:00:00,51.6,45.8,2.16,Friday,14,Paper,39.26,No,No Overflow
+AB-B-06,Academic Block B,2026-09-09T21:00:00,46.41,46.88,2.5,Wednesday,15,Paper,39.36,No,No Overflow
+CA-03,Common Area,2026-09-23T20:00:00,94.6,84.68,3.3,Wednesday,14,Plastic,44.19,Yes,Overflowed
+LIB-03,Library,2026-09-26T16:00:00,39.71,41.46,0.9,Saturday,10,Paper,40.78,No,No Overflow
+AB-A-01,Academic Block A,2026-09-18T19:00:00,97.16,89.38,2.0,Friday,13,Paper,35.68,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-04T23:00:00,80.36,76.2,4.18,Friday,17,Organic,64.98,Yes,Likely Overflow
+CAN-02,Canteen,2026-09-10T21:00:00,53.74,46.52,8.4,Thursday,15,Mixed,69.7,Yes,Likely Overflow
+HB2-05,Hostel Block 2,2026-09-16T16:00:00,57.66,58.46,4.18,Wednesday,10,Organic,58.22,No,No Overflow
+AB-B-05,Academic Block B,2026-09-30T22:00:00,44.03,36.22,2.5,Wednesday,16,Paper,46.15,No,No Overflow
+CA-02,Common Area,2026-09-03T17:00:00,100,100,3.3,Thursday,11,Plastic,55.91,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-10-01T01:00:00,74.44,64.01,5.94,Thursday,19,Organic,56.14,No,Likely Overflow
+HB1-03,Hostel Block 1,2026-09-24T17:00:00,88.8,83.28,4.4,Thursday,11,Organic,62.07,Yes,Overflowed
+LIB-07,Library,2026-09-17T02:00:00,81.41,78.71,2.16,Thursday,20,Paper,30.67,Yes,Likely Overflow
+HB1-07,Hostel Block 1,2026-09-11T21:00:00,40.03,37.35,4.4,Friday,15,Organic,60.73,No,No Overflow
+CA-06,Common Area,2026-09-12T02:00:00,86.72,81.32,2.64,Saturday,20,Plastic,45.4,Yes,Overflowed
+LIB-01,Library,2026-09-13T16:00:00,71.62,71.97,0.9,Sunday,10,Paper,43.41,No,Likely Overflow
+HB1-05,Hostel Block 1,2026-09-24T20:00:00,48.1,39.34,4.4,Thursday,14,Organic,59.69,No,No Overflow
+HB1-09,Hostel Block 1,2026-09-23T01:00:00,50.96,38.29,5.94,Wednesday,19,Organic,61.77,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-02T15:00:00,42.42,36.98,4.18,Wednesday,9,Organic,59.04,No,No Overflow
+CA-02,Common Area,2026-09-05T02:00:00,97.04,100,2.64,Saturday,20,Plastic,57.21,Yes,Overflowed
+CA-05,Common Area,2026-09-15T13:00:00,31.84,29.8,3.3,Tuesday,7,Plastic,55.0,No,No Overflow
+LIB-06,Library,2026-09-05T14:00:00,50.96,43.49,0.9,Saturday,8,Paper,36.45,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-21T00:00:00,74.5,74.44,5.94,Monday,18,Organic,54.15,No,Likely Overflow
+HB1-06,Hostel Block 1,2026-09-28T23:00:00,77.22,74.5,4.4,Monday,17,Organic,62.47,Yes,Likely Overflow
+HB1-05,Hostel Block 1,2026-09-22T00:00:00,53.87,48.1,5.94,Tuesday,18,Organic,62.97,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-02T22:00:00,82.86,76.84,4.18,Wednesday,16,Organic,51.23,Yes,Likely Overflow
+CA-05,Common Area,2026-09-10T16:00:00,34.22,31.84,3.3,Thursday,10,Plastic,55.44,No,No Overflow
+AB-A-07,Academic Block A,2026-09-25T23:00:00,28.03,31.62,2.0,Friday,17,Paper,46.67,No,No Overflow
+AB-B-03,Academic Block B,2026-09-23T17:00:00,81.7,85.56,2.5,Wednesday,11,Paper,53.26,Yes,Likely Overflow
+CAN-07,Canteen,2026-09-02T17:00:00,80.16,69.37,11.76,Wednesday,11,Mixed,63.45,Yes,Likely Overflow
+AB-B-08,Academic Block B,2026-09-17T19:00:00,92.41,85.81,2.5,Thursday,13,Paper,47.19,Yes,Overflowed
+AB-B-03,Academic Block B,2026-09-06T14:00:00,81.18,81.7,1.12,Sunday,8,Paper,47.97,Yes,Likely Overflow
+LIB-08,Library,2026-09-08T20:00:00,23.07,21.45,2.16,Tuesday,14,Paper,44.43,No,No Overflow
+HB1-01,Hostel Block 1,2026-09-15T17:00:00,100,100,4.4,Tuesday,11,Organic,59.0,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-29T17:00:00,79.75,80.36,4.18,Tuesday,11,Organic,62.2,Yes,Likely Overflow
+HB2-03,Hostel Block 2,2026-09-12T22:00:00,81.36,71.09,3.8,Saturday,16,Organic,55.38,Yes,Likely Overflow
+CAN-01,Canteen,2026-09-09T20:00:00,100,100,11.76,Wednesday,14,Mixed,72.22,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-28T20:00:00,53.7,50.96,4.4,Monday,14,Organic,48.92,No,No Overflow
+HB1-07,Hostel Block 1,2026-09-19T17:00:00,41.16,40.03,4.0,Saturday,11,Organic,64.87,No,No Overflow
+CAN-10,Canteen,2026-09-22T19:00:00,71.09,58.41,11.76,Tuesday,13,Mixed,61.94,Yes,Likely Overflow
+LIB-08,Library,2026-09-26T00:00:00,29.72,23.07,0.9,Saturday,18,Paper,45.52,No,No Overflow
+CAN-04,Canteen,2026-09-17T02:00:00,100,97.59,11.76,Thursday,20,Mixed,73.27,Yes,Overflowed
+CAN-08,Canteen,2026-09-08T22:00:00,95.45,90.98,8.4,Tuesday,16,Mixed,71.43,Yes,Overflowed
+AB-B-05,Academic Block B,2026-09-20T17:00:00,48.25,44.03,1.12,Sunday,11,Paper,49.2,No,No Overflow
+LIB-07,Library,2026-09-23T02:00:00,77.93,81.41,2.16,Wednesday,20,Paper,30.46,Yes,Likely Overflow
+LIB-05,Library,2026-09-21T13:00:00,24.7,23.37,2.16,Monday,7,Paper,33.56,No,No Overflow
+LIB-02,Library,2026-09-13T00:00:00,95.89,89.26,0.9,Sunday,18,Paper,30.37,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-24T19:00:00,53.12,53.87,4.4,Thursday,13,Organic,50.16,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-29T18:00:00,92.83,82.86,4.18,Tuesday,12,Organic,59.56,Yes,Overflowed
+CAN-10,Canteen,2026-09-06T17:00:00,90.05,71.09,12.74,Sunday,11,Mixed,73.45,Yes,Overflowed
+CA-08,Common Area,2026-09-26T17:00:00,56.95,56.57,2.64,Saturday,11,Plastic,55.44,No,No Overflow
+AB-A-08,Academic Block A,2026-09-15T14:00:00,46.45,37.92,2.0,Tuesday,8,Paper,36.53,No,No Overflow
+CA-02,Common Area,2026-09-23T00:00:00,98.9,97.04,3.3,Wednesday,18,Plastic,54.14,Yes,Overflowed
+CA-01,Common Area,2026-09-26T21:00:00,90.76,84.05,2.64,Saturday,15,Plastic,48.58,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-09T21:00:00,97.32,97.16,2.0,Wednesday,15,Paper,36.22,Yes,Overflowed
+CAN-04,Canteen,2026-09-22T17:00:00,100,100,11.76,Tuesday,11,Mixed,67.52,Yes,Overflowed
+CA-07,Common Area,2026-09-12T14:00:00,94.53,92.29,2.64,Saturday,8,Plastic,54.15,Yes,Overflowed
+LIB-04,Library,2026-09-29T21:00:00,55.3,51.6,2.16,Tuesday,15,Paper,33.9,No,No Overflow
+LIB-06,Library,2026-09-03T23:00:00,58.85,50.96,2.16,Thursday,17,Paper,42.83,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-21T19:00:00,81.06,83.03,4.4,Monday,13,Organic,49.1,Yes,Likely Overflow
+AB-A-03,Academic Block A,2026-09-10T20:00:00,97.89,99.6,2.0,Thursday,14,Paper,36.09,Yes,Overflowed
+HB2-09,Hostel Block 2,2026-09-05T19:00:00,99.02,92.83,3.8,Saturday,13,Organic,58.17,Yes,Overflowed
+CAN-04,Canteen,2026-09-23T21:00:00,100,100,8.4,Wednesday,15,Mixed,64.54,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-29T19:00:00,52.87,45.7,2.5,Tuesday,13,Paper,48.79,No,No Overflow
+LIB-04,Library,2026-09-14T17:00:00,55.65,55.3,2.16,Monday,11,Paper,28.59,No,No Overflow
+HB2-03,Hostel Block 2,2026-09-15T16:00:00,79.93,81.36,4.18,Tuesday,10,Organic,65.4,Yes,Likely Overflow
+LIB-08,Library,2026-09-12T21:00:00,32.65,29.72,0.9,Saturday,15,Paper,44.23,No,No Overflow
+AB-A-04,Academic Block A,2026-09-13T17:00:00,29.59,33.98,0.9,Sunday,11,Paper,37.42,No,No Overflow
+CA-01,Common Area,2026-09-27T20:00:00,89.37,90.76,2.64,Sunday,14,Plastic,43.65,Yes,Overflowed
+LIB-05,Library,2026-09-20T13:00:00,23.27,24.7,0.9,Sunday,7,Paper,28.91,No,No Overflow
+AB-B-01,Academic Block B,2026-09-26T22:00:00,46.7,40.96,1.12,Saturday,16,Paper,40.69,No,No Overflow
+HB2-10,Hostel Block 2,2026-09-07T22:00:00,100,100,4.18,Monday,16,Organic,53.89,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-25T15:00:00,82.96,77.22,4.4,Friday,9,Organic,61.2,Yes,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-28T15:00:00,63.51,58.55,4.4,Monday,9,Organic,64.78,No,No Overflow
+CAN-08,Canteen,2026-09-06T14:00:00,97.91,95.45,9.1,Sunday,8,Mixed,68.9,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-13T01:00:00,99.46,97.32,0.9,Sunday,19,Paper,48.19,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-06T17:00:00,83.78,79.5,0.9,Sunday,11,Paper,34.94,Yes,Likely Overflow
+HB2-08,Hostel Block 2,2026-09-05T00:00:00,100,99.7,5.13,Saturday,18,Organic,51.14,Yes,Overflowed
+HB1-08,Hostel Block 1,2026-09-17T22:00:00,18.74,14.29,4.4,Thursday,16,Organic,48.96,No,No Overflow
+CA-07,Common Area,2026-09-20T13:00:00,100,94.53,2.64,Sunday,7,Plastic,55.09,Yes,Overflowed
+LIB-07,Library,2026-09-17T17:00:00,86.59,77.93,2.16,Thursday,11,Paper,36.24,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-17T02:00:00,34.2,29.59,2.0,Thursday,20,Paper,41.23,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-24T03:00:00,53.65,42.42,5.64,Thursday,21,Organic,57.98,No,No Overflow
+HB1-05,Hostel Block 1,2026-09-20T15:00:00,53.97,53.12,4.0,Sunday,9,Organic,48.18,No,No Overflow
+LIB-05,Library,2026-09-19T21:00:00,22.5,23.27,0.9,Saturday,15,Paper,40.82,No,No Overflow
+LIB-03,Library,2026-09-17T17:00:00,43.35,39.71,2.16,Thursday,11,Paper,36.17,No,No Overflow
+AB-A-07,Academic Block A,2026-09-27T00:00:00,31.1,28.03,0.9,Sunday,18,Paper,36.06,No,No Overflow
+CA-03,Common Area,2026-09-25T21:00:00,93.91,94.6,3.3,Friday,15,Plastic,54.98,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-29T16:00:00,88.69,79.93,4.18,Tuesday,10,Organic,57.45,Yes,Overflowed
+HB1-10,Hostel Block 1,2026-09-15T00:00:00,36.04,31.13,5.94,Tuesday,18,Organic,48.71,No,No Overflow
+LIB-07,Library,2026-09-09T18:00:00,91.37,86.59,2.16,Wednesday,12,Paper,45.16,Yes,Overflowed
+HB2-05,Hostel Block 2,2026-09-03T14:00:00,57.61,57.66,5.64,Thursday,8,Organic,64.97,No,No Overflow
+AB-A-07,Academic Block A,2026-09-25T00:00:00,27.92,31.1,2.0,Friday,18,Paper,40.71,No,No Overflow
+AB-A-04,Academic Block A,2026-09-19T21:00:00,37.48,34.2,0.9,Saturday,15,Paper,44.11,No,No Overflow
+HB2-01,Hostel Block 2,2026-09-13T02:00:00,69.66,61.03,5.13,Sunday,20,Organic,61.98,No,No Overflow
+CA-02,Common Area,2026-10-01T00:00:00,99.23,98.9,3.3,Thursday,18,Plastic,42.93,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-12T14:00:00,82.44,81.06,5.4,Saturday,8,Organic,57.4,Yes,Likely Overflow
+LIB-07,Library,2026-09-16T16:00:00,91.43,91.37,2.16,Wednesday,10,Paper,43.25,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-12T14:00:00,100,100,5.13,Saturday,8,Organic,63.73,Yes,Overflowed
+CAN-08,Canteen,2026-09-15T02:00:00,100,97.91,11.76,Tuesday,20,Mixed,67.1,Yes,Overflowed
+LIB-04,Library,2026-09-20T23:00:00,49.92,55.65,0.9,Sunday,17,Paper,39.57,No,No Overflow
+CA-06,Common Area,2026-09-23T02:00:00,83.43,86.72,3.3,Wednesday,20,Plastic,54.48,Yes,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-24T01:00:00,67.21,63.51,5.94,Thursday,19,Organic,52.56,No,No Overflow
+AB-A-01,Academic Block A,2026-09-07T02:00:00,100,99.46,2.0,Monday,20,Paper,36.58,Yes,Overflowed
+AB-A-05,Academic Block A,2026-09-06T00:00:00,21.69,27.36,0.9,Sunday,18,Paper,45.4,No,No Overflow
+CAN-04,Canteen,2026-09-17T16:00:00,100,100,8.4,Thursday,10,Mixed,63.77,Yes,Overflowed
+AB-B-03,Academic Block B,2026-09-12T17:00:00,86.18,81.18,1.12,Saturday,11,Paper,49.99,Yes,Overflowed
+LIB-01,Library,2026-09-20T14:00:00,67.7,71.62,0.9,Sunday,8,Paper,43.9,No,No Overflow
+CAN-05,Canteen,2026-09-20T13:00:00,70.19,64.28,9.1,Sunday,7,Mixed,69.13,Yes,Likely Overflow
+LIB-07,Library,2026-09-14T20:00:00,92.39,91.43,2.16,Monday,14,Paper,38.93,Yes,Overflowed
+AB-B-06,Academic Block B,2026-09-25T21:00:00,47.93,46.41,2.5,Friday,15,Paper,39.05,No,No Overflow
+HB1-03,Hostel Block 1,2026-09-22T23:00:00,93.58,88.8,4.4,Tuesday,17,Organic,57.68,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-02T16:00:00,88.23,82.44,4.4,Wednesday,10,Organic,54.11,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-07T17:00:00,100,100,2.0,Monday,11,Paper,51.02,Yes,Overflowed
+CAN-05,Canteen,2026-09-09T17:00:00,75.06,70.19,11.76,Wednesday,11,Mixed,62.91,Yes,Likely Overflow
+CAN-04,Canteen,2026-09-14T15:00:00,100,100,8.4,Monday,9,Mixed,59.33,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-17T21:00:00,66.4,59.61,2.5,Thursday,15,Paper,52.0,No,No Overflow
+AB-A-05,Academic Block A,2026-09-14T02:00:00,22.8,21.69,2.0,Monday,20,Paper,47.36,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-30T14:00:00,86.45,79.75,5.64,Wednesday,8,Organic,65.52,Yes,Overflowed
+LIB-01,Library,2026-09-14T00:00:00,66.91,67.7,2.16,Monday,18,Paper,39.52,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-01T18:00:00,46.71,36.04,4.4,Tuesday,12,Organic,50.09,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-28T00:00:00,86.33,86.45,5.64,Monday,18,Organic,66.56,Yes,Overflowed
+CA-01,Common Area,2026-09-04T16:00:00,91.28,89.37,3.3,Friday,10,Plastic,49.84,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-14T02:00:00,37.46,37.71,2.0,Monday,20,Paper,39.58,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-25T15:00:00,89.23,82.96,4.4,Friday,9,Organic,48.37,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-17T16:00:00,100,100,4.18,Thursday,10,Organic,66.31,Yes,Overflowed
+CAN-03,Canteen,2026-09-27T23:00:00,96.55,91.14,9.1,Sunday,17,Mixed,71.67,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-09T16:00:00,50.51,52.87,2.5,Wednesday,10,Paper,40.12,No,No Overflow
+CAN-05,Canteen,2026-09-21T14:00:00,87.28,75.06,8.4,Monday,8,Mixed,60.19,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-16T01:00:00,60.41,53.65,5.64,Wednesday,19,Organic,60.15,No,No Overflow
+LIB-08,Library,2026-10-01T03:00:00,36.7,32.65,2.16,Thursday,21,Paper,38.16,No,No Overflow
+LIB-04,Library,2026-09-12T02:00:00,48.25,49.92,0.9,Saturday,20,Paper,45.48,No,No Overflow
+HB2-03,Hostel Block 2,2026-09-03T20:00:00,90.11,88.69,4.18,Thursday,14,Organic,57.96,Yes,Overflowed
+HB1-02,Hostel Block 1,2026-09-19T13:00:00,66.65,67.21,5.4,Saturday,7,Organic,53.33,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-15T13:00:00,96.62,86.33,5.64,Tuesday,7,Organic,51.02,Yes,Overflowed
+AB-A-05,Academic Block A,2026-09-22T02:00:00,19.06,22.8,2.0,Tuesday,20,Paper,51.59,No,No Overflow
+LIB-03,Library,2026-09-17T19:00:00,46.27,43.35,2.16,Thursday,13,Paper,36.33,No,No Overflow
+CAN-07,Canteen,2026-09-25T03:00:00,94.29,80.16,8.4,Friday,21,Mixed,57.74,Yes,Overflowed
+LIB-01,Library,2026-09-21T16:00:00,68.73,66.91,2.16,Monday,10,Paper,33.79,No,No Overflow
+AB-B-02,Academic Block B,2026-09-02T20:00:00,58.6,50.51,2.5,Wednesday,14,Paper,38.86,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-23T14:00:00,90.59,89.23,5.94,Wednesday,8,Organic,56.08,Yes,Overflowed
+AB-B-08,Academic Block B,2026-09-23T20:00:00,95.25,92.41,2.5,Wednesday,14,Paper,54.84,Yes,Overflowed
+LIB-04,Library,2026-09-06T18:00:00,46.11,48.25,0.9,Sunday,12,Paper,34.71,No,No Overflow
+HB2-01,Hostel Block 2,2026-09-25T18:00:00,67.57,69.66,4.18,Friday,12,Organic,62.22,No,No Overflow
+LIB-05,Library,2026-09-21T18:00:00,18.98,22.5,2.16,Monday,12,Paper,29.19,No,No Overflow
+LIB-08,Library,2026-09-13T17:00:00,42.52,36.7,0.9,Sunday,11,Paper,32.54,No,No Overflow
+CA-08,Common Area,2026-09-30T22:00:00,57.92,56.95,3.3,Wednesday,16,Plastic,57.72,No,No Overflow
+LIB-02,Library,2026-09-22T15:00:00,95.39,95.89,2.16,Tuesday,9,Paper,44.5,Yes,Overflowed
+LIB-06,Library,2026-09-23T23:00:00,62.34,58.85,2.16,Wednesday,17,Paper,35.06,No,No Overflow
+CA-07,Common Area,2026-09-03T17:00:00,100,100,3.3,Thursday,11,Plastic,52.06,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-27T15:00:00,99.2,90.59,4.0,Sunday,9,Organic,59.06,Yes,Overflowed
+CAN-04,Canteen,2026-09-23T03:00:00,100,100,8.4,Wednesday,21,Mixed,66.48,Yes,Overflowed
+HB2-02,Hostel Block 2,2026-09-17T18:00:00,90.93,89.43,4.18,Thursday,12,Organic,50.33,Yes,Overflowed
+CA-07,Common Area,2026-09-07T18:00:00,100,100,3.3,Monday,12,Plastic,59.06,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-05T15:00:00,72.35,66.4,1.12,Saturday,9,Paper,38.39,No,Likely Overflow
+AB-A-07,Academic Block A,2026-09-18T01:00:00,33.26,27.92,2.0,Friday,19,Paper,43.72,No,No Overflow
+HB2-08,Hostel Block 2,2026-09-02T23:00:00,100,100,4.18,Wednesday,17,Organic,56.06,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-20T19:00:00,43.36,46.7,1.12,Sunday,13,Paper,39.78,No,No Overflow
+CAN-01,Canteen,2026-09-25T22:00:00,100,100,8.4,Friday,16,Mixed,71.56,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-02T19:00:00,97.36,90.11,4.18,Wednesday,13,Organic,56.56,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-20T17:00:00,100,97.36,3.8,Sunday,11,Organic,63.54,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-18T16:00:00,79.17,72.35,2.5,Friday,10,Paper,42.57,Yes,Likely Overflow
+HB2-05,Hostel Block 2,2026-09-30T02:00:00,65.75,57.61,5.64,Wednesday,20,Organic,53.49,No,No Overflow
+LIB-01,Library,2026-09-15T20:00:00,74.78,68.73,2.16,Tuesday,14,Paper,41.85,No,Likely Overflow
+HB2-07,Hostel Block 2,2026-09-17T19:00:00,36.6,27.98,4.18,Thursday,13,Organic,67.39,No,No Overflow
+CAN-08,Canteen,2026-09-20T15:00:00,100,100,9.1,Sunday,9,Mixed,72.71,Yes,Overflowed
+HB2-05,Hostel Block 2,2026-09-28T18:00:00,64.37,65.75,4.18,Monday,12,Organic,59.98,No,No Overflow
+CA-01,Common Area,2026-09-18T02:00:00,88.75,91.28,3.3,Friday,20,Plastic,44.24,Yes,Overflowed
+AB-B-03,Academic Block B,2026-09-09T20:00:00,83.74,86.18,2.5,Wednesday,14,Paper,53.3,Yes,Likely Overflow
+HB2-02,Hostel Block 2,2026-09-04T03:00:00,95.89,90.93,5.64,Friday,21,Organic,54.0,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-09-30T13:00:00,45.65,41.16,5.94,Wednesday,7,Organic,54.47,No,No Overflow
+HB1-08,Hostel Block 1,2026-09-08T19:00:00,21.39,18.74,4.4,Tuesday,13,Organic,64.9,No,No Overflow
+AB-A-02,Academic Block A,2026-09-12T03:00:00,87.69,83.78,0.9,Saturday,21,Paper,35.78,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-26T15:00:00,100,99.2,4.0,Saturday,9,Organic,49.48,Yes,Overflowed
+CAN-10,Canteen,2026-09-17T00:00:00,100,90.05,11.76,Thursday,18,Mixed,71.96,Yes,Overflowed
+HB2-05,Hostel Block 2,2026-09-15T22:00:00,62.66,64.37,4.18,Tuesday,16,Organic,50.09,No,No Overflow
+HB1-01,Hostel Block 1,2026-09-08T02:00:00,100,100,5.94,Tuesday,20,Organic,49.69,Yes,Overflowed
+LIB-03,Library,2026-09-17T19:00:00,45.46,46.27,2.16,Thursday,13,Paper,30.0,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-04T13:00:00,96.12,88.23,5.94,Friday,7,Organic,51.29,Yes,Overflowed
+LIB-04,Library,2026-09-15T14:00:00,53.94,46.11,2.16,Tuesday,8,Paper,30.0,No,No Overflow
+LIB-03,Library,2026-09-18T13:00:00,48.67,45.46,2.16,Friday,7,Paper,39.38,No,No Overflow
+CAN-02,Canteen,2026-09-05T17:00:00,68.09,53.74,12.74,Saturday,11,Mixed,64.73,Yes,Likely Overflow
+AB-B-08,Academic Block B,2026-09-19T19:00:00,98.73,95.25,1.12,Saturday,13,Paper,40.37,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-12T14:00:00,100,100,5.13,Saturday,8,Organic,67.16,Yes,Overflowed
+CAN-07,Canteen,2026-09-17T21:00:00,100,94.29,8.4,Thursday,15,Mixed,57.37,Yes,Overflowed
+AB-A-03,Academic Block A,2026-09-21T19:00:00,96.44,97.89,2.0,Monday,13,Paper,51.66,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-13T01:00:00,84.97,87.69,0.9,Sunday,19,Paper,35.22,Yes,Likely Overflow
+LIB-07,Library,2026-09-21T14:00:00,97.84,92.39,2.16,Monday,8,Paper,41.89,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-05T13:00:00,100,100,5.4,Saturday,7,Organic,53.34,Yes,Overflowed
+LIB-06,Library,2026-09-07T02:00:00,64.0,62.34,2.16,Monday,20,Paper,42.02,No,No Overflow
+CAN-01,Canteen,2026-09-16T23:00:00,100,100,8.4,Wednesday,17,Mixed,60.28,Yes,Overflowed
+CAN-02,Canteen,2026-09-25T20:00:00,75.67,68.09,11.76,Friday,14,Mixed,57.67,Yes,Likely Overflow
+CAN-07,Canteen,2026-09-08T03:00:00,100,100,8.4,Tuesday,21,Mixed,57.75,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-14T02:00:00,38.79,36.6,5.64,Monday,20,Organic,59.77,No,No Overflow
+CAN-05,Canteen,2026-09-21T16:00:00,100,87.28,8.4,Monday,10,Mixed,62.15,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-28T23:00:00,34.22,37.48,2.0,Monday,17,Paper,39.97,No,No Overflow
+HB1-08,Hostel Block 1,2026-09-15T03:00:00,26.49,21.39,5.94,Tuesday,21,Organic,54.2,No,No Overflow
+CA-08,Common Area,2026-09-13T18:00:00,60.51,57.92,2.64,Sunday,12,Plastic,59.53,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-13T03:00:00,62.27,60.41,5.13,Sunday,21,Organic,64.35,No,No Overflow
+AB-A-06,Academic Block A,2026-09-24T19:00:00,40.89,37.46,2.0,Thursday,13,Paper,35.42,No,No Overflow
+CAN-09,Canteen,2026-09-06T21:00:00,100,100,9.1,Sunday,15,Mixed,62.29,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-22T17:00:00,59.81,53.97,4.4,Tuesday,11,Organic,52.52,No,No Overflow
+HB2-02,Hostel Block 2,2026-09-07T00:00:00,100,95.89,5.64,Monday,18,Organic,57.99,Yes,Overflowed
+CAN-03,Canteen,2026-09-29T03:00:00,100,96.55,8.4,Tuesday,21,Mixed,63.35,Yes,Overflowed
+HB1-02,Hostel Block 1,2026-09-22T01:00:00,66.64,66.65,5.94,Tuesday,19,Organic,64.06,No,No Overflow
+LIB-05,Library,2026-09-13T18:00:00,23.38,18.98,0.9,Sunday,12,Paper,37.24,No,No Overflow
+AB-B-03,Academic Block B,2026-09-01T15:00:00,88.73,83.74,2.5,Tuesday,9,Paper,52.28,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-02T15:00:00,100,100,4.18,Wednesday,9,Organic,51.21,Yes,Overflowed
+HB1-08,Hostel Block 1,2026-09-12T19:00:00,23.94,26.49,4.0,Saturday,13,Organic,64.09,No,No Overflow
+AB-B-02,Academic Block B,2026-09-22T20:00:00,59.31,58.6,2.5,Tuesday,14,Paper,54.08,No,No Overflow
+CAN-05,Canteen,2026-09-03T22:00:00,100,100,8.4,Thursday,16,Mixed,59.48,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-21T17:00:00,58.8,59.81,4.4,Monday,11,Organic,51.49,No,No Overflow
+CAN-04,Canteen,2026-09-06T20:00:00,100,100,12.74,Sunday,14,Mixed,66.32,Yes,Overflowed
+AB-A-08,Academic Block A,2026-09-10T01:00:00,47.7,46.45,2.0,Thursday,19,Paper,38.69,No,No Overflow
+LIB-04,Library,2026-09-11T00:00:00,55.98,53.94,2.16,Friday,18,Paper,44.5,No,No Overflow
+AB-A-08,Academic Block A,2026-09-06T02:00:00,44.02,47.7,0.9,Sunday,20,Paper,35.33,No,No Overflow
+CAN-02,Canteen,2026-09-15T14:00:00,90.62,75.67,8.4,Tuesday,8,Mixed,71.59,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-22T18:00:00,63.9,58.8,4.4,Tuesday,12,Organic,59.77,No,No Overflow
+HB1-03,Hostel Block 1,2026-09-29T17:00:00,100,93.58,4.4,Tuesday,11,Organic,62.32,Yes,Overflowed
+CA-06,Common Area,2026-09-23T23:00:00,84.79,83.43,3.3,Wednesday,17,Plastic,45.13,Yes,Likely Overflow
+AB-B-07,Academic Block B,2026-09-04T16:00:00,77.98,79.17,2.5,Friday,10,Paper,51.26,Yes,Likely Overflow
+HB2-06,Hostel Block 2,2026-09-01T18:00:00,64.61,62.27,4.18,Tuesday,12,Organic,59.97,No,No Overflow
+CAN-08,Canteen,2026-09-18T15:00:00,100,100,8.4,Friday,9,Mixed,68.02,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-14T00:00:00,100,96.12,5.94,Monday,18,Organic,59.94,Yes,Overflowed
+CAN-06,Canteen,2026-09-15T02:00:00,89.36,82.85,11.76,Tuesday,20,Mixed,67.35,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-21T14:00:00,72.36,63.9,5.94,Monday,8,Organic,55.1,No,Likely Overflow
+HB1-07,Hostel Block 1,2026-09-06T03:00:00,51.77,45.65,5.4,Sunday,21,Organic,61.92,No,No Overflow
+LIB-02,Library,2026-09-07T01:00:00,96.61,95.39,2.16,Monday,19,Paper,45.39,Yes,Overflowed
+CA-05,Common Area,2026-09-28T13:00:00,37.77,34.22,3.3,Monday,7,Plastic,56.97,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-06T15:00:00,100,100,4.0,Sunday,9,Organic,52.81,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-09-18T03:00:00,51.81,51.77,5.94,Friday,21,Organic,52.11,No,No Overflow
+AB-B-05,Academic Block B,2026-09-21T21:00:00,52.5,48.25,2.5,Monday,15,Paper,41.94,No,No Overflow
+LIB-04,Library,2026-09-18T14:00:00,53.5,55.98,2.16,Friday,8,Paper,37.05,No,No Overflow
+CA-07,Common Area,2026-09-19T15:00:00,100,100,2.64,Saturday,9,Plastic,45.08,Yes,Overflowed
+CA-04,Common Area,2026-09-20T18:00:00,94.81,91.28,2.64,Sunday,12,Plastic,57.17,Yes,Overflowed
+CAN-09,Canteen,2026-09-28T13:00:00,100,100,8.4,Monday,7,Mixed,58.46,Yes,Overflowed
+CAN-06,Canteen,2026-09-19T17:00:00,100,89.36,12.74,Saturday,11,Mixed,68.72,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-20T23:00:00,76.82,67.57,3.8,Sunday,17,Organic,50.55,Yes,Likely Overflow
+HB2-09,Hostel Block 2,2026-09-10T23:00:00,100,99.02,4.18,Thursday,17,Organic,67.22,Yes,Overflowed
+CAN-08,Canteen,2026-09-26T23:00:00,100,100,9.1,Saturday,17,Mixed,64.31,Yes,Overflowed
+CAN-01,Canteen,2026-09-02T15:00:00,100,100,8.4,Wednesday,9,Mixed,64.91,Yes,Overflowed
+AB-B-06,Academic Block B,2026-09-11T22:00:00,55.49,47.93,2.5,Friday,16,Paper,39.59,No,No Overflow
+HB1-05,Hostel Block 1,2026-09-25T02:00:00,76.88,72.36,5.94,Friday,20,Organic,53.22,Yes,Likely Overflow
+CAN-05,Canteen,2026-09-12T21:00:00,100,100,9.1,Saturday,15,Mixed,67.11,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-04T17:00:00,95.77,96.62,4.18,Friday,11,Organic,58.09,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-10T19:00:00,35.07,34.22,2.0,Thursday,13,Paper,49.55,No,No Overflow
+CA-08,Common Area,2026-09-29T03:00:00,61.39,60.51,3.3,Tuesday,21,Plastic,44.87,No,No Overflow
+LIB-01,Library,2026-09-24T18:00:00,72.17,74.78,2.16,Thursday,12,Paper,31.42,No,Likely Overflow
+HB2-07,Hostel Block 2,2026-09-15T20:00:00,42.93,38.79,4.18,Tuesday,14,Organic,65.82,No,No Overflow
+AB-A-06,Academic Block A,2026-09-13T21:00:00,38.16,40.89,0.9,Sunday,15,Paper,42.23,No,No Overflow
+LIB-02,Library,2026-09-12T13:00:00,97.44,96.61,0.9,Saturday,7,Paper,28.91,Yes,Overflowed
+CA-03,Common Area,2026-09-27T23:00:00,93.55,93.91,2.64,Sunday,17,Plastic,54.11,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-28T14:00:00,100,100,2.0,Monday,8,Paper,41.76,Yes,Overflowed
+CAN-03,Canteen,2026-09-13T01:00:00,100,100,12.74,Sunday,19,Mixed,64.26,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-19T21:00:00,36.72,35.07,0.9,Saturday,15,Paper,37.5,No,No Overflow
+AB-A-05,Academic Block A,2026-09-13T21:00:00,20.66,19.06,0.9,Sunday,15,Paper,42.11,No,No Overflow
+CAN-09,Canteen,2026-09-20T23:00:00,100,100,9.1,Sunday,17,Mixed,68.0,Yes,Overflowed
+AB-A-07,Academic Block A,2026-09-13T18:00:00,31.91,33.26,0.9,Sunday,12,Paper,48.31,No,No Overflow
+CA-07,Common Area,2026-09-13T01:00:00,100,100,2.64,Sunday,19,Plastic,44.6,Yes,Overflowed
+HB1-10,Hostel Block 1,2026-09-17T13:00:00,47.57,46.71,5.94,Thursday,7,Organic,47.82,No,No Overflow
+HB1-06,Hostel Block 1,2026-09-26T20:00:00,99.09,100,4.0,Saturday,14,Organic,56.35,Yes,Overflowed
+CA-04,Common Area,2026-09-17T15:00:00,99.69,94.81,3.3,Thursday,9,Plastic,47.9,Yes,Overflowed
+AB-B-03,Academic Block B,2026-09-13T22:00:00,87.04,88.73,1.12,Sunday,16,Paper,50.31,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-18T02:00:00,100,99.09,5.94,Friday,20,Organic,56.17,Yes,Overflowed
+LIB-01,Library,2026-09-10T20:00:00,72.49,72.17,2.16,Thursday,14,Paper,42.68,No,Likely Overflow
+LIB-08,Library,2026-09-04T19:00:00,48.83,42.52,2.16,Friday,13,Paper,38.51,No,No Overflow
+CAN-03,Canteen,2026-09-29T00:00:00,100,100,11.76,Tuesday,18,Mixed,68.33,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-22T01:00:00,100,100,5.94,Tuesday,19,Organic,64.5,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-24T13:00:00,75.87,77.98,2.5,Thursday,7,Paper,47.5,Yes,Likely Overflow
+LIB-05,Library,2026-09-24T22:00:00,23.86,23.38,2.16,Thursday,16,Paper,41.94,No,No Overflow
+CAN-09,Canteen,2026-09-22T16:00:00,100,100,8.4,Tuesday,10,Mixed,57.57,Yes,Overflowed
+AB-A-08,Academic Block A,2026-09-07T13:00:00,44.88,44.02,2.0,Monday,7,Paper,41.94,No,No Overflow
+HB2-01,Hostel Block 2,2026-09-23T16:00:00,84.85,76.82,4.18,Wednesday,10,Organic,57.39,Yes,Likely Overflow
+CA-05,Common Area,2026-09-17T02:00:00,44.25,37.77,3.3,Thursday,20,Plastic,57.27,No,No Overflow
+CAN-02,Canteen,2026-09-05T21:00:00,97.27,90.62,9.1,Saturday,15,Mixed,60.73,Yes,Overflowed
+LIB-07,Library,2026-09-16T21:00:00,100,97.84,2.16,Wednesday,15,Paper,34.78,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-30T21:00:00,97.91,95.77,4.18,Wednesday,15,Organic,56.16,Yes,Overflowed
+CAN-06,Canteen,2026-09-29T00:00:00,100,100,11.76,Tuesday,18,Mixed,69.25,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-20T20:00:00,100,100,4.0,Sunday,14,Organic,50.46,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-10T16:00:00,100,100,4.18,Thursday,10,Organic,66.95,Yes,Overflowed
+CAN-06,Canteen,2026-09-11T00:00:00,100,100,11.76,Friday,18,Mixed,60.73,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-16T18:00:00,87.36,76.88,4.4,Wednesday,12,Organic,57.09,Yes,Overflowed
+CAN-03,Canteen,2026-09-09T17:00:00,100,100,11.76,Wednesday,11,Mixed,59.19,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-29T19:00:00,64.46,53.7,4.4,Tuesday,13,Organic,61.73,No,No Overflow
+CAN-08,Canteen,2026-09-05T17:00:00,100,100,12.74,Saturday,11,Mixed,57.76,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-13T03:00:00,35.65,38.16,0.9,Sunday,21,Paper,41.96,No,No Overflow
+HB2-05,Hostel Block 2,2026-09-07T16:00:00,63.64,62.66,4.18,Monday,10,Organic,64.9,No,No Overflow
+HB2-10,Hostel Block 2,2026-09-23T17:00:00,100,100,4.18,Wednesday,11,Organic,52.47,Yes,Overflowed
+LIB-02,Library,2026-09-08T16:00:00,100,97.44,2.16,Tuesday,10,Paper,28.91,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-21T16:00:00,77.16,75.87,2.5,Monday,10,Paper,37.94,Yes,Likely Overflow
+CAN-02,Canteen,2026-09-16T14:00:00,100,97.27,8.4,Wednesday,8,Mixed,69.26,Yes,Overflowed
+CA-08,Common Area,2026-09-19T03:00:00,66.17,61.39,2.64,Saturday,21,Plastic,44.84,No,No Overflow
+CA-03,Common Area,2026-09-29T20:00:00,92.64,93.55,3.3,Tuesday,14,Plastic,50.59,Yes,Overflowed
+CA-08,Common Area,2026-09-10T18:00:00,63.3,66.17,3.3,Thursday,12,Plastic,47.14,No,No Overflow
+CAN-06,Canteen,2026-09-03T23:00:00,100,100,8.4,Thursday,17,Mixed,67.33,Yes,Overflowed
+CAN-03,Canteen,2026-09-29T03:00:00,100,100,8.4,Tuesday,21,Mixed,57.67,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-30T02:00:00,96.37,84.85,5.64,Wednesday,20,Organic,53.16,Yes,Overflowed
+CAN-10,Canteen,2026-09-14T01:00:00,100,100,11.76,Monday,19,Mixed,65.92,Yes,Overflowed
+CA-08,Common Area,2026-09-29T03:00:00,60.12,63.3,3.3,Tuesday,21,Plastic,47.21,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-19T22:00:00,100,100,4.0,Saturday,16,Organic,48.93,Yes,Overflowed
+HB1-03,Hostel Block 1,2026-09-15T23:00:00,100,100,4.4,Tuesday,17,Organic,56.78,Yes,Overflowed
+CA-07,Common Area,2026-09-06T02:00:00,99.46,100,2.64,Sunday,20,Plastic,51.08,Yes,Overflowed
+CAN-08,Canteen,2026-09-04T18:00:00,100,100,11.76,Friday,12,Mixed,59.92,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-23T15:00:00,100,100,4.4,Wednesday,9,Organic,47.25,Yes,Overflowed
+HB1-03,Hostel Block 1,2026-09-19T23:00:00,99.46,100,4.0,Saturday,17,Organic,60.63,Yes,Overflowed
+CA-01,Common Area,2026-09-22T03:00:00,91.04,88.75,3.3,Tuesday,21,Plastic,49.3,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-03T19:00:00,87.35,87.36,4.4,Thursday,13,Organic,59.05,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-16T18:00:00,38.96,43.36,2.5,Wednesday,12,Paper,53.84,No,No Overflow
+HB1-09,Hostel Block 1,2026-09-08T20:00:00,75.22,64.46,4.4,Tuesday,14,Organic,60.57,Yes,Likely Overflow
+HB1-04,Hostel Block 1,2026-09-20T00:00:00,100,100,5.4,Sunday,18,Organic,57.31,Yes,Overflowed
+HB1-08,Hostel Block 1,2026-09-23T16:00:00,23.0,23.94,4.4,Wednesday,10,Organic,48.12,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-06T19:00:00,100,100,4.0,Sunday,13,Organic,59.35,Yes,Overflowed
+CA-03,Common Area,2026-09-24T01:00:00,90.58,92.64,3.3,Thursday,19,Plastic,47.6,Yes,Overflowed
+CA-05,Common Area,2026-09-10T18:00:00,43.62,44.25,3.3,Thursday,12,Plastic,53.06,No,No Overflow
+AB-B-01,Academic Block B,2026-09-16T15:00:00,48.3,38.96,2.5,Wednesday,9,Paper,45.19,No,No Overflow
+HB1-08,Hostel Block 1,2026-09-15T00:00:00,28.53,23.0,5.94,Tuesday,18,Organic,56.89,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-26T23:00:00,100,100,3.8,Saturday,17,Organic,64.86,Yes,Overflowed
+LIB-08,Library,2026-09-25T22:00:00,45.14,48.83,2.16,Friday,16,Paper,43.72,No,No Overflow
+HB2-03,Hostel Block 2,2026-09-18T00:00:00,100,100,5.64,Friday,18,Organic,56.51,Yes,Overflowed
+AB-A-08,Academic Block A,2026-09-03T02:00:00,46.96,44.88,2.0,Thursday,20,Paper,43.86,No,No Overflow
+LIB-01,Library,2026-09-18T15:00:00,79.61,72.49,2.16,Friday,9,Paper,30.96,Yes,Likely Overflow
+HB2-03,Hostel Block 2,2026-09-04T23:00:00,100,100,4.18,Friday,17,Organic,53.7,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-29T21:00:00,31.43,35.65,2.0,Tuesday,15,Paper,42.02,No,No Overflow
+AB-B-01,Academic Block B,2026-09-17T19:00:00,44.61,48.3,2.5,Thursday,13,Paper,45.22,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-23T01:00:00,96.86,97.91,5.64,Wednesday,19,Organic,55.55,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-27T13:00:00,100,100,5.4,Sunday,7,Organic,60.42,Yes,Overflowed
+AB-A-03,Academic Block A,2026-09-14T18:00:00,99.02,96.44,2.0,Monday,12,Paper,46.61,Yes,Overflowed
+AB-A-04,Academic Block A,2026-10-01T03:00:00,44.79,36.72,2.0,Thursday,21,Paper,35.24,No,No Overflow
+AB-A-03,Academic Block A,2026-09-10T19:00:00,95.92,99.02,2.0,Thursday,13,Paper,37.24,Yes,Overflowed
+LIB-06,Library,2026-09-24T23:00:00,64.4,64.0,2.16,Thursday,17,Paper,45.35,No,No Overflow
+CA-04,Common Area,2026-09-13T20:00:00,100,99.69,2.64,Sunday,14,Plastic,57.65,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-03T23:00:00,84.86,75.22,4.4,Thursday,17,Organic,64.35,Yes,Likely Overflow
+AB-B-01,Academic Block B,2026-09-22T02:00:00,42.61,44.61,2.5,Tuesday,20,Paper,43.26,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-13T21:00:00,100,100,3.8,Sunday,15,Organic,52.29,Yes,Overflowed
+CAN-10,Canteen,2026-09-02T01:00:00,100,100,11.76,Wednesday,19,Mixed,57.41,Yes,Overflowed
+LIB-08,Library,2026-09-24T21:00:00,45.61,45.14,2.16,Thursday,15,Paper,35.63,No,No Overflow
+AB-B-07,Academic Block B,2026-09-08T20:00:00,76.52,77.16,2.5,Tuesday,14,Paper,43.23,Yes,Likely Overflow
+CA-06,Common Area,2026-09-30T00:00:00,81.54,84.79,3.3,Wednesday,18,Plastic,55.78,Yes,Likely Overflow
+LIB-07,Library,2026-09-14T22:00:00,100,100,2.16,Monday,16,Paper,41.79,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-08T16:00:00,88.29,84.97,2.0,Tuesday,10,Paper,35.21,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-20T23:00:00,97.48,100,3.8,Sunday,17,Organic,62.66,Yes,Overflowed
+CAN-04,Canteen,2026-09-02T19:00:00,100,100,11.76,Wednesday,13,Mixed,64.9,Yes,Overflowed
+CAN-05,Canteen,2026-09-29T01:00:00,100,100,11.76,Tuesday,19,Mixed,58.02,Yes,Overflowed
+HB1-03,Hostel Block 1,2026-09-09T02:00:00,100,99.46,5.94,Wednesday,20,Organic,63.5,Yes,Overflowed
+LIB-01,Library,2026-09-21T01:00:00,79.26,79.61,2.16,Monday,19,Paper,40.11,Yes,Likely Overflow
+HB1-04,Hostel Block 1,2026-09-29T15:00:00,100,100,4.4,Tuesday,9,Organic,64.74,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-10T17:00:00,100,96.37,4.18,Thursday,11,Organic,51.1,Yes,Overflowed
+CA-03,Common Area,2026-09-25T03:00:00,96.38,90.58,3.3,Friday,21,Plastic,45.15,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-16T13:00:00,100,100,5.64,Wednesday,7,Organic,67.5,Yes,Overflowed
+LIB-07,Library,2026-09-14T01:00:00,100,100,2.16,Monday,19,Paper,37.44,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-05T17:00:00,100,100,3.8,Saturday,11,Organic,56.78,Yes,Overflowed
+HB2-05,Hostel Block 2,2026-09-09T02:00:00,74.29,63.64,5.64,Wednesday,20,Organic,54.06,No,Likely Overflow
+AB-B-02,Academic Block B,2026-09-26T20:00:00,61.31,59.31,1.12,Saturday,14,Paper,53.47,No,No Overflow
+CA-08,Common Area,2026-09-14T21:00:00,61.86,60.12,3.3,Monday,15,Plastic,51.54,No,No Overflow
+HB1-01,Hostel Block 1,2026-09-07T18:00:00,100,100,4.4,Monday,12,Organic,58.64,Yes,Overflowed
+CA-01,Common Area,2026-09-12T14:00:00,98.29,91.04,2.64,Saturday,8,Plastic,51.64,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-09T19:00:00,48.23,44.79,2.0,Wednesday,13,Paper,46.13,No,No Overflow
+CA-02,Common Area,2026-09-03T16:00:00,100,99.23,3.3,Thursday,10,Plastic,56.48,Yes,Overflowed
+LIB-07,Library,2026-09-18T16:00:00,100,100,2.16,Friday,10,Paper,36.63,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-11T03:00:00,100,100,5.94,Friday,21,Organic,47.28,Yes,Overflowed
+CA-08,Common Area,2026-09-24T14:00:00,68.72,61.86,3.3,Thursday,8,Plastic,55.44,No,No Overflow
+CA-05,Common Area,2026-09-09T00:00:00,42.78,43.62,3.3,Wednesday,18,Plastic,52.88,No,No Overflow
+CA-05,Common Area,2026-09-08T21:00:00,43.04,42.78,3.3,Tuesday,15,Plastic,47.79,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-18T23:00:00,97.7,96.86,4.18,Friday,17,Organic,56.47,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-29T20:00:00,51.35,42.93,4.18,Tuesday,14,Organic,58.39,No,No Overflow
+CAN-03,Canteen,2026-09-17T01:00:00,100,100,11.76,Thursday,19,Mixed,72.12,Yes,Overflowed
+HB1-08,Hostel Block 1,2026-09-11T19:00:00,38.03,28.53,4.4,Friday,13,Organic,47.82,No,No Overflow
+CAN-04,Canteen,2026-09-05T13:00:00,100,100,9.1,Saturday,7,Mixed,61.69,Yes,Overflowed
+LIB-02,Library,2026-09-24T19:00:00,97.91,100,2.16,Thursday,13,Paper,33.31,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-13T22:00:00,77.64,76.52,1.12,Sunday,16,Paper,52.0,Yes,Likely Overflow
+LIB-06,Library,2026-09-22T18:00:00,71.06,64.4,2.16,Tuesday,12,Paper,32.63,No,Likely Overflow
+CA-08,Common Area,2026-09-24T23:00:00,71.47,68.72,3.3,Thursday,17,Plastic,55.31,No,Likely Overflow
+CAN-03,Canteen,2026-09-26T18:00:00,100,100,12.74,Saturday,12,Mixed,60.05,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-07T03:00:00,77.12,64.61,5.64,Monday,21,Organic,66.01,Yes,Likely Overflow
+CA-08,Common Area,2026-09-02T21:00:00,79.62,71.47,3.3,Wednesday,15,Plastic,42.61,Yes,Likely Overflow
+CA-07,Common Area,2026-09-27T23:00:00,95.19,99.46,2.64,Sunday,17,Plastic,42.87,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-27T23:00:00,46.64,42.61,1.12,Sunday,17,Paper,41.17,No,No Overflow
+AB-A-01,Academic Block A,2026-09-07T21:00:00,95.85,100,2.0,Monday,15,Paper,42.21,Yes,Overflowed
+LIB-05,Library,2026-09-23T03:00:00,25.78,23.86,2.16,Wednesday,21,Paper,39.1,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-01T13:00:00,81.52,77.12,5.64,Tuesday,7,Organic,59.58,Yes,Likely Overflow
+AB-A-02,Academic Block A,2026-09-18T00:00:00,96.97,88.29,2.0,Friday,18,Paper,38.95,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-18T02:00:00,98.0,96.97,2.0,Friday,20,Paper,46.56,Yes,Overflowed
+CA-07,Common Area,2026-09-30T15:00:00,92.84,95.19,3.3,Wednesday,9,Plastic,43.93,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-08T16:00:00,60.34,61.31,2.5,Tuesday,10,Paper,48.16,No,No Overflow
+HB1-07,Hostel Block 1,2026-09-10T01:00:00,55.97,51.81,5.94,Thursday,19,Organic,54.14,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-15T22:00:00,54.73,47.57,4.4,Tuesday,16,Organic,51.38,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-23T02:00:00,100,100,5.94,Wednesday,20,Organic,62.26,Yes,Overflowed
+CA-01,Common Area,2026-09-22T01:00:00,100,98.29,3.3,Tuesday,19,Plastic,42.57,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-18T20:00:00,82.39,84.86,4.4,Friday,14,Organic,48.01,Yes,Likely Overflow
+AB-B-03,Academic Block B,2026-09-03T20:00:00,91.57,87.04,2.5,Thursday,14,Paper,52.22,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-20T02:00:00,100,100,5.4,Sunday,20,Organic,64.53,Yes,Overflowed
+CA-05,Common Area,2026-09-02T16:00:00,51.49,43.04,3.3,Wednesday,10,Plastic,45.81,No,No Overflow
+CA-03,Common Area,2026-09-19T20:00:00,100,96.38,2.64,Saturday,14,Plastic,46.88,Yes,Overflowed
+LIB-08,Library,2026-09-30T17:00:00,48.66,45.61,2.16,Wednesday,11,Paper,44.19,No,No Overflow
+AB-A-03,Academic Block A,2026-09-07T03:00:00,91.14,95.92,2.0,Monday,21,Paper,49.31,Yes,Overflowed
+AB-B-06,Academic Block B,2026-09-19T15:00:00,59.59,55.49,1.12,Saturday,9,Paper,50.54,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-30T14:00:00,61.57,54.73,5.94,Wednesday,8,Organic,52.39,No,No Overflow
+LIB-01,Library,2026-09-28T02:00:00,86.97,79.26,2.16,Monday,20,Paper,35.0,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-14T01:00:00,100,100,5.94,Monday,19,Organic,60.32,Yes,Overflowed
+CAN-01,Canteen,2026-09-24T14:00:00,100,100,8.4,Thursday,8,Mixed,66.01,Yes,Overflowed
+AB-A-04,Academic Block A,2026-09-04T19:00:00,44.29,48.23,2.0,Friday,13,Paper,38.18,No,No Overflow
+LIB-03,Library,2026-09-25T22:00:00,49.38,48.67,2.16,Friday,16,Paper,45.19,No,No Overflow
+CAN-06,Canteen,2026-09-11T13:00:00,100,100,8.4,Friday,7,Mixed,68.41,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-16T16:00:00,100,97.48,4.18,Wednesday,10,Organic,56.4,Yes,Overflowed
+HB2-02,Hostel Block 2,2026-09-06T23:00:00,100,100,3.8,Sunday,17,Organic,60.55,Yes,Overflowed
+CAN-06,Canteen,2026-09-20T17:00:00,100,100,12.74,Sunday,11,Mixed,71.36,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-09T15:00:00,37.4,31.43,2.0,Wednesday,9,Paper,40.84,No,No Overflow
+AB-B-02,Academic Block B,2026-09-24T19:00:00,57.33,60.34,2.5,Thursday,13,Paper,42.7,No,No Overflow
+AB-A-01,Academic Block A,2026-09-10T20:00:00,94.63,95.85,2.0,Thursday,14,Paper,40.48,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-03T15:00:00,49.94,46.64,2.5,Thursday,9,Paper,44.76,No,No Overflow
+HB2-07,Hostel Block 2,2026-09-14T14:00:00,54.95,51.35,5.64,Monday,8,Organic,50.47,No,No Overflow
+AB-A-06,Academic Block A,2026-09-20T22:00:00,43.39,37.4,0.9,Sunday,16,Paper,48.12,No,No Overflow
+AB-A-01,Academic Block A,2026-09-10T19:00:00,90.82,94.63,2.0,Thursday,13,Paper,40.98,Yes,Overflowed
+CA-04,Common Area,2026-09-19T03:00:00,99.04,100,2.64,Saturday,21,Plastic,59.87,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-06T23:00:00,98.74,100,3.8,Sunday,17,Organic,56.85,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-09T20:00:00,99.74,100,4.4,Wednesday,14,Organic,49.63,Yes,Overflowed
+HB1-02,Hostel Block 1,2026-09-14T17:00:00,65.12,66.64,4.4,Monday,11,Organic,55.72,No,No Overflow
+HB1-01,Hostel Block 1,2026-09-09T00:00:00,100,100,5.94,Wednesday,18,Organic,58.25,Yes,Overflowed
+AB-B-05,Academic Block B,2026-09-15T14:00:00,48.09,52.5,2.5,Tuesday,8,Paper,39.44,No,No Overflow
+HB1-10,Hostel Block 1,2026-09-12T02:00:00,71.23,61.57,5.4,Saturday,20,Organic,58.16,No,Likely Overflow
+HB1-06,Hostel Block 1,2026-09-15T18:00:00,100,100,4.4,Tuesday,12,Organic,54.75,Yes,Overflowed
+LIB-06,Library,2026-09-20T15:00:00,73.4,71.06,0.9,Sunday,9,Paper,33.41,No,Likely Overflow
+CAN-01,Canteen,2026-09-07T20:00:00,100,100,11.76,Monday,14,Mixed,62.66,Yes,Overflowed
+CA-08,Common Area,2026-09-11T17:00:00,84.78,79.62,3.3,Friday,11,Plastic,55.23,Yes,Likely Overflow
+CA-08,Common Area,2026-09-20T01:00:00,85.68,84.78,2.64,Sunday,19,Plastic,46.36,Yes,Overflowed
+CAN-09,Canteen,2026-09-26T19:00:00,100,100,12.74,Saturday,13,Mixed,63.57,Yes,Overflowed
+AB-B-05,Academic Block B,2026-09-19T21:00:00,52.96,48.09,1.12,Saturday,15,Paper,40.24,No,No Overflow
+AB-A-02,Academic Block A,2026-09-24T20:00:00,95.94,98.0,2.0,Thursday,14,Paper,50.97,Yes,Overflowed
+CAN-08,Canteen,2026-09-11T02:00:00,100,100,11.76,Friday,20,Mixed,69.47,Yes,Overflowed
+CAN-07,Canteen,2026-09-26T19:00:00,100,100,12.74,Saturday,13,Mixed,69.11,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-08T17:00:00,100,99.74,4.4,Tuesday,11,Organic,58.86,Yes,Overflowed
+CAN-07,Canteen,2026-09-13T14:00:00,100,100,9.1,Sunday,8,Mixed,65.08,Yes,Overflowed
+LIB-02,Library,2026-09-13T21:00:00,100,97.91,0.9,Sunday,15,Paper,37.12,Yes,Overflowed
+CAN-01,Canteen,2026-09-14T21:00:00,100,100,8.4,Monday,15,Mixed,57.66,Yes,Overflowed
+CAN-01,Canteen,2026-09-30T01:00:00,100,100,11.76,Wednesday,19,Mixed,66.66,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-05T01:00:00,46.6,43.39,0.9,Saturday,19,Paper,38.47,No,No Overflow
+AB-B-03,Academic Block B,2026-09-21T22:00:00,100,91.57,2.5,Monday,16,Paper,37.8,Yes,Overflowed
+LIB-08,Library,2026-09-21T19:00:00,48.46,48.66,2.16,Monday,13,Paper,45.4,No,No Overflow
+CAN-07,Canteen,2026-09-14T14:00:00,100,100,8.4,Monday,8,Mixed,57.19,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-24T21:00:00,61.76,54.95,4.18,Thursday,15,Organic,60.04,No,No Overflow
+AB-B-07,Academic Block B,2026-09-15T18:00:00,83.95,77.64,2.5,Tuesday,12,Paper,44.04,Yes,Likely Overflow
+LIB-02,Library,2026-09-23T21:00:00,100,100,2.16,Wednesday,15,Paper,30.71,Yes,Overflowed
+HB2-05,Hostel Block 2,2026-09-04T17:00:00,84.93,74.29,4.18,Friday,11,Organic,57.49,Yes,Likely Overflow
+AB-A-08,Academic Block A,2026-09-28T00:00:00,46.33,46.96,2.0,Monday,18,Paper,36.55,No,No Overflow
+HB2-04,Hostel Block 2,2026-09-26T16:00:00,99.38,97.7,3.8,Saturday,10,Organic,59.38,Yes,Overflowed
+AB-A-07,Academic Block A,2026-09-16T00:00:00,31.37,31.91,2.0,Wednesday,18,Paper,46.54,No,No Overflow
+HB1-04,Hostel Block 1,2026-09-03T01:00:00,99.26,100,5.94,Thursday,19,Organic,59.79,Yes,Overflowed
+HB1-06,Hostel Block 1,2026-09-21T14:00:00,100,100,5.94,Monday,8,Organic,59.19,Yes,Overflowed
+CAN-04,Canteen,2026-09-08T21:00:00,100,100,8.4,Tuesday,15,Mixed,60.14,Yes,Overflowed
+HB2-10,Hostel Block 2,2026-09-14T20:00:00,100,100,4.18,Monday,14,Organic,54.17,Yes,Overflowed
+AB-B-04,Academic Block B,2026-09-06T23:00:00,46.1,41.65,1.12,Sunday,17,Paper,48.83,No,No Overflow
+CA-03,Common Area,2026-09-07T20:00:00,100,100,3.3,Monday,14,Plastic,52.66,Yes,Overflowed
+CAN-02,Canteen,2026-09-07T16:00:00,100,100,8.4,Monday,10,Mixed,62.01,Yes,Overflowed
+CAN-07,Canteen,2026-09-03T22:00:00,100,100,8.4,Thursday,16,Mixed,58.83,Yes,Overflowed
+AB-B-04,Academic Block B,2026-09-12T18:00:00,41.82,46.1,1.12,Saturday,12,Paper,40.55,No,No Overflow
+LIB-07,Library,2026-09-28T20:00:00,100,100,2.16,Monday,14,Paper,37.5,Yes,Overflowed
+LIB-03,Library,2026-09-13T22:00:00,44.88,49.38,0.9,Sunday,16,Paper,35.07,No,No Overflow
+HB1-07,Hostel Block 1,2026-09-28T20:00:00,64.76,55.97,4.4,Monday,14,Organic,58.11,No,No Overflow
+CAN-02,Canteen,2026-09-26T17:00:00,100,100,12.74,Saturday,11,Mixed,73.54,Yes,Overflowed
+LIB-08,Library,2026-09-05T18:00:00,46.64,48.46,0.9,Saturday,12,Paper,30.12,No,No Overflow
+AB-B-04,Academic Block B,2026-09-13T00:00:00,41.38,41.82,1.12,Sunday,18,Paper,39.54,No,No Overflow
+LIB-03,Library,2026-09-05T22:00:00,41.38,44.88,0.9,Saturday,16,Paper,34.91,No,No Overflow
+LIB-05,Library,2026-09-19T00:00:00,32.71,25.78,0.9,Saturday,18,Paper,44.54,No,No Overflow
+AB-B-04,Academic Block B,2026-09-18T15:00:00,38.84,41.38,2.5,Friday,9,Paper,45.81,No,No Overflow
+HB1-05,Hostel Block 1,2026-09-27T20:00:00,96.47,87.35,4.0,Sunday,14,Organic,58.15,Yes,Overflowed
+CA-07,Common Area,2026-09-01T20:00:00,100,92.84,3.3,Tuesday,14,Plastic,44.46,Yes,Overflowed
+CA-08,Common Area,2026-09-18T21:00:00,87.71,85.68,3.3,Friday,15,Plastic,53.76,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-15T00:00:00,87.0,81.52,5.64,Tuesday,18,Organic,65.12,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-19T13:00:00,43.59,46.6,0.9,Saturday,7,Paper,48.33,No,No Overflow
+AB-A-03,Academic Block A,2026-09-09T16:00:00,88.49,91.14,2.0,Wednesday,10,Paper,43.68,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-20T00:00:00,100,99.38,5.13,Sunday,18,Organic,63.91,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-04T22:00:00,69.79,61.76,4.18,Friday,16,Organic,52.06,No,No Overflow
+CAN-09,Canteen,2026-09-12T21:00:00,100,100,9.1,Saturday,15,Mixed,71.81,Yes,Overflowed
+CAN-03,Canteen,2026-09-15T21:00:00,100,100,8.4,Tuesday,15,Mixed,60.93,Yes,Overflowed
+CAN-04,Canteen,2026-09-27T23:00:00,100,100,9.1,Sunday,17,Mixed,70.52,Yes,Overflowed
+AB-A-03,Academic Block A,2026-09-15T17:00:00,94.92,88.49,2.0,Tuesday,11,Paper,40.27,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-28T14:00:00,100,100,5.64,Monday,8,Organic,63.96,Yes,Overflowed
+CAN-08,Canteen,2026-09-24T22:00:00,100,100,8.4,Thursday,16,Mixed,69.4,Yes,Overflowed
+LIB-04,Library,2026-09-21T19:00:00,50.61,53.5,2.16,Monday,13,Paper,30.99,No,No Overflow
+AB-B-06,Academic Block B,2026-09-27T16:00:00,61.7,59.59,1.12,Sunday,10,Paper,51.5,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-09T22:00:00,100,100,4.18,Wednesday,16,Organic,59.7,Yes,Overflowed
+CAN-02,Canteen,2026-09-10T17:00:00,100,100,11.76,Thursday,11,Mixed,67.31,Yes,Overflowed
+HB2-07,Hostel Block 2,2026-09-29T23:00:00,68.87,69.79,4.18,Tuesday,17,Organic,64.67,No,No Overflow
+CAN-05,Canteen,2026-09-26T19:00:00,100,100,12.74,Saturday,13,Mixed,73.54,Yes,Overflowed
+CA-02,Common Area,2026-09-21T15:00:00,98.16,100,3.3,Monday,9,Plastic,54.63,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-23T18:00:00,63.49,57.33,2.5,Wednesday,12,Paper,51.91,No,No Overflow
+LIB-08,Library,2026-09-13T20:00:00,49.39,46.64,0.9,Sunday,14,Paper,30.56,No,No Overflow
+LIB-05,Library,2026-09-14T19:00:00,36.74,32.71,2.16,Monday,13,Paper,36.14,No,No Overflow
+CA-03,Common Area,2026-09-25T14:00:00,100,100,3.3,Friday,8,Plastic,49.25,Yes,Overflowed
+CAN-01,Canteen,2026-10-01T03:00:00,100,100,8.4,Thursday,21,Mixed,63.64,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-19T13:00:00,100,96.47,5.4,Saturday,7,Organic,62.64,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-24T20:00:00,48.35,43.59,2.0,Thursday,14,Paper,45.43,No,No Overflow
+CA-01,Common Area,2026-09-04T01:00:00,99.35,100,3.3,Friday,19,Plastic,51.62,Yes,Overflowed
+HB2-02,Hostel Block 2,2026-09-27T16:00:00,100,100,3.8,Sunday,10,Organic,58.9,Yes,Overflowed
+HB1-03,Hostel Block 1,2026-09-11T21:00:00,100,100,4.4,Friday,15,Organic,57.4,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-26T18:00:00,94.47,87.0,3.8,Saturday,12,Organic,66.09,Yes,Overflowed
+AB-A-03,Academic Block A,2026-09-04T23:00:00,96.35,94.92,2.0,Friday,17,Paper,48.11,Yes,Overflowed
+AB-A-08,Academic Block A,2026-10-01T02:00:00,47.72,46.33,2.0,Thursday,20,Paper,36.84,No,No Overflow
+CA-08,Common Area,2026-09-14T16:00:00,96.74,87.71,3.3,Monday,10,Plastic,59.92,Yes,Overflowed
+CA-03,Common Area,2026-09-21T17:00:00,100,100,3.3,Monday,11,Plastic,44.86,Yes,Overflowed
+HB1-02,Hostel Block 1,2026-09-03T23:00:00,63.67,65.12,4.4,Thursday,17,Organic,53.49,No,No Overflow
+LIB-07,Library,2026-09-29T23:00:00,100,100,2.16,Tuesday,17,Paper,30.98,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-25T00:00:00,100,99.26,5.94,Friday,18,Organic,60.59,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-23T14:00:00,50.03,48.35,2.0,Wednesday,8,Paper,34.02,No,No Overflow
+AB-B-01,Academic Block B,2026-09-19T16:00:00,50.3,49.94,1.12,Saturday,10,Paper,46.35,No,No Overflow
+AB-A-01,Academic Block A,2026-09-23T18:00:00,99.65,90.82,2.0,Wednesday,12,Paper,48.71,Yes,Overflowed
+HB2-02,Hostel Block 2,2026-09-23T15:00:00,100,100,4.18,Wednesday,9,Organic,58.6,Yes,Overflowed
+AB-A-06,Academic Block A,2026-09-25T01:00:00,49.42,50.03,2.0,Friday,19,Paper,35.84,No,No Overflow
+CA-03,Common Area,2026-09-10T15:00:00,100,100,3.3,Thursday,9,Plastic,48.89,Yes,Overflowed
+CA-02,Common Area,2026-09-05T23:00:00,95.8,98.16,2.64,Saturday,17,Plastic,59.87,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-19T13:00:00,99.17,98.74,5.13,Saturday,7,Organic,60.99,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-09-24T16:00:00,64.28,64.76,4.4,Thursday,10,Organic,58.31,No,No Overflow
+HB2-01,Hostel Block 2,2026-09-20T23:00:00,99.84,100,3.8,Sunday,17,Organic,57.96,Yes,Overflowed
+CA-04,Common Area,2026-09-04T15:00:00,100,99.04,3.3,Friday,9,Plastic,55.54,Yes,Overflowed
+HB1-09,Hostel Block 1,2026-09-12T19:00:00,81.35,82.39,4.0,Saturday,13,Organic,52.66,Yes,Likely Overflow
+HB1-02,Hostel Block 1,2026-09-21T14:00:00,71.02,63.67,5.94,Monday,8,Organic,51.47,No,Likely Overflow
+CAN-03,Canteen,2026-09-20T17:00:00,100,100,12.74,Sunday,11,Mixed,71.02,Yes,Overflowed
+CA-01,Common Area,2026-09-28T23:00:00,98.53,99.35,3.3,Monday,17,Plastic,57.76,Yes,Overflowed
+LIB-03,Library,2026-09-17T16:00:00,40.68,41.38,2.16,Thursday,10,Paper,41.46,No,No Overflow
+AB-A-04,Academic Block A,2026-09-27T03:00:00,41.54,44.29,0.9,Sunday,21,Paper,48.29,No,No Overflow
+HB1-09,Hostel Block 1,2026-09-04T16:00:00,87.07,81.35,4.4,Friday,10,Organic,55.99,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-29T13:00:00,100,99.17,5.64,Tuesday,7,Organic,67.76,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-14T02:00:00,51.69,50.3,2.5,Monday,20,Paper,52.1,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-22T15:00:00,100,100,4.18,Tuesday,9,Organic,63.73,Yes,Overflowed
+CAN-06,Canteen,2026-09-03T13:00:00,100,100,8.4,Thursday,7,Mixed,67.57,Yes,Overflowed
+AB-B-06,Academic Block B,2026-09-03T03:00:00,68.25,61.7,2.5,Thursday,21,Paper,38.09,No,No Overflow
+HB2-07,Hostel Block 2,2026-09-10T23:00:00,76.79,68.87,4.18,Thursday,17,Organic,62.83,Yes,Likely Overflow
+HB2-02,Hostel Block 2,2026-09-23T19:00:00,100,100,4.18,Wednesday,13,Organic,51.48,Yes,Overflowed
+LIB-04,Library,2026-09-05T17:00:00,45.62,50.61,0.9,Saturday,11,Paper,29.5,No,No Overflow
+CA-05,Common Area,2026-09-08T01:00:00,52.36,51.49,3.3,Tuesday,19,Plastic,44.8,No,No Overflow
+LIB-02,Library,2026-09-22T01:00:00,100,100,2.16,Tuesday,19,Paper,43.02,Yes,Overflowed
+AB-A-05,Academic Block A,2026-09-11T00:00:00,29.01,20.66,2.0,Friday,18,Paper,41.87,No,No Overflow
+AB-B-08,Academic Block B,2026-09-02T16:00:00,100,98.73,2.5,Wednesday,10,Paper,38.55,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-20T22:00:00,100,100,3.8,Sunday,16,Organic,50.99,Yes,Overflowed
+LIB-07,Library,2026-09-24T15:00:00,100,100,2.16,Thursday,9,Paper,30.15,Yes,Overflowed
+CAN-01,Canteen,2026-09-01T15:00:00,100,100,8.4,Tuesday,9,Mixed,65.94,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-27T02:00:00,100,100,5.13,Sunday,20,Organic,62.97,Yes,Overflowed
+AB-B-01,Academic Block B,2026-09-25T01:00:00,57.45,51.69,2.5,Friday,19,Paper,52.72,No,No Overflow
+AB-A-08,Academic Block A,2026-09-26T03:00:00,52.92,47.72,0.9,Saturday,21,Paper,34.53,No,No Overflow
+HB1-02,Hostel Block 1,2026-09-17T14:00:00,83.61,71.02,5.94,Thursday,8,Organic,51.73,Yes,Likely Overflow
+LIB-05,Library,2026-09-03T20:00:00,36.94,36.74,2.16,Thursday,14,Paper,36.19,No,No Overflow
+HB2-06,Hostel Block 2,2026-09-28T22:00:00,93.85,94.47,4.18,Monday,16,Organic,53.0,Yes,Overflowed
+CAN-06,Canteen,2026-09-05T03:00:00,100,100,9.1,Saturday,21,Mixed,67.33,Yes,Overflowed
+AB-B-07,Academic Block B,2026-09-24T21:00:00,91.47,83.95,2.5,Thursday,15,Paper,37.05,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-08T13:00:00,100,99.65,2.0,Tuesday,7,Paper,42.49,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-07T03:00:00,59.49,63.49,2.5,Monday,21,Paper,54.29,No,No Overflow
+CAN-08,Canteen,2026-10-01T00:00:00,100,100,11.76,Thursday,18,Mixed,70.33,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-08T19:00:00,100,100,4.4,Tuesday,13,Organic,63.49,Yes,Overflowed
+CAN-09,Canteen,2026-09-03T22:00:00,100,100,8.4,Thursday,16,Mixed,63.71,Yes,Overflowed
+CA-04,Common Area,2026-09-02T15:00:00,100,100,3.3,Wednesday,9,Plastic,46.02,Yes,Overflowed
+AB-A-03,Academic Block A,2026-09-13T14:00:00,100,96.35,0.9,Sunday,8,Paper,49.79,Yes,Overflowed
+CAN-06,Canteen,2026-09-28T17:00:00,100,100,11.76,Monday,11,Mixed,62.89,Yes,Overflowed
+AB-A-01,Academic Block A,2026-09-12T16:00:00,100,100,0.9,Saturday,10,Paper,39.25,Yes,Overflowed
+CAN-04,Canteen,2026-09-20T16:00:00,100,100,9.1,Sunday,10,Mixed,65.35,Yes,Overflowed
+HB2-06,Hostel Block 2,2026-09-26T01:00:00,100,93.85,5.13,Saturday,19,Organic,53.52,Yes,Overflowed
+CAN-05,Canteen,2026-09-26T16:00:00,100,100,9.1,Saturday,10,Mixed,59.71,Yes,Overflowed
+AB-A-02,Academic Block A,2026-09-08T21:00:00,100,95.94,2.0,Tuesday,15,Paper,40.24,Yes,Overflowed
+CA-03,Common Area,2026-09-01T18:00:00,100,100,3.3,Tuesday,12,Plastic,42.03,Yes,Overflowed
+CA-01,Common Area,2026-09-25T00:00:00,97.7,98.53,3.3,Friday,18,Plastic,47.54,Yes,Overflowed
+AB-B-08,Academic Block B,2026-09-14T20:00:00,100,100,2.5,Monday,14,Paper,54.3,Yes,Overflowed
+AB-B-02,Academic Block B,2026-09-23T17:00:00,67.89,59.49,2.5,Wednesday,11,Paper,38.67,No,No Overflow
+CA-04,Common Area,2026-09-28T21:00:00,100,100,3.3,Monday,15,Plastic,49.44,Yes,Overflowed
+HB2-04,Hostel Block 2,2026-09-24T14:00:00,100,100,5.64,Thursday,8,Organic,60.45,Yes,Overflowed
+LIB-05,Library,2026-09-27T19:00:00,38.79,36.94,0.9,Sunday,13,Paper,29.35,No,No Overflow
+HB2-02,Hostel Block 2,2026-09-22T15:00:00,100,100,4.18,Tuesday,9,Organic,54.26,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-10-01T01:00:00,100,100,5.94,Thursday,19,Organic,54.07,Yes,Overflowed
+HB1-05,Hostel Block 1,2026-09-11T20:00:00,98.45,100,4.4,Friday,14,Organic,51.9,Yes,Overflowed
+AB-B-05,Academic Block B,2026-09-06T01:00:00,48.61,52.96,1.12,Sunday,19,Paper,50.86,No,No Overflow
+AB-A-07,Academic Block A,2026-09-06T20:00:00,30.96,31.37,0.9,Sunday,14,Paper,42.39,No,No Overflow
+HB2-09,Hostel Block 2,2026-09-13T01:00:00,100,100,5.13,Sunday,19,Organic,53.74,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-28T14:00:00,100,100,5.94,Monday,8,Organic,48.63,Yes,Overflowed
+HB1-04,Hostel Block 1,2026-09-28T00:00:00,99.5,100,5.94,Monday,18,Organic,59.54,Yes,Overflowed
+CAN-10,Canteen,2026-09-28T18:00:00,100,100,11.76,Monday,12,Mixed,59.67,Yes,Overflowed
+CA-08,Common Area,2026-09-12T19:00:00,100,96.74,2.64,Saturday,13,Plastic,51.24,Yes,Overflowed
+HB1-01,Hostel Block 1,2026-09-27T15:00:00,100,100,4.0,Sunday,9,Organic,47.56,Yes,Overflowed
+HB2-03,Hostel Block 2,2026-09-19T00:00:00,99.46,100,5.13,Saturday,18,Organic,59.9,Yes,Overflowed
+AB-A-07,Academic Block A,2026-09-27T01:00:00,25.03,30.96,0.9,Sunday,19,Paper,36.52,No,No Overflow
+CAN-10,Canteen,2026-09-25T16:00:00,100,100,8.4,Friday,10,Mixed,59.35,Yes,Overflowed
+HB1-08,Hostel Block 1,2026-09-22T23:00:00,36.61,38.03,4.4,Tuesday,17,Organic,63.88,No,No Overflow
+LIB-02,Library,2026-09-10T03:00:00,95.47,100,2.16,Thursday,21,Paper,42.63,Yes,Overflowed
+AB-A-05,Academic Block A,2026-09-08T03:00:00,35.34,29.01,2.0,Tuesday,21,Paper,45.63,No,No Overflow
+AB-A-06,Academic Block A,2026-09-30T02:00:00,49.06,49.42,2.0,Wednesday,20,Paper,48.93,No,No Overflow
+AB-A-03,Academic Block A,2026-09-15T13:00:00,100,100,2.0,Tuesday,7,Paper,37.02,Yes,Overflowed
+CAN-09,Canteen,2026-09-24T19:00:00,100,100,11.76,Thursday,13,Mixed,65.93,Yes,Overflowed
+HB2-02,Hostel Block 2,2026-09-06T18:00:00,99.42,100,3.8,Sunday,12,Organic,53.86,Yes,Overflowed
+HB1-02,Hostel Block 1,2026-09-16T03:00:00,91.15,83.61,5.94,Wednesday,21,Organic,49.68,Yes,Overflowed
+LIB-04,Library,2026-09-08T23:00:00,46.55,45.62,2.16,Tuesday,17,Paper,33.31,No,No Overflow
+HB2-10,Hostel Block 2,2026-09-16T13:00:00,100,100,5.64,Wednesday,7,Organic,51.58,Yes,Overflowed
+HB2-01,Hostel Block 2,2026-09-07T23:00:00,100,99.84,4.18,Monday,17,Organic,65.92,Yes,Overflowed
+LIB-05,Library,2026-09-26T21:00:00,46.54,38.79,0.9,Saturday,15,Paper,42.31,No,No Overflow
+CAN-07,Canteen,2026-09-23T18:00:00,100,100,11.76,Wednesday,12,Mixed,65.63,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-09-30T22:00:00,67.12,64.28,4.4,Wednesday,16,Organic,56.04,No,No Overflow
+AB-B-04,Academic Block B,2026-09-01T18:00:00,34.75,38.84,2.5,Tuesday,12,Paper,47.75,No,No Overflow
+CAN-08,Canteen,2026-09-25T17:00:00,100,100,11.76,Friday,11,Mixed,58.05,Yes,Overflowed
+HB2-08,Hostel Block 2,2026-09-13T01:00:00,100,100,5.13,Sunday,19,Organic,60.51,Yes,Overflowed
+AB-B-03,Academic Block B,2026-09-04T16:00:00,99.23,100,2.5,Friday,10,Paper,48.82,Yes,Overflowed
+CAN-09,Canteen,2026-09-27T03:00:00,100,100,9.1,Sunday,21,Mixed,70.27,Yes,Overflowed
+CA-07,Common Area,2026-09-08T22:00:00,100,100,3.3,Tuesday,16,Plastic,57.24,Yes,Overflowed
+HB1-07,Hostel Block 1,2026-10-01T02:00:00,68.49,67.12,5.94,Thursday,20,Organic,64.85,No,No Overflow
+AB-B-08,Academic Block B,2026-09-19T18:00:00,100,100,1.12,Saturday,12,Paper,51.51,Yes,Overflowed
+CA-05,Common Area,2026-09-19T13:00:00,52.92,52.36,2.64,Saturday,7,Plastic,54.66,No,No Overflow
+LIB-01,Library,2026-09-19T15:00:00,83.51,86.97,0.9,Saturday,9,Paper,38.14,Yes,Likely Overflow
+CAN-08,Canteen,2026-09-29T20:00:00,100,100,11.76,Tuesday,14,Mixed,66.76,Yes,Overflowed
