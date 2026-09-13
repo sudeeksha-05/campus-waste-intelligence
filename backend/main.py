@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 from backend.services.waste_service import (
     get_dashboard,
@@ -41,6 +41,7 @@ class PredictionInput(BaseModel):
 
 class AssistantInput(BaseModel):
     question: str
+    history: Optional[List[Dict[str, Any]]] = None
 
 
 @app.get("/api/dashboard")
@@ -88,7 +89,7 @@ def prediction(payload: PredictionInput):
 
 @app.post("/api/assistant")
 def assistant(payload: AssistantInput):
-    return {"answer": assistant_answer(payload.question)}
+    return {"answer": assistant_answer(payload.question, payload.history)}
 
 
 @app.get("/api/routes")

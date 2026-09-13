@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import {
   BarChart3,
   Bell,
@@ -14,7 +14,7 @@ import {
   CheckCircle2,
   LayoutDashboard,
   LineChart,
-  Map,
+  Map as MapIcon,
   LogOut,
   Menu,
   Radar,
@@ -26,6 +26,13 @@ import {
   AlertTriangle,
   Building2,
   MapPin,
+  Check,
+  Clock,
+  Compass,
+  Info,
+  ChevronRight,
+  ShieldCheck,
+  Navigation,
 } from 'lucide-react'
 import {
   CartesianGrid,
@@ -49,7 +56,7 @@ const navigation = [
   { label: 'Bin Monitoring', icon: Trash2, page: 'bins' },
   { label: 'Collection Priority', icon: AlertTriangle, page: 'priority' },
   { label: 'Analytics', icon: BarChart3, page: 'analytics' },
-  { label: 'Collection Routes', icon: Map, page: 'routes' },
+  { label: 'Collection Routes', icon: MapIcon, page: 'routes' },
   { label: 'AI Waste Assistant', icon: Bot, page: 'assistant' },
   { label: 'Reports', icon: ClipboardCheck, page: 'reports' },
   { label: 'Settings', icon: Settings, page: 'settings' },
@@ -921,80 +928,1087 @@ function RoutePage({ routes, priority }) {
   const [selectedStop, setSelectedStop] = useState(null)
   const [reviewOpen, setReviewOpen] = useState(false)
   const [routeStatus, setRouteStatus] = useState('Awaiting Approval')
+  const [filterLocation, setFilterLocation] = useState('All')
+  const [showAllStops, setShowAllStops] = useState(false)
+
+  // Derive route stops from routes API and priority data
   const routeIds = (routes?.route || []).filter((item) => item !== 'Depot')
-  const byId = new Map(priority.map((row) => [row.bin_id, row]))
-  const stops = routeIds.map((binId) => byId.get(binId)).filter(Boolean)
-  const highPriorityCount = stops.filter((row) => ['P1', 'P2'].includes(row.priority)).length
+  const byId = new Map((priority || []).map((row) => [row.bin_id, row]))
+  let stops = routeIds.map((binId) => byId.get(binId)).filter(Boolean)
+
+  // Fallback: If route API returns empty but priority has urgent bins
+  if (stops.length === 0 && (priority || []).length > 0) {
+    const urgentBins = priority.filter((b) => ['P1', 'P2'].includes(b.priority))
+    if (urgentBins.length > 0) {
+      stops = urgentBins
+    }
+  }
+
+  // Filtered stops by campus location
+  const filteredStops = filterLocation === 'All'
+    ? stops
+    : stops.filter((s) => s.location === filterLocation)
+
+  const displayedStops = showAllStops ? filteredStops : filteredStops.slice(0, 10)
+
+  // KPI calculations
+  const highPriorityCount = stops.filter(
+    (row) => ['P1', 'P2'].includes(row.priority) || row.predicted_risk === 'High Risk'
+  ).length
   const highestFill = stops.length ? Math.max(...stops.map((row) => row.current_fill_level)) : 0
-  const reasonFor = (row) => row.current_fill_level >= 95
-    ? `${row.bin_id} is prioritized because its fill level is critically high.`
-    : row.estimated_overflow_hours != null && row.estimated_overflow_hours <= 3
-      ? `${row.bin_id} is prioritized because its predicted overflow time is very short.`
-      : `${row.bin_id} is prioritized from its ${row.predicted_risk} prediction and ${row.priority} collection priority.`
+
+  // Dynamic reasoning generator (Requirement 4)
+  const reasonFor = (row) => {
+    if (!row) return ''
+    if (row.current_fill_level >= 95) {
+      return `${row.bin_id} is prioritized because its fill level is critically high (${row.current_fill_level.toFixed(1)}%).`
+    }
+    if (row.estimated_overflow_hours != null && row.estimated_overflow_hours <= 1.0) {
+      return `${row.bin_id} is prioritized because its predicted overflow time is very short (${row.estimated_overflow_hours.toFixed(1)} hours).`
+    }
+    if (row.estimated_overflow_hours != null && row.estimated_overflow_hours <= 3.0) {
+      return `${row.bin_id} is prioritized because it is projected to overflow within ${row.estimated_overflow_hours.toFixed(1)} hours.`
+    }
+    if (row.fill_rate >= 2.0) {
+      return `${row.bin_id} is prioritized due to rapid fill accumulation (${row.fill_rate.toFixed(2)}%/hr) and elevated overflow risk.`
+    }
+    if (row.predicted_risk === 'High Risk') {
+      return `${row.bin_id} is prioritized based on High Risk ML prediction and urgent ${row.priority} collection status.`
+    }
+    return `${row.bin_id} is prioritized from its ${row.priority} queue ranking and ${row.predicted_risk} ML classification.`
+  }
 
   const approve = () => setRouteStatus('Route Approved')
-  return <section className="page-section route-page">
-    <div className="section-title-row"><div><span className="section-label">Collection Routes • Simulated Sensor Data</span><h2>Smart Collection Routes</h2><div className="sub-title">AI-assisted prototype route recommendation for Spoorthy Engineering College. This is not real-time GPS navigation.</div></div><span className={`route-status ${routeStatus === 'Route Approved' ? 'approved' : ''}`}>{routeStatus}</span></div>
-    <div className="route-kpi-grid"><RouteKpi label="Bins in Recommended Route" value={stops.length} /><RouteKpi label="High Priority Bins" value={highPriorityCount} /><RouteKpi label="Highest Fill Level" value={`${highestFill.toFixed(1)}%`} /><RouteKpi label="Route Status" value={routeStatus} /></div>
-    {stops.length === 0 ? <div className="analytics-empty"><h3>No urgent collection route is currently recommended.</h3><p>The route is generated only when the priority engine returns collection candidates.</p></div> : <>
-      <div className="route-layout"><div className="route-list"><div className="route-list-title">Recommended stop sequence</div>{stops.map((row, idx) => <button className="route-stop-button" key={row.bin_id} onClick={() => setSelectedStop(row)}><span>{String(idx + 1).padStart(2, '0')}</span><div><strong>{row.bin_id}</strong><small>{row.location} • {row.current_fill_level.toFixed(1)}% full</small><small><b className="route-risk">{row.predicted_risk}</b> <b>{row.priority}</b> • Overflow: {overflowLabel(row.estimated_overflow_hours)}</small></div><ArrowRight size={16} /></button>)}</div><div className="route-card"><div className="route-card-title">Recommended Route</div><div className="route-card-text">{routes?.explanation || 'The route is derived from current collection-priority results. Human administrator approval is required.'}</div><div className="route-card-actions"><button className="primary-button" onClick={approve}>{routeStatus === 'Route Approved' ? 'Route Approved' : 'Approve Route'}</button><button className="secondary-button" onClick={() => setReviewOpen(true)}>Review Route</button></div>{routeStatus === 'Route Approved' && <div className="route-confirmation">Route approved by administrator.</div>}</div></div>
-      <div className="route-detail-grid"><section className="panel route-process"><div className="section-label">Decision flow</div><h2>How was this route generated?</h2><div className="route-process-steps">{['Analyze bin readings', 'Predict overflow risk', 'Rank collection priority', 'Select high-priority bins', 'Generate prototype route', 'Human administrator reviews route'].map((step, idx) => <div key={step}><span>{idx + 1}</span>{step}</div>)}</div><p>The route recommendation is generated from the collection-priority results. Bins with higher predicted overflow risk, higher fill levels and shorter estimated overflow times receive higher collection priority.</p></section><section className="panel"><div className="section-label">Explainability</div><h2>Why these bins?</h2><div className="route-reasons">{stops.slice(0, 5).map((row) => <p key={row.bin_id}>{reasonFor(row)}</p>)}</div></section></div>
-      <section className="prototype-route-map"><div><span className="section-label">Prototype campus route</span><h2>Campus stop overview</h2><p>Prototype campus route — not GPS navigation. Locations are shown as an ordered visual sequence, not geographic coordinates.</p></div><div className="route-map-track"><span className="map-depot">Depot</span>{stops.slice(0, 8).map((row, idx) => <div className="map-marker" key={row.bin_id}><span>{idx + 1}</span><small>{row.location}</small></div>)}</div></section>
-      <section className="route-notices"><div><strong>Prototype Data Notice</strong><span>This internship prototype uses simulated campus waste data representing Spoorthy Engineering College. In a real deployment, IoT sensors would send bin readings to the backend, where they would be processed by the prediction model before collection recommendations are generated.</span></div><div><strong>Future Enhancement</strong><span>Future versions can integrate GPS coordinates, road-network data and route-optimization algorithms to calculate more efficient vehicle routes across multiple campuses.</span></div></section>
-    </>}
-    {selectedStop && <RouteStopModal row={selectedStop} onClose={() => setSelectedStop(null)} />}
-    {reviewOpen && <RouteReviewModal stops={stops} onClose={() => setReviewOpen(false)} onApprove={() => { approve(); setReviewOpen(false) }} />}
-  </section>
+
+  const uniqueLocations = ['All', ...new Set(stops.map((s) => s.location))]
+
+  return (
+    <section className="page-section route-page">
+      {/* Header Row */}
+      <div className="section-title-row">
+        <div>
+          <span className="section-label">Collection Routes • AI Decision Support</span>
+          <h2>Smart Collection Routes</h2>
+          <div className="sub-title">
+            AI-assisted prototype route recommendation for Spoorthy Engineering College. This is not real-time GPS navigation.
+          </div>
+        </div>
+        <div className="route-header-status-wrap">
+          <span className={`route-status-pill ${routeStatus === 'Route Approved' ? 'approved' : 'pending'}`}>
+            {routeStatus === 'Route Approved' ? <CheckCircle2 size={14} /> : <Clock size={14} />}
+            <span>{routeStatus}</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Concept Pipeline Architecture Banner (Requirement 12) */}
+      <div className="route-pipeline-banner">
+        <div className="pipeline-header">
+          <span className="pipeline-dot"></span>
+          <span className="pipeline-title">AI Decision-Support Pipeline Architecture</span>
+        </div>
+        <div className="pipeline-flow">
+          <div className="pipeline-step">
+            <span className="step-tag">Step 1</span>
+            <div className="step-name">DATA</div>
+            <small>IoT Sensor Readings</small>
+          </div>
+          <div className="pipeline-arrow">↓</div>
+          <div className="pipeline-step">
+            <span className="step-tag">Step 2</span>
+            <div className="step-name">AI PREDICTION</div>
+            <small>ML Overflow Risk</small>
+          </div>
+          <div className="pipeline-arrow">↓</div>
+          <div className="pipeline-step">
+            <span className="step-tag">Step 3</span>
+            <div className="step-name">COLLECTION PRIORITY</div>
+            <small>Urgency Engine (P1-P4)</small>
+          </div>
+          <div className="pipeline-arrow">↓</div>
+          <div className="pipeline-step highlight">
+            <span className="step-tag">Step 4</span>
+            <div className="step-name">ROUTE RECOMMENDATION</div>
+            <small>AI-Assisted Prototype</small>
+          </div>
+          <div className="pipeline-arrow">↓</div>
+          <div className="pipeline-step">
+            <span className="step-tag">Step 5</span>
+            <div className="step-name">HUMAN APPROVAL</div>
+            <small>Administrator Sign-off</small>
+          </div>
+        </div>
+      </div>
+
+      {/* Requirement 1 - Route Summary KPI Cards */}
+      <div className="route-kpi-grid">
+        <RouteKpiCard
+          icon={<MapPin size={22} />}
+          label="Bins in Recommended Route"
+          value={stops.length}
+          badge="Active Stops"
+        />
+        <RouteKpiCard
+          icon={<AlertTriangle size={22} />}
+          label="High Priority Bins"
+          value={highPriorityCount}
+          badge="P1 / P2 Urgent"
+          variant="danger"
+        />
+        <RouteKpiCard
+          icon={<Trash2 size={22} />}
+          label="Highest Fill Level"
+          value={stops.length ? `${highestFill.toFixed(1)}%` : '0.0%'}
+          badge="Peak Capacity"
+          variant="warning"
+        />
+        <RouteKpiCard
+          icon={routeStatus === 'Route Approved' ? <CheckCircle2 size={22} /> : <Clock size={22} />}
+          label="Route Status"
+          value={routeStatus}
+          badge={routeStatus === 'Route Approved' ? 'Approved' : 'Awaiting Review'}
+          variant={routeStatus === 'Route Approved' ? 'success' : 'pending'}
+        />
+      </div>
+
+      {/* Requirement 6 - Approval Confirmation Message */}
+      {routeStatus === 'Route Approved' && (
+        <div className="route-approval-banner">
+          <div className="approval-banner-icon">
+            <CheckCircle2 size={24} />
+          </div>
+          <div className="approval-banner-content">
+            <strong>Route approved by administrator.</strong>
+            <span>
+              Human administrator review is complete. Route recommendation is verified for sanitation crew assignment.
+              In accordance with safety guidelines, vehicles are not automatically dispatched.
+            </span>
+          </div>
+          <button
+            className="secondary-button banner-reset-btn"
+            onClick={() => setRouteStatus('Awaiting Approval')}
+            title="Reset to Awaiting Approval for demonstration"
+          >
+            Reset Status
+          </button>
+        </div>
+      )}
+
+      {/* Requirement 9 - Empty State */}
+      {stops.length === 0 ? (
+        <div className="route-empty-card">
+          <ClipboardCheck size={52} className="empty-icon" />
+          <h3>No urgent collection route is currently recommended.</h3>
+          <p>
+            The collection priority engine has not identified any high-priority bins requiring urgent collection.
+            All monitored bins at Spoorthy Engineering College are operating within safe fill thresholds.
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Main Layout: Left = Route Stop Sequence List, Right = Recommendation Card & Actions */}
+          <div className="route-layout">
+            {/* Requirement 2 - Route List */}
+            <div className="route-list-container">
+              <div className="route-list-header">
+                <div>
+                  <div className="route-list-title">Recommended Stop Sequence</div>
+                  <div className="route-list-subtitle">
+                    Showing {displayedStops.length} of {filteredStops.length} recommended stops
+                  </div>
+                </div>
+                {uniqueLocations.length > 2 && (
+                  <div className="route-filter-select">
+                    <Filter size={14} />
+                    <select
+                      value={filterLocation}
+                      onChange={(e) => setFilterLocation(e.target.value)}
+                    >
+                      {uniqueLocations.map((loc) => (
+                        <option key={loc} value={loc}>
+                          {loc === 'All' ? 'All Locations' : loc}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+
+              <div className="route-stops-scroll">
+                {displayedStops.map((row, idx) => (
+                  <button
+                    className={`route-stop-card ${selectedStop?.bin_id === row.bin_id ? 'active-stop' : ''}`}
+                    key={row.bin_id}
+                    onClick={() => setSelectedStop(row)}
+                    title="Click to view full bin details and priority reasoning"
+                  >
+                    <div className="stop-number-badge">
+                      {String(idx + 1).padStart(2, '0')}
+                    </div>
+                    <div className="stop-main-info">
+                      <div className="stop-top-line">
+                        <strong className="stop-bin-id">{row.bin_id}</strong>
+                        <span className="stop-location-text">{row.location}</span>
+                      </div>
+                      <div className="stop-fill-row">
+                        <span className="stop-fill-text">{row.current_fill_level.toFixed(1)}% full</span>
+                        <div className="stop-fill-bar-mini">
+                          <i
+                            style={{
+                              width: `${Math.min(row.current_fill_level, 100)}%`,
+                              backgroundColor: row.current_fill_level >= 90 ? '#e05656' : row.current_fill_level >= 75 ? '#f7b267' : '#0b6b58',
+                            }}
+                          ></i>
+                        </div>
+                      </div>
+                      <div className="stop-badge-line">
+                        <span className={`risk-badge small ${row.predicted_risk.toLowerCase().replace(' ', '-')}`}>
+                          {row.predicted_risk}
+                        </span>
+                        <span className="priority-tag small">{row.priority}</span>
+                        <span className="stop-overflow-tag">
+                          Overflow: {overflowLabel(row.estimated_overflow_hours)}
+                        </span>
+                      </div>
+                    </div>
+                    <ChevronRight size={18} className="stop-chevron" />
+                  </button>
+                ))}
+              </div>
+
+              {filteredStops.length > 10 && (
+                <div className="route-list-footer">
+                  <button
+                    className="secondary-button small-button show-more-btn"
+                    onClick={() => setShowAllStops((prev) => !prev)}
+                  >
+                    {showAllStops ? 'Show top 10 stops' : `Show all ${filteredStops.length} stops`}
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Right Card: Decision Support & Route Action Controls (Requirements 5 & 6) */}
+            <div className="route-card-column">
+              <div className="route-card">
+                <div className="route-card-kicker">
+                  <span className="status-dot"></span> AI-Assisted Recommendation
+                </div>
+                <h3 className="route-card-title">Recommended Route</h3>
+                <p className="route-card-text">
+                  This route is an AI-assisted prototype route recommendation generated from ML overflow-risk predictions
+                  and collection prioritization for Spoorthy Engineering College. It does not guarantee a minimum-travel route
+                  or operational vehicle feasibility. The final collection dispatch must be reviewed and approved by the administrator.
+                </p>
+
+                <div className="route-quick-stats">
+                  <div className="quick-stat-item">
+                    <span>Starting Point</span>
+                    <strong>Central Depot</strong>
+                  </div>
+                  <div className="quick-stat-item">
+                    <span>Stops in Queue</span>
+                    <strong>{stops.length} bins</strong>
+                  </div>
+                  <div className="quick-stat-item">
+                    <span>Critical Bins (&ge;90%)</span>
+                    <strong>{stops.filter((s) => s.current_fill_level >= 90).length}</strong>
+                  </div>
+                  <div className="quick-stat-item">
+                    <span>Review Status</span>
+                    <strong className={routeStatus === 'Route Approved' ? 'text-success' : 'text-pending'}>
+                      {routeStatus}
+                    </strong>
+                  </div>
+                </div>
+
+                <div className="route-card-actions">
+                  <button
+                    className="secondary-button route-action-review"
+                    onClick={() => setReviewOpen(true)}
+                  >
+                    <Eye size={16} /> Review Route
+                  </button>
+                  <button
+                    className={`primary-button route-action-approve ${routeStatus === 'Route Approved' ? 'approved' : ''}`}
+                    onClick={approve}
+                  >
+                    {routeStatus === 'Route Approved' ? (
+                      <>
+                        <CheckCircle2 size={16} /> Route Approved
+                      </>
+                    ) : (
+                      <>
+                        <Check size={16} /> Approve Route
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {routeStatus === 'Route Approved' && (
+                  <div className="route-approved-pill">
+                    <CheckCircle2 size={16} /> Route approved by administrator. Ready for manual dispatch.
+                  </div>
+                )}
+              </div>
+
+              {/* Requirement 4 - Route Reasoning ("Why these bins?") */}
+              <section className="panel route-reasons-panel">
+                <div className="panel-head">
+                  <div>
+                    <span className="section-label">Explainable AI</span>
+                    <h2>Why these bins?</h2>
+                  </div>
+                </div>
+                <p className="route-reasons-intro">
+                  Dynamic statements generated from actual bin fill levels, fill rates, and ML predictions:
+                </p>
+                <div className="route-reasons-list">
+                  {stops.slice(0, 5).map((row, idx) => (
+                    <div
+                      className="route-reason-card"
+                      key={row.bin_id}
+                      onClick={() => setSelectedStop(row)}
+                      title="Click to view bin details"
+                    >
+                      <div className="reason-header">
+                        <span className="reason-stop-idx">#{String(idx + 1).padStart(2, '0')}</span>
+                        <strong className="reason-bin-id">{row.bin_id}</strong>
+                        <span className="reason-loc">{row.location}</span>
+                        <span className={`risk-badge mini ${row.predicted_risk.toLowerCase().replace(' ', '-')}`}>
+                          {row.predicted_risk}
+                        </span>
+                        <span className="priority-tag mini">{row.priority}</span>
+                      </div>
+                      <p className="reason-text">{reasonFor(row)}</p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+            </div>
+          </div>
+
+          {/* Requirement 3 - AI Route Explanation */}
+          <section className="panel route-explanation-panel">
+            <div className="panel-head">
+              <div>
+                <span className="section-label">Decision Workflow</span>
+                <h2>How was this route generated?</h2>
+              </div>
+            </div>
+
+            <div className="route-process-stepper">
+              <div className="process-step-item">
+                <span className="process-step-num">1</span>
+                <strong className="process-step-title">Analyze bin readings</strong>
+                <p className="process-step-sub">Evaluates current fill level, fill rate, and historical volume trends.</p>
+              </div>
+              <div className="process-step-item">
+                <span className="process-step-num">2</span>
+                <strong className="process-step-title">Predict overflow risk</strong>
+                <p className="process-step-sub">ML Decision Tree classifier predicts overflow likelihood (High, Medium, Low).</p>
+              </div>
+              <div className="process-step-item">
+                <span className="process-step-num">3</span>
+                <strong className="process-step-title">Rank collection priority</strong>
+                <p className="process-step-sub">Priority Engine assigns urgency classes (P1 to P4) based on risk and overflow time.</p>
+              </div>
+              <div className="process-step-item">
+                <span className="process-step-num">4</span>
+                <strong className="process-step-title">Select high-priority bins</strong>
+                <p className="process-step-sub">Filters urgent bins requiring prompt collection (P1 & P2 candidates).</p>
+              </div>
+              <div className="process-step-item">
+                <span className="process-step-num">5</span>
+                <strong className="process-step-title">Generate prototype route</strong>
+                <p className="process-step-sub">Sequences high-priority bins from Central Depot using campus proximity order.</p>
+              </div>
+              <div className="process-step-item">
+                <span className="process-step-num">6</span>
+                <strong className="process-step-title">Human administrator reviews route</strong>
+                <p className="process-step-sub">Supervisor inspects stops and approves recommendation before dispatch.</p>
+              </div>
+            </div>
+
+            <div className="route-explanation-callout">
+              <Info size={22} className="callout-icon" />
+              <div>
+                <p className="callout-primary-text">
+                  “The route recommendation is generated from the collection-priority results. Bins with higher predicted overflow risk, higher fill levels and shorter estimated overflow times receive higher collection priority.”
+                </p>
+                <p className="callout-secondary-text">
+                  Note: This route is an AI-assisted decision support recommendation and does not claim to be a guaranteed shortest path or municipal routing system.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* Requirement 7 - Prototype Campus Map */}
+          <section className="panel prototype-campus-map-panel">
+            <div className="panel-head map-panel-head">
+              <div>
+                <span className="section-label">Campus Schematic Visualization</span>
+                <h2>Campus Stop Overview</h2>
+                <div className="map-disclaimer-pill">
+                  <MapPin size={14} />
+                  <span>Prototype campus route — not GPS navigation.</span>
+                </div>
+              </div>
+              <div className="map-legend-strip">
+                <div className="legend-entry">
+                  <span className="legend-dot depot"></span> Depot (Origin)
+                </div>
+                <div className="legend-entry">
+                  <span className="legend-dot high-risk"></span> High Risk Bin
+                </div>
+                <div className="legend-entry">
+                  <span className="legend-dot medium-risk"></span> Medium Risk Bin
+                </div>
+                <div className="legend-entry">
+                  <span className="legend-line"></span> Route Path
+                </div>
+              </div>
+            </div>
+            <p className="map-explanatory-note">
+              Locations use the existing Spoorthy Engineering College prototype coordinates. Stop markers indicate recommended visit sequence starting from Central Depot.
+            </p>
+
+            <div className="campus-map-wrapper">
+              <CampusRouteSvg stops={stops} onSelectStop={setSelectedStop} />
+            </div>
+          </section>
+
+          {/* Requirements 10 & 11 - Transparency & Future Extension */}
+          <section className="route-notices-container">
+            <div className="route-notice-card">
+              <div className="notice-head">
+                <Info size={18} className="notice-icon" />
+                <strong>Prototype Data Notice</strong>
+              </div>
+              <p>
+                This internship prototype uses simulated campus waste data representing Spoorthy Engineering College. In a real deployment, IoT sensors would send bin readings to the backend, where they would be processed by the prediction model before collection recommendations are generated.
+              </p>
+            </div>
+
+            <div className="route-notice-card">
+              <div className="notice-head">
+                <Compass size={18} className="notice-icon" />
+                <strong>Future Enhancement</strong>
+              </div>
+              <p>
+                Future versions can integrate GPS coordinates, road-network data and route-optimization algorithms to calculate more efficient vehicle routes across multiple campuses.
+              </p>
+            </div>
+          </section>
+        </>
+      )}
+
+      {/* Requirement 2 - Route Stop Detail Panel/Modal */}
+      {selectedStop && (
+        <RouteStopModal
+          row={selectedStop}
+          reason={reasonFor(selectedStop)}
+          onClose={() => setSelectedStop(null)}
+        />
+      )}
+
+      {/* Requirement 5 - Review Route Modal */}
+      {reviewOpen && (
+        <RouteReviewModal
+          stops={stops}
+          status={routeStatus}
+          onClose={() => setReviewOpen(false)}
+          onApprove={() => {
+            approve()
+            setReviewOpen(false)
+          }}
+        />
+      )}
+    </section>
+  )
 }
 
-function RouteKpi({ label, value }) { return <div className="route-kpi"><span>{label}</span><strong>{value}</strong></div> }
+function RouteKpiCard({ icon, label, value, badge, variant = 'default' }) {
+  return (
+    <div className={`route-kpi-card ${variant}`}>
+      <div className="route-kpi-top">
+        <span className="route-kpi-icon">{icon}</span>
+        {badge && <span className="route-kpi-badge">{badge}</span>}
+      </div>
+      <div className="route-kpi-number">{value}</div>
+      <div className="route-kpi-title">{label}</div>
+    </div>
+  )
+}
 
-function RouteStopModal({ row, onClose }) { return <div className="priority-modal-backdrop" onClick={onClose}><div className="priority-modal" onClick={(event) => event.stopPropagation()}><div className="panel-head"><div><span className="section-label">Route stop detail</span><h2>{row.bin_id}</h2></div><button className="icon-button" onClick={onClose}>×</button></div><div className="priority-detail-grid"><div><span>Location</span><strong>{row.location}</strong></div><div><span>Current fill</span><strong>{row.current_fill_level.toFixed(1)}%</strong></div><div><span>Fill rate</span><strong>{row.fill_rate.toFixed(2)}% / hour</strong></div><div><span>Predicted risk</span><strong>{row.predicted_risk}</strong></div><div><span>Priority</span><strong>{row.priority}</strong></div><div><span>Estimated overflow</span><strong>{overflowLabel(row.estimated_overflow_hours)}</strong></div><div><span>Waste type</span><strong>{row.waste_type}</strong></div><div><span>Timestamp</span><strong>{row.timestamp}</strong></div></div><p className="priority-explanation">{row.priority_explanation}</p></div></div> }
+function RouteStopModal({ row, reason, onClose }) {
+  return (
+    <div className="priority-modal-backdrop" onClick={onClose}>
+      <div className="priority-modal route-stop-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="panel-head">
+          <div>
+            <span className="section-label">Route Stop Inspection</span>
+            <h2>{row.bin_id}</h2>
+          </div>
+          <button className="icon-button" onClick={onClose}>×</button>
+        </div>
 
-function RouteReviewModal({ stops, onClose, onApprove }) { return <div className="priority-modal-backdrop" onClick={onClose}><div className="priority-modal route-review-modal" onClick={(event) => event.stopPropagation()}><div className="panel-head"><div><span className="section-label">Human review</span><h2>Review Route</h2></div><button className="icon-button" onClick={onClose}>×</button></div><p className="sub-title">Recommended stops are generated from the existing collection-priority results.</p><div className="review-route-list">{stops.map((row, idx) => <div key={row.bin_id}><strong>{String(idx + 1).padStart(2, '0')} {row.bin_id}</strong><span>{row.priority} • {row.predicted_risk} • {row.current_fill_level.toFixed(1)}% • {overflowLabel(row.estimated_overflow_hours)}</span></div>)}</div><button className="primary-button" onClick={onApprove}>Approve Route</button></div></div> }
+        <div className="priority-detail-grid">
+          <div>
+            <span>Bin ID</span>
+            <strong>{row.bin_id}</strong>
+          </div>
+          <div>
+            <span>Location</span>
+            <strong>{row.location}</strong>
+          </div>
+          <div>
+            <span>Current Fill</span>
+            <strong>{row.current_fill_level.toFixed(1)}% full</strong>
+          </div>
+          <div>
+            <span>Fill Rate</span>
+            <strong>{row.fill_rate.toFixed(2)}% / hour</strong>
+          </div>
+          <div>
+            <span>Predicted Risk</span>
+            <strong className={row.predicted_risk === 'High Risk' ? 'text-danger' : 'text-warning'}>
+              {row.predicted_risk}
+            </strong>
+          </div>
+          <div>
+            <span>Priority</span>
+            <strong>{row.priority}</strong>
+          </div>
+          <div>
+            <span>Estimated Overflow</span>
+            <strong>{overflowLabel(row.estimated_overflow_hours)}</strong>
+          </div>
+          <div>
+            <span>Waste Type</span>
+            <strong>{row.waste_type}</strong>
+          </div>
+        </div>
+
+        <div className="modal-reason-box">
+          <span className="modal-reason-label">Why this bin was prioritized:</span>
+          <p className="modal-reason-text">{reason || row.priority_explanation}</p>
+        </div>
+
+        <div className="modal-bottom-actions">
+          <button className="primary-button" onClick={onClose}>Done</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function RouteReviewModal({ stops, status, onClose, onApprove }) {
+  return (
+    <div className="priority-modal-backdrop" onClick={onClose}>
+      <div className="priority-modal route-review-modal" onClick={(e) => e.stopPropagation()}>
+        <div className="panel-head">
+          <div>
+            <span className="section-label">Administrator Pre-Approval Inspection</span>
+            <h2>Review Route Recommendation</h2>
+          </div>
+          <button className="icon-button" onClick={onClose}>×</button>
+        </div>
+
+        <p className="sub-title">
+          Recommended stops are generated from the existing collection-priority results. Inspect candidate stops, predicted risks, and fill levels before approving the route.
+        </p>
+
+        <div className="review-summary-ribbon">
+          <div><span>Total Stops:</span><strong>{stops.length} bins</strong></div>
+          <div><span>P1 / P2 Urgent:</span><strong>{stops.filter((s) => ['P1', 'P2'].includes(s.priority)).length}</strong></div>
+          <div><span>Peak Fill:</span><strong>{stops.length ? Math.max(...stops.map((s) => s.current_fill_level)).toFixed(1) + '%' : '0%'}</strong></div>
+          <div><span>Status:</span><strong className={status === 'Route Approved' ? 'text-success' : 'text-pending'}>{status}</strong></div>
+        </div>
+
+        <div className="review-table-container">
+          <table className="review-stops-table">
+            <thead>
+              <tr>
+                <th>Stop #</th>
+                <th>Bin ID</th>
+                <th>Location</th>
+                <th>Priority</th>
+                <th>Predicted Risk</th>
+                <th>Fill Level</th>
+                <th>Estimated Overflow</th>
+              </tr>
+            </thead>
+            <tbody>
+              {stops.map((row, idx) => (
+                <tr key={row.bin_id}>
+                  <td>
+                    <span className="review-stop-pill">{String(idx + 1).padStart(2, '0')}</span>
+                  </td>
+                  <td><strong>{row.bin_id}</strong></td>
+                  <td>{row.location}</td>
+                  <td>
+                    <span className="priority-tag small">{row.priority}</span>
+                  </td>
+                  <td>
+                    <span className={`risk-badge small ${row.predicted_risk.toLowerCase().replace(' ', '-')}`}>
+                      {row.predicted_risk}
+                    </span>
+                  </td>
+                  <td>
+                    <strong>{row.current_fill_level.toFixed(1)}%</strong>
+                  </td>
+                  <td>{overflowLabel(row.estimated_overflow_hours)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="modal-bottom-actions space-between">
+          <button className="secondary-button" onClick={onClose}>Close Inspection</button>
+          <button
+            className={`primary-button ${status === 'Route Approved' ? 'approved' : ''}`}
+            onClick={onApprove}
+          >
+            {status === 'Route Approved' ? (
+              <>
+                <CheckCircle2 size={16} /> Route Already Approved
+              </>
+            ) : (
+              <>
+                <Check size={16} /> Approve Route
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function CampusRouteSvg({ stops, onSelectStop }) {
+  // Spoorthy Engineering College campus zones matching backend prototype coordinates
+  const CAMPUS_ZONES = [
+    { id: 'Depot', name: 'Central Depot', sub: 'Start / Dispatch', x: 60, y: 310, w: 125, h: 58, isDepot: true },
+    { id: 'Library', name: 'Library', sub: 'Academic Resource', x: 195, y: 225, w: 115, h: 58 },
+    { id: 'Academic Block A', name: 'Academic Block A', sub: 'Classrooms & Labs', x: 50, y: 135, w: 135, h: 58 },
+    { id: 'Academic Block B', name: 'Academic Block B', sub: 'Classrooms & Faculty', x: 210, y: 135, w: 135, h: 58 },
+    { id: 'Common Area', name: 'Common Area', sub: 'Student Plaza', x: 380, y: 165, w: 125, h: 58 },
+    { id: 'Canteen', name: 'Canteen', sub: 'Food Court', x: 535, y: 250, w: 125, h: 58 },
+    { id: 'Hostel Block 1', name: 'Hostel Block 1', sub: 'Student Residence 1', x: 325, y: 45, w: 135, h: 58 },
+    { id: 'Hostel Block 2', name: 'Hostel Block 2', sub: 'Student Residence 2', x: 485, y: 45, w: 135, h: 58 },
+  ]
+
+  // Map each zone to its bins in the route
+  const zoneStopsMap = {}
+  stops.forEach((stop, index) => {
+    const loc = stop.location
+    if (!zoneStopsMap[loc]) zoneStopsMap[loc] = []
+    zoneStopsMap[loc].push({ ...stop, stopNum: index + 1 })
+  })
+
+  // Centers for route path drawing
+  const centers = {
+    'Depot': { x: 122, y: 339 },
+    'Library': { x: 252, y: 254 },
+    'Academic Block A': { x: 117, y: 164 },
+    'Academic Block B': { x: 277, y: 164 },
+    'Common Area': { x: 442, y: 194 },
+    'Hostel Block 2': { x: 552, y: 74 },
+    'Hostel Block 1': { x: 392, y: 74 },
+    'Canteen': { x: 597, y: 279 },
+  }
+
+  // Prototype route visit sequence among unique zones
+  const routePathPoints = [
+    centers['Depot'],
+    centers['Library'],
+    centers['Academic Block A'],
+    centers['Academic Block B'],
+    centers['Common Area'],
+    centers['Hostel Block 2'],
+    centers['Hostel Block 1'],
+    centers['Canteen'],
+  ]
+
+  const pathString = routePathPoints.map((pt, i) => `${i === 0 ? 'M' : 'L'} ${pt.x} ${pt.y}`).join(' ')
+
+  return (
+    <div className="campus-svg-container">
+      <svg viewBox="0 0 710 410" className="campus-schematic-svg">
+        <defs>
+          <linearGradient id="depotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#102b22" />
+            <stop offset="100%" stopColor="#194838" />
+          </linearGradient>
+          <linearGradient id="zoneGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="100%" stopColor="#f4faf3" />
+          </linearGradient>
+          <filter id="boxShadow" x="-5%" y="-5%" width="115%" height="120%">
+            <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#102b22" floodOpacity="0.08" />
+          </filter>
+        </defs>
+
+        {/* Campus Terrain Background */}
+        <rect x="0" y="0" width="710" height="410" rx="14" fill="#f4faf4" />
+
+        {/* Decorative campus grid roads / walkways */}
+        <line x1="40" y1="200" x2="670" y2="200" stroke="#e1ede1" strokeWidth="20" strokeLinecap="round" />
+        <line x1="250" y1="30" x2="250" y2="380" stroke="#e1ede1" strokeWidth="18" strokeLinecap="round" />
+        <line x1="510" y1="30" x2="510" y2="380" stroke="#e1ede1" strokeWidth="18" strokeLinecap="round" />
+
+        {/* Route Path connecting locations */}
+        <path
+          d={pathString}
+          fill="none"
+          stroke="#0b6b58"
+          strokeWidth="3.5"
+          strokeDasharray="7 5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          opacity="0.85"
+        />
+
+        {/* Campus Buildings */}
+        {CAMPUS_ZONES.map((zone) => {
+          const zoneStops = zoneStopsMap[zone.id] || []
+          const hasStops = zoneStops.length > 0
+          const firstStopNum = hasStops ? zoneStops[0].stopNum : null
+          const hasHighRisk = zoneStops.some((s) => s.predicted_risk === 'High Risk')
+
+          return (
+            <g
+              key={zone.id}
+              className={`campus-zone-group ${hasStops ? 'has-stops' : ''}`}
+              onClick={() => {
+                if (hasStops) onSelectStop(zoneStops[0])
+              }}
+              style={{ cursor: hasStops ? 'pointer' : 'default' }}
+            >
+              {/* Building Card */}
+              <rect
+                x={zone.x}
+                y={zone.y}
+                width={zone.w}
+                height={zone.h}
+                rx="10"
+                fill={zone.isDepot ? 'url(#depotGrad)' : 'url(#zoneGrad)'}
+                stroke={zone.isDepot ? '#0b6b58' : hasHighRisk ? '#e05656' : hasStops ? '#8ab7a5' : '#cfe0d2'}
+                strokeWidth={hasHighRisk ? 2 : 1.2}
+                filter="url(#boxShadow)"
+              />
+
+              {/* Building Titles */}
+              <text
+                x={zone.x + 10}
+                y={zone.y + 22}
+                fill={zone.isDepot ? '#eefcf4' : '#123c2d'}
+                fontSize="11"
+                fontWeight="800"
+                fontFamily="Inter, sans-serif"
+              >
+                {zone.name}
+              </text>
+              <text
+                x={zone.x + 10}
+                y={zone.y + 38}
+                fill={zone.isDepot ? '#b9e9b2' : '#68816d'}
+                fontSize="9"
+                fontWeight="600"
+                fontFamily="Inter, sans-serif"
+              >
+                {hasStops ? `${zoneStops.length} bin stop${zoneStops.length > 1 ? 's' : ''}` : zone.sub}
+              </text>
+
+              {/* Stop Sequence Marker on building */}
+              {hasStops && (
+                <g transform={`translate(${zone.x + zone.w - 14}, ${zone.y + 12})`}>
+                  <circle
+                    cx="0"
+                    cy="0"
+                    r="11"
+                    fill={hasHighRisk ? '#e05656' : '#0b6b58'}
+                    stroke="#ffffff"
+                    strokeWidth="2"
+                  />
+                  <text
+                    x="0"
+                    y="3.5"
+                    fill="#ffffff"
+                    fontSize="9"
+                    fontWeight="800"
+                    textAnchor="middle"
+                    fontFamily="Inter, sans-serif"
+                  >
+                    {firstStopNum}
+                  </text>
+                </g>
+              )}
+
+              {/* Depot badge */}
+              {zone.isDepot && (
+                <g transform={`translate(${zone.x + zone.w - 14}, ${zone.y + 12})`}>
+                  <circle cx="0" cy="0" r="10" fill="#2bd48d" stroke="#ffffff" strokeWidth="2" />
+                  <text x="0" y="3.5" fill="#102b22" fontSize="9" fontWeight="900" textAnchor="middle">
+                    0
+                  </text>
+                </g>
+              )}
+            </g>
+          )
+        })}
+      </svg>
+    </div>
+  )
+}
+
+const ASSISTANT_EXAMPLE_CHIPS = [
+  'Which bins need immediate collection?',
+  'How many bins are high risk?',
+  'Why is HB1-02 high risk?',
+  'Which location needs attention?',
+  'How should plastic waste be handled?',
+  'How should e-waste be handled?',
+]
+
+function FormattedAssistantText({ text }) {
+  if (!text) return null
+  const lines = text.split('\n')
+  return (
+    <div className="formatted-assistant-text">
+      {lines.map((line, idx) => {
+        const trimmed = line.trim()
+        if (!trimmed) {
+          return <div key={idx} className="msg-spacer" />
+        }
+        if (trimmed.startsWith('### ')) {
+          return <h4 key={idx} className="msg-heading">{trimmed.replace(/^###\s+/, '')}</h4>
+        }
+        if (trimmed.startsWith('**') && trimmed.endsWith('**') && !trimmed.slice(2, -2).includes('**')) {
+          return <p key={idx} className="msg-lead"><strong>{trimmed.slice(2, -2)}</strong></p>
+        }
+        const isBullet = trimmed.startsWith('•') || trimmed.startsWith('- ') || trimmed.startsWith('* ')
+        const bulletText = isBullet ? trimmed.replace(/^[•\-\*]\s*/, '') : trimmed
+
+        const renderInline = (str) => {
+          const parts = str.split(/(\*\*.*?\*\*|\*.*?\*)/g)
+          return parts.map((part, pIdx) => {
+            if (part.startsWith('**') && part.endsWith('**')) {
+              return <strong key={pIdx}>{part.slice(2, -2)}</strong>
+            }
+            if (part.startsWith('*') && part.endsWith('*')) {
+              return <em key={pIdx}>{part.slice(1, -1)}</em>
+            }
+            return part
+          })
+        }
+
+        if (isBullet) {
+          return (
+            <div key={idx} className="msg-bullet-item">
+              <span className="bullet-dot">•</span>
+              <div className="bullet-content">{renderInline(bulletText)}</div>
+            </div>
+          )
+        }
+
+        return <p key={idx} className="msg-paragraph">{renderInline(trimmed)}</p>
+      })}
+    </div>
+  )
+}
 
 function AssistantPage() {
-  const [question, setQuestion] = useState('Which bins need immediate collection?')
-  const [answer, setAnswer] = useState('Assistant: Based on the model prediction and priority scoring engine:')
+  const [messages, setMessages] = useState([
+    {
+      id: 'welcome',
+      role: 'assistant',
+      text: "### Welcome to AI Waste Assistant\nConfigured for **Spoorthy Engineering College**.\n\nI can assist you with:\n• **Current Telemetry & Urgent Bins:** Real-time fill levels and bins closest to overflow\n• **ML Risk Prediction:** High/medium/low overflow risk classifications based on sensor trends\n• **Collection Prioritization:** Transparent P1-P4 priority scoring engine recommendations\n• **Campus Waste Protocols:** Grounded RAG handling guidelines from our campus knowledge base\n\nClick any suggested question below or type your question to begin.",
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    },
+  ])
+  const [input, setInput] = useState('')
   const [loading, setLoading] = useState(false)
+  const messagesEndRef = useRef(null)
 
-  const ask = async () => {
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  useEffect(() => {
+    scrollToBottom()
+  }, [messages, loading])
+
+  const handleSend = async (questionToSend) => {
+    const query = (questionToSend || input).trim()
+    if (!query || loading) return
+
+    const userMessage = {
+      id: Date.now().toString(),
+      role: 'user',
+      text: query,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+    }
+
+    const nextMessages = [...messages, userMessage]
+    setMessages(nextMessages)
+    setInput('')
     setLoading(true)
+
     try {
+      const historyPayload = nextMessages.map((m) => ({
+        role: m.role,
+        text: m.text,
+      }))
+
       const response = await fetch(`${API}/assistant`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question }),
+        body: JSON.stringify({
+          question: query,
+          history: historyPayload,
+        }),
       })
+
+      if (!response.ok) {
+        throw new Error(`Server returned ${response.status}`)
+      }
+
       const payload = await response.json()
-      setAnswer(payload.answer)
-    } catch (e) {
-      setAnswer('Unable to retrieve latest bin data.')
+      const assistantMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        text: payload.answer || 'No response generated.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      }
+      setMessages((prev) => [...prev, assistantMessage])
+    } catch (err) {
+      const errorMessage = {
+        id: (Date.now() + 1).toString(),
+        role: 'assistant',
+        text: 'Unable to retrieve current bin information. Please ensure the backend server is running.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      }
+      setMessages((prev) => [...prev, errorMessage])
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
+  }
+
+  const handleClear = () => {
+    setMessages([
+      {
+        id: 'welcome',
+        role: 'assistant',
+        text: "### Chat Reset\nHow can I help you with campus waste management or bin telemetry today?",
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      },
+    ])
   }
 
   return (
-    <section className="page-section">
+    <section className="page-section assistant-page-section">
       <div className="section-title-row">
         <div>
           <span className="section-label">AI Waste Assistant</span>
           <h2>AI Waste Assistant</h2>
-          <div className="sub-title">Ask questions about campus waste, bin risk, and collection priorities.</div>
+          <div className="sub-title">Ask questions about campus waste telemetry, ML overflow risk, and collection priorities.</div>
         </div>
+        <button
+          type="button"
+          className="secondary-button small-button reset-chat-btn"
+          onClick={handleClear}
+          title="Start a fresh conversation"
+        >
+          <RefreshCw size={13} style={{ marginRight: '6px' }} /> Clear Chat
+        </button>
       </div>
-      <div className="chatbox">
-        <div className="chat-bubble assistant-bubble">
-          <span className="assistant-label">Assistant</span>
-          <span>{answer}</span>
+
+      <div className="assistant-container">
+        {/* Suggested Example Questions */}
+        <div className="assistant-suggestions-bar">
+          <span className="suggestions-label">Example Questions:</span>
+          <div className="example-chips-grid">
+            {ASSISTANT_EXAMPLE_CHIPS.map((q, idx) => (
+              <button
+                key={idx}
+                type="button"
+                className="example-chip"
+                onClick={() => handleSend(q)}
+                disabled={loading}
+              >
+                {q}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="chat-bubble user-bubble">
-          <span className="user-label">You</span>
-          <span>{question}</span>
+
+        {/* Chat History Stream */}
+        <div className="assistant-chat-stream">
+          {messages.map((msg) => (
+            <div
+              key={msg.id}
+              className={`chat-bubble-wrapper ${msg.role === 'user' ? 'user-wrapper' : 'assistant-wrapper'}`}
+            >
+              <div className={`chat-bubble ${msg.role === 'user' ? 'user-bubble' : 'assistant-bubble'}`}>
+                <div className="bubble-header">
+                  <span className={msg.role === 'user' ? 'user-label' : 'assistant-label'}>
+                    {msg.role === 'user' ? 'You' : 'AI Assistant'}
+                  </span>
+                  {msg.timestamp && <span className="bubble-timestamp">{msg.timestamp}</span>}
+                </div>
+                {msg.role === 'user' ? (
+                  <div className="user-message-text">{msg.text}</div>
+                ) : (
+                  <FormattedAssistantText text={msg.text} />
+                )}
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="chat-bubble-wrapper assistant-wrapper">
+              <div className="chat-bubble assistant-bubble loading-bubble">
+                <div className="bubble-header">
+                  <span className="assistant-label">AI Assistant</span>
+                </div>
+                <div className="loading-dots">
+                  <span className="typing-dot"></span>
+                  <span className="typing-dot"></span>
+                  <span className="typing-dot"></span>
+                  <span className="loading-text">Analyzing telemetry and retrieving guidance...</span>
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
         </div>
+
+        {/* Input Bar */}
         <div className="chat-input-row">
-          <input value={question} onChange={(e) => setQuestion(e.target.value)} />
-          <button className="primary-button" onClick={ask}>{loading ? 'Thinking...' : 'Ask'}</button>
+          <input
+            type="text"
+            value={input}
+            placeholder="Ask about campus waste, bin risk, or collection priorities... (Press Enter to send)"
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                handleSend()
+              }
+            }}
+            disabled={loading}
+          />
+          <button
+            type="button"
+            className="primary-button"
+            onClick={() => handleSend()}
+            disabled={loading || !input.trim()}
+          >
+            {loading ? 'Thinking...' : 'Ask'}
+          </button>
         </div>
       </div>
     </section>

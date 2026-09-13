@@ -1,7 +1,7 @@
 import sys
 import pickle
 from pathlib import Path
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 import pandas as pd
 import numpy as np
@@ -234,8 +234,8 @@ def load_model():
         return pickle.load(f)
 
 
-def assistant_answer(question: str) -> str:
-    return process_user_question(question)
+def assistant_answer(question: str, history: Optional[List[Dict[str, Any]]] = None) -> str:
+    return process_user_question(question, history=history)
 
 
 def get_routes():
