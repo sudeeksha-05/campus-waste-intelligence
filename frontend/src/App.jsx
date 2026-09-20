@@ -33,6 +33,13 @@ import {
   ChevronRight,
   ShieldCheck,
   Navigation,
+  FileText,
+  Printer,
+  TrendingUp,
+  Layers,
+  Mail,
+  Sliders,
+  X,
 } from 'lucide-react'
 import {
   CartesianGrid,
@@ -98,6 +105,132 @@ function App() {
   const [selectedPriorityBin, setSelectedPriorityBin] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+
+  // System Settings & Notification Preferences (functional with localStorage persistence)
+  const [riskThreshold, setRiskThreshold] = useState(() => {
+    const saved = localStorage.getItem('campus_waste_risk_threshold')
+    return saved ? Number(saved) : 70
+  })
+  const [notificationPrefs, setNotificationPrefs] = useState(() => {
+    const saved = localStorage.getItem('campus_waste_notification_prefs')
+    return saved
+      ? JSON.parse(saved)
+      : {
+          emailAlerts: false,
+          highRiskAlerts: true,
+          overflowAlerts: true,
+          priorityAlerts: true,
+        }
+  })
+  const [readNotificationIds, setReadNotificationIds] = useState(() => {
+    const saved = localStorage.getItem('campus_waste_read_notifications')
+    return saved ? JSON.parse(saved) : []
+  })
+  const [clearedNotifications, setClearedNotifications] = useState(() => {
+    return localStorage.getItem('campus_waste_cleared_notifications') === 'true'
+  })
+
+  const updateRiskThreshold = (val) => {
+    const clamped = Math.min(100, Math.max(50, Number(val)))
+    setRiskThreshold(clamped)
+    localStorage.setItem('campus_waste_risk_threshold', String(clamped))
+  }
+
+  const updateNotificationPrefs = (updater) => {
+    setNotificationPrefs((prev) => {
+      const next = typeof updater === 'function' ? updater(prev) : { ...prev, ...updater }
+      localStorage.setItem('campus_waste_notification_prefs', JSON.stringify(next))
+      setClearedNotifications(false)
+      localStorage.setItem('campus_waste_cleared_notifications', 'false')
+      return next
+    })
+  }
+
+  const markNotificationRead = (id) => {
+    setReadNotificationIds((prev) => {
+      const next = [...new Set([...prev, id])]
+      localStorage.setItem('campus_waste_read_notifications', JSON.stringify(next))
+      return next
+    })
+  }
+
+  const markAllNotificationsRead = () => {
+    const allIds = activeNotifications.map((n) => n.id)
+    setReadNotificationIds(allIds)
+    localStorage.setItem('campus_waste_read_notifications', JSON.stringify(allIds))
+  }
+
+  const clearAllNotifications = () => {
+    setClearedNotifications(true)
+    localStorage.setItem('campus_waste_cleared_notifications', 'true')
+  }
+
+  // Dynamically generate real in-app notifications strictly from current project data & preferences
+  const activeNotifications = React.useMemo(() => {
+    if (clearedNotifications) return []
+    const list = []
+
+    if (notificationPrefs.highRiskAlerts && bins.length > 0) {
+      const highCount = bins.filter(
+        (b) => b.predicted_risk === 'High Risk' || (b.current_fill_level || 0) >= riskThreshold
+      ).length
+      if (highCount > 0) {
+        list.push({
+          id: 'alert-high-risk',
+          title: 'High-Risk Bins Detected',
+          message: `${highCount} bins are currently classified as High Risk (exceeding ${riskThreshold}% threshold).`,
+          time: 'Active Telemetry',
+          severity: 'high',
+        })
+      }
+    }
+
+    if (notificationPrefs.overflowAlerts && bins.length > 0) {
+      const overflowCount = bins.filter(
+        (b) =>
+          (b.current_fill_level || 0) >= 98 ||
+          (b.estimated_overflow_hours !== null && b.estimated_overflow_hours <= 1.0)
+      ).length
+      if (overflowCount > 0) {
+        list.push({
+          id: 'alert-overflow',
+          title: 'Imminent Overflow Warning',
+          message: `${overflowCount} bins are at critical capacity (fill >= 98% or estimated overflow < 1.0h).`,
+          time: 'Critical',
+          severity: 'critical',
+        })
+      }
+    }
+
+    if (notificationPrefs.priorityAlerts && priority.length > 0) {
+      const p1Count = priority.filter((p) => p.priority === 'P1').length
+      const p2Count = priority.filter((p) => p.priority === 'P2').length
+      if (p1Count > 0 || p2Count > 0) {
+        list.push({
+          id: 'alert-priority',
+          title: 'Immediate Collection Required',
+          message: `${p1Count} bins require immediate P1 dispatch and ${p2Count} bins require P2 priority collection.`,
+          time: 'Action Required',
+          severity: 'urgent',
+        })
+      }
+    }
+
+    // System Status
+    list.push({
+      id: 'system-online',
+      title: 'AI Decision System Online',
+      message: 'Decision Tree ML classifier and Collection Priority Engine are active for Spoorthy Engineering College.',
+      time: 'Operational',
+      severity: 'info',
+    })
+
+    return list
+  }, [bins, priority, riskThreshold, notificationPrefs, clearedNotifications])
+
+  const unreadNotificationsCount = activeNotifications.filter(
+    (n) => !readNotificationIds.includes(n.id)
+  ).length
 
   useEffect(() => {
     if (!auth) {
@@ -267,7 +400,19 @@ function App() {
         window.history.pushState({}, '', routeForPage(nextPage))
       }} onLogout={handleLogout} user={auth.user} />
       <main className="main-content">
-        <Header page={page} user={auth.user} onLogout={handleLogout} selectedCampus={selectedCampus} onCampusChange={setSelectedCampus} />
+        <Header
+          page={page}
+          user={auth.user}
+          onLogout={handleLogout}
+          selectedCampus={selectedCampus}
+          onCampusChange={setSelectedCampus}
+          notifications={activeNotifications}
+          unreadCount={unreadNotificationsCount}
+          readNotificationIds={readNotificationIds}
+          onMarkRead={markNotificationRead}
+          onMarkAllRead={markAllNotificationsRead}
+          onClearNotifications={clearAllNotifications}
+        />
         <div className="app-content">
           {error && <div className="error-banner">{error}</div>}
           {loading ? <LoadingSkeleton /> : null}
@@ -280,8 +425,27 @@ function App() {
           {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'analytics' && <AnalyticsPage locationData={locationData} trendData={trendData} riskData={riskData} bins={bins} onNavigateToBins={(location) => { setSelectedLocation(location); setPage('bins'); window.history.pushState({}, '', '/bins') }} />}
           {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'routes' && <RoutePage routes={routes} priority={priority} />}
           {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'assistant' && <AssistantPage />}
-          {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'reports' && <ReportsPage dashboard={dashboard} />}
-          {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'settings' && <SettingsPage />}
+          {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'reports' && (
+            <ReportsPage
+              dashboard={dashboard}
+              bins={bins}
+              priority={priority}
+              locationData={locationData}
+              trendData={trendData}
+              riskData={riskData}
+              kpis={kpis}
+              selectedCampus={selectedCampus}
+            />
+          )}
+          {!loading && !FUTURE_CAMPUSES.has(selectedCampus) && page === 'settings' && (
+            <SettingsPage
+              riskThreshold={riskThreshold}
+              onRiskThresholdChange={updateRiskThreshold}
+              notificationPrefs={notificationPrefs}
+              onNotificationPrefsChange={updateNotificationPrefs}
+              selectedCampus={selectedCampus}
+            />
+          )}
           {selectedPriorityBin && <PriorityDetailsModal row={selectedPriorityBin} status={collectionStatuses[selectedPriorityBin.bin_id] || 'Active'} onClose={() => setSelectedPriorityBin(null)} />}
         </div>
       </main>
@@ -521,7 +685,36 @@ function Sidebar({ page, setPage, onLogout, user }) {
   )
 }
 
-function Header({ page, user, onLogout, selectedCampus, onCampusChange }) {
+function Header({
+  page,
+  user,
+  onLogout,
+  selectedCampus,
+  onCampusChange,
+  notifications = [],
+  unreadCount = 0,
+  readNotificationIds = [],
+  onMarkRead,
+  onMarkAllRead,
+  onClearNotifications,
+}) {
+  const [showNotifications, setShowNotifications] = useState(false)
+  const notifRef = useRef(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (notifRef.current && !notifRef.current.contains(event.target)) {
+        setShowNotifications(false)
+      }
+    }
+    if (showNotifications) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showNotifications])
+
   return (
     <header className="topbar">
       <div className="left-top">
@@ -532,9 +725,123 @@ function Header({ page, user, onLogout, selectedCampus, onCampusChange }) {
         </div>
       </div>
       <div className="topbar-actions">
-        <label className="campus-selector"><Building2 size={16} /><span>Campus</span><select value={selectedCampus} onChange={(event) => onCampusChange(event.target.value)}>{CAMPUS_OPTIONS.map((campus) => <option key={campus} value={campus}>{campus}{campus !== ACTIVE_CAMPUS ? ' (Future)' : ''}</option>)}</select></label>
-        <div className="search-wrap"><Search size={15} /><input placeholder="Search" /></div>
-        <button className="icon-button"><Bell size={18} /></button>
+        <label className="campus-selector">
+          <Building2 size={16} />
+          <span>Campus</span>
+          <select value={selectedCampus} onChange={(event) => onCampusChange(event.target.value)}>
+            {CAMPUS_OPTIONS.map((campus) => (
+              <option key={campus} value={campus}>
+                {campus}{campus !== ACTIVE_CAMPUS ? ' (Future)' : ''}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="search-wrap">
+          <Search size={15} />
+          <input placeholder="Search" />
+        </div>
+
+        {/* Notifications Bell with unread counter and interactive dropdown */}
+        <div className="notifications-bell-container" ref={notifRef}>
+          <button
+            className={`icon-button bell-button ${showNotifications ? 'active' : ''}`}
+            onClick={() => setShowNotifications((prev) => !prev)}
+            title="System Notifications"
+            aria-label="System Notifications"
+          >
+            <Bell size={18} />
+            {unreadCount > 0 && (
+              <span className="bell-badge" title={`${unreadCount} unread alert${unreadCount > 1 ? 's' : ''}`}>
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {showNotifications && (
+            <div className="notifications-dropdown-menu">
+              <div className="notif-dropdown-header">
+                <div className="notif-dropdown-title-wrap">
+                  <span className="notif-dropdown-title">Notifications</span>
+                  {unreadCount > 0 ? (
+                    <span className="notif-unread-count-pill">{unreadCount} New</span>
+                  ) : (
+                    <span className="notif-all-caught-up">All read</span>
+                  )}
+                </div>
+                <div className="notif-dropdown-actions">
+                  {unreadCount > 0 && (
+                    <button
+                      className="notif-action-btn"
+                      onClick={onMarkAllRead}
+                      title="Mark all as read"
+                    >
+                      <Check size={13} /> Mark all read
+                    </button>
+                  )}
+                  {notifications.length > 0 && (
+                    <button
+                      className="notif-action-btn"
+                      onClick={onClearNotifications}
+                      title="Clear notifications"
+                    >
+                      <X size={13} /> Clear
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              <div className="notif-list-body">
+                {notifications.length === 0 ? (
+                  <div className="notif-empty-state">
+                    <CheckCircle2 size={30} className="notif-empty-icon" />
+                    <strong>All Caught Up</strong>
+                    <p>No active alerts. All campus bins are operating within standard parameters.</p>
+                  </div>
+                ) : (
+                  notifications.map((notif) => {
+                    const isRead = readNotificationIds.includes(notif.id)
+                    return (
+                      <div
+                        key={notif.id}
+                        className={`notif-item notif-${notif.severity} ${isRead ? 'read' : 'unread'}`}
+                        onClick={() => !isRead && onMarkRead && onMarkRead(notif.id)}
+                      >
+                        <div className="notif-item-top">
+                          <div className="notif-title-row">
+                            {!isRead && <span className="notif-unread-dot" />}
+                            <span className="notif-item-title">{notif.title}</span>
+                          </div>
+                          <span className={`notif-severity-badge severity-${notif.severity}`}>
+                            {notif.time}
+                          </span>
+                        </div>
+                        <p className="notif-item-message">{notif.message}</p>
+                        {!isRead && (
+                          <div className="notif-item-footer">
+                            <button
+                              className="notif-mark-read-link"
+                              onClick={(e) => {
+                                e.stopPropagation()
+                                onMarkRead && onMarkRead(notif.id)
+                              }}
+                            >
+                              Mark as read
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    )
+                  })
+                )}
+              </div>
+
+              <div className="notif-dropdown-footer">
+                <span className="notif-footer-note">Telemetry derived in real time from AI Decision Engine</span>
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="user-menu">
           <button className="user-chip"><User size={16} /> {user?.name || 'Admin'}</button>
           <button className="logout-chip" onClick={onLogout}>Logout</button>
@@ -2015,67 +2322,1154 @@ function AssistantPage() {
   )
 }
 
-function ReportsPage({ dashboard }) {
-  const reportKpis = dashboard?.kpis || {}
+function ReportsPage({
+  dashboard,
+  bins = [],
+  priority = [],
+  locationData = [],
+  trendData = [],
+  riskData = {},
+  kpis = {},
+  selectedCampus = ACTIVE_CAMPUS,
+}) {
+  const [locationFilter, setLocationFilter] = useState('All Locations')
+  const [riskFilter, setRiskFilter] = useState('All Risk Levels')
+  const [wasteFilter, setWasteFilter] = useState('All Waste Types')
+  const [dateRange, setDateRange] = useState('Today')
+  const [selectedCampusState, setSelectedCampusState] = useState(selectedCampus || ACTIVE_CAMPUS)
+
+  // Map priority data by bin_id for enriched telemetry
+  const priorityMap = new Map((priority || []).map((p) => [p.bin_id, p]))
+
+  const enrichedBins = (bins || []).map((b) => {
+    const p = priorityMap.get(b.bin_id) || {}
+    return {
+      ...b,
+      priority: p.priority || b.priority || 'P4',
+      priority_score: p.priority_score ?? b.priority_score ?? 0,
+      estimated_overflow_hours:
+        p.est_overflow_hours ?? p.estimated_overflow_hours ?? b.estimated_overflow_hours ?? null,
+    }
+  })
+
+  // Filter bins based on selected filter toolbar
+  const filteredBins = enrichedBins.filter((b) => {
+    if (locationFilter !== 'All Locations' && b.location !== locationFilter) return false
+    if (riskFilter !== 'All Risk Levels' && b.predicted_risk !== riskFilter) return false
+    if (wasteFilter !== 'All Waste Types') {
+      const wClean =
+        b.waste_type === 'Organic'
+          ? 'Food / Organic'
+          : b.waste_type === 'Mixed'
+          ? 'Mixed Waste'
+          : b.waste_type
+      if (wClean !== wasteFilter && b.waste_type !== wasteFilter) return false
+    }
+    return true
+  })
+
+  // Executive KPI calculations (strictly from filtered real telemetry)
+  const totalBins = filteredBins.length
+  const highRiskCount = filteredBins.filter((b) => b.predicted_risk === 'High Risk').length
+  const medRiskCount = filteredBins.filter((b) => b.predicted_risk === 'Medium Risk').length
+  const lowRiskCount = filteredBins.filter((b) => b.predicted_risk === 'Low Risk').length
+  const avgFill =
+    totalBins > 0
+      ? filteredBins.reduce((sum, b) => sum + (b.current_fill_level || 0), 0) / totalBins
+      : 0
+  const maxFill =
+    totalBins > 0 ? Math.max(...filteredBins.map((b) => b.current_fill_level || 0)) : 0
+
+  const p1Count = filteredBins.filter((b) => b.priority === 'P1').length
+  const p2Count = filteredBins.filter((b) => b.priority === 'P2').length
+  const p3Count = filteredBins.filter((b) => b.priority === 'P3').length
+  const p4Count = filteredBins.filter((b) => b.priority === 'P4').length
+  const immediateBins = filteredBins.filter(
+    (b) =>
+      b.priority === 'P1' ||
+      (b.estimated_overflow_hours !== null && b.estimated_overflow_hours <= 1.0) ||
+      b.current_fill_level >= 98
+  ).length
+  const collectionsRequired = p1Count + p2Count
+
+  // Waste Type Distribution Data for Charts
+  const wasteCounts = filteredBins.reduce((acc, b) => {
+    const w =
+      b.waste_type === 'Organic'
+        ? 'Food / Organic'
+        : b.waste_type === 'Mixed'
+        ? 'Mixed Waste'
+        : b.waste_type
+    acc[w] = (acc[w] || 0) + 1
+    return acc
+  }, {})
+  const wasteChartData = Object.entries(wasteCounts).map(([name, count]) => ({
+    name,
+    count,
+  }))
+  const sortedWaste = [...wasteChartData].sort((a, b) => b.count - a.count)
+  const dominantWaste = sortedWaste[0]?.name || 'Mixed Waste'
+  const dominantWastePct =
+    totalBins > 0 ? (((sortedWaste[0]?.count || 0) / totalBins) * 100).toFixed(0) : '0'
+
+  // Location Aggregation Data for Charts & Insights
+  const locationAgg = filteredBins.reduce((acc, b) => {
+    if (!acc[b.location]) {
+      acc[b.location] = { location: b.location, total: 0, fillSum: 0, highRisk: 0 }
+    }
+    acc[b.location].total += 1
+    acc[b.location].fillSum += b.current_fill_level || 0
+    if (b.predicted_risk === 'High Risk') acc[b.location].highRisk += 1
+    return acc
+  }, {})
+  const locationChartData = Object.values(locationAgg)
+    .map((loc) => ({
+      location: loc.location,
+      avgFill: Number((loc.fillSum / (loc.total || 1)).toFixed(1)),
+      highRisk: loc.highRisk,
+      total: loc.total,
+    }))
+    .sort((a, b) => b.avgFill - a.avgFill)
+
+  const topLocation = locationChartData[0]?.location || 'Canteen'
+  const topLocAvg = locationChartData[0]?.avgFill || 0
+  const topLocHighRisk = locationChartData[0]?.highRisk || 0
+
+  // Risk Distribution Data for Pie Chart
+  const riskChartData = [
+    { name: 'High Risk', value: highRiskCount, color: '#e05656' },
+    { name: 'Medium Risk', value: medRiskCount, color: '#d97706' },
+    { name: 'Low Risk', value: lowRiskCount, color: '#0b6b58' },
+  ].filter((r) => r.value > 0)
+
+  // Priority Distribution Data for Bar Chart
+  const priorityChartData = [
+    { name: 'P1 - Immediate', count: p1Count, color: '#dc2626' },
+    { name: 'P2 - High Priority', count: p2Count, color: '#ea580c' },
+    { name: 'P3 - Medium', count: p3Count, color: '#d97706' },
+    { name: 'P4 - Routine', count: p4Count, color: '#0b6b58' },
+  ]
+
+  // CSV Report Downloader
+  const downloadReportCSV = (reportType) => {
+    const header =
+      'Bin ID,Location,Waste Type,Current Fill (%),Fill Rate (%/hr),Historical Avg (%),Predicted Risk,Priority,Priority Score,Est Overflow (Hours)\n'
+    const rows = filteredBins
+      .map((b) =>
+        [
+          b.bin_id,
+          b.location,
+          b.waste_type,
+          (b.current_fill_level ?? 0).toFixed(1),
+          (b.fill_rate ?? 0).toFixed(2),
+          (b.historical_average_fill ?? 0).toFixed(1),
+          b.predicted_risk,
+          b.priority,
+          (b.priority_score ?? 0).toFixed(1),
+          b.estimated_overflow_hours !== null && isFinite(b.estimated_overflow_hours)
+            ? b.estimated_overflow_hours.toFixed(1)
+            : 'N/A',
+        ]
+          .map((val) => `"${String(val).replaceAll('"', '""')}"`)
+          .join(',')
+      )
+      .join('\n')
+
+    const blob = new Blob([header + rows], { type: 'text/csv;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `spoorthy-${reportType}-waste-report-${new Date().toISOString().split('T')[0]}.csv`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
+  // Professional Printable PDF Generator
+  const downloadReportPDF = (reportType) => {
+    const printWindow = window.open('', '_blank', 'width=900,height=750')
+    if (!printWindow) {
+      alert('Please allow browser popups to generate and view the printable PDF report.')
+      return
+    }
+    const reportTitle =
+      reportType === 'daily'
+        ? 'DAILY OPERATIONAL WASTE REPORT'
+        : reportType === 'weekly'
+        ? 'WEEKLY COLLECTION DEMAND REPORT'
+        : 'MONTHLY STRATEGIC WASTE SUMMARY'
+    const reportSubtitle =
+      reportType === 'daily'
+        ? 'Current Operational Shift Snapshot'
+        : reportType === 'weekly'
+        ? 'Collection Demand & Urgency Forecast'
+        : 'Strategic Campus Capacity & Risk Overview'
+    const operationalNote =
+      reportType === 'daily'
+        ? 'Daily metrics reflecting current live telemetry.'
+        : reportType === 'weekly'
+        ? 'Collection requirement based on current simulated telemetry.'
+        : 'Monthly summary based on available simulated sensor data.'
+
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>${reportTitle} - ${selectedCampusState}</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; padding: 32px; color: #1f2937; background: #fff; margin: 0; }
+    .header-bar { border-bottom: 3px solid #0b6b58; padding-bottom: 14px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; }
+    .brand h1 { color: #0b6b58; margin: 0; font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .brand h2 { color: #111827; margin: 4px 0 0; font-size: 15px; font-weight: 700; text-transform: uppercase; }
+    .meta-box { text-align: right; font-size: 11px; color: #6b7280; line-height: 1.5; }
+    .filter-summary { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 6px; padding: 10px 14px; margin-bottom: 20px; font-size: 12px; color: #065f46; display: flex; gap: 20px; flex-wrap: wrap; }
+    .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+    .kpi-card { background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px 12px; text-align: center; }
+    .kpi-card .val { font-size: 22px; font-weight: 800; color: #0b6b58; margin-bottom: 4px; }
+    .kpi-card .lbl { font-size: 11px; font-weight: 600; color: #4b5563; text-transform: uppercase; letter-spacing: 0.5px; }
+    .section-head { font-size: 14px; font-weight: 700; color: #111827; margin: 24px 0 10px; border-left: 4px solid #0b6b58; padding-left: 10px; text-transform: uppercase; }
+    .insights-box { background: #fefce8; border: 1px solid #fef08a; border-radius: 8px; padding: 14px 18px; margin-bottom: 24px; font-size: 12px; line-height: 1.6; color: #854d0e; }
+    .insights-box ul { margin: 0; padding-left: 20px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 11px; }
+    th { background: #0b6b58; color: #ffffff; text-align: left; padding: 8px 10px; font-weight: 600; font-size: 11px; }
+    td { padding: 7px 10px; border-bottom: 1px solid #e5e7eb; color: #374151; }
+    tr:nth-child(even) td { background: #f9fafb; }
+    .badge { display: inline-block; padding: 2px 7px; border-radius: 4px; font-weight: 700; font-size: 10px; }
+    .badge-high { background: #fee2e2; color: #991b1b; }
+    .badge-med { background: #fef3c7; color: #92400e; }
+    .badge-low { background: #dcfce7; color: #166534; }
+    .badge-p1 { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .disclaimer-box { margin-top: 32px; padding: 14px 18px; background: #f9fafb; border: 1px dashed #d1d5db; border-radius: 8px; font-size: 11px; color: #4b5563; line-height: 1.5; }
+    @media print { body { padding: 12px; } .disclaimer-box { page-break-inside: avoid; } }
+  </style>
+</head>
+<body>
+  <div class="header-bar">
+    <div class="brand">
+      <h1>${selectedCampusState}</h1>
+      <h2>${reportTitle}</h2>
+      <div style="font-size: 12px; color: #4b5563; margin-top: 2px;">${reportSubtitle}</div>
+    </div>
+    <div class="meta-box">
+      <div><strong>Report ID:</strong> RPT-${Date.now().toString().slice(-6)}</div>
+      <div><strong>Date:</strong> ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+      <div><strong>System:</strong> Campus Waste Intelligence</div>
+    </div>
+  </div>
+
+  <div class="filter-summary">
+    <div><strong>Scope:</strong> ${selectedCampusState}</div>
+    <div><strong>Location:</strong> ${locationFilter}</div>
+    <div><strong>Risk Filter:</strong> ${riskFilter}</div>
+    <div><strong>Waste Type:</strong> ${wasteFilter}</div>
+    <div><strong>Horizon:</strong> ${dateRange}</div>
+  </div>
+
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="val">${totalBins}</div>
+      <div class="lbl">Total Bins Monitored</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val" style="color: #dc2626;">${highRiskCount}</div>
+      <div class="lbl">High-Risk Bins (${totalBins > 0 ? ((highRiskCount / totalBins) * 100).toFixed(0) : 0}%)</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val">${avgFill.toFixed(1)}%</div>
+      <div class="lbl">Average Fill Level</div>
+    </div>
+    <div class="kpi-card">
+      <div class="val" style="color: #ea580c;">${p1Count} P1 / ${p2Count} P2</div>
+      <div class="lbl">Priority Collection Load</div>
+    </div>
+  </div>
+
+  <div class="section-head">Operational Intelligence Summary</div>
+  <div class="insights-box">
+    <ul>
+      <li><strong>Risk Analysis:</strong> <strong>${highRiskCount} of ${totalBins} bins (${totalBins > 0 ? ((highRiskCount / totalBins) * 100).toFixed(0) : 0}%)</strong> currently operate under High Risk according to ML Decision Tree classification.</li>
+      <li><strong>Immediate Urgent Dispatch:</strong> <strong>${p1Count} bins</strong> require immediate collection (P1) to prevent imminent overflow hazard.</li>
+      <li><strong>Peak Attention Zone:</strong> <strong>${topLocation}</strong> exhibits peak concentration with average fill of <strong>${topLocAvg.toFixed(1)}%</strong> and <strong>${topLocHighRisk} high-risk bins</strong>.</li>
+      <li><strong>Waste Composition:</strong> <strong>${dominantWaste}</strong> forms the primary waste category (${dominantWastePct}% of filtered volume).</li>
+    </ul>
+  </div>
+
+  <div class="section-head">Critical Bin Inventory & Urgency Dispatch Schedule</div>
+  <table>
+    <thead>
+      <tr>
+        <th>Bin ID</th>
+        <th>Location</th>
+        <th>Waste Stream</th>
+        <th>Current Fill</th>
+        <th>Fill Rate</th>
+        <th>Risk Level</th>
+        <th>Priority</th>
+        <th>Est Overflow</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${filteredBins.slice(0, 20).map((b) => `
+        <tr>
+          <td><strong>${b.bin_id}</strong></td>
+          <td>${b.location}</td>
+          <td>${b.waste_type}</td>
+          <td><strong>${(b.current_fill_level || 0).toFixed(1)}%</strong></td>
+          <td>${(b.fill_rate || 0).toFixed(2)}%/hr</td>
+          <td><span class="badge ${b.predicted_risk === 'High Risk' ? 'badge-high' : b.predicted_risk === 'Medium Risk' ? 'badge-med' : 'badge-low'}">${b.predicted_risk}</span></td>
+          <td><span class="badge ${b.priority === 'P1' ? 'badge-p1' : ''}">${b.priority || 'P4'}</span></td>
+          <td>${b.estimated_overflow_hours !== null && isFinite(b.estimated_overflow_hours) ? `${b.estimated_overflow_hours.toFixed(1)} hours` : 'Not imminent'}</td>
+        </tr>
+      `).join('')}
+    </tbody>
+  </table>
+
+  <div class="disclaimer-box">
+    <div><strong>Operational Status:</strong> ${operationalNote}</div>
+    <div><strong>Data Source:</strong> Simulated campus waste sensor dataset used for prototype demonstration.</div>
+    <div style="margin-top: 4px;"><strong>Responsible AI Advisory:</strong> All predictions, risk levels, and collection priorities are AI-assisted recommendations based on sensor readings and must be reviewed by authorized campus sanitation supervisors before physical vehicle dispatch.</div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      setTimeout(function() {
+        window.print();
+      }, 350);
+    };
+  </script>
+</body>
+</html>`
+
+    printWindow.document.open()
+    printWindow.document.write(html)
+    printWindow.document.close()
+  }
+
+  const resetFilters = () => {
+    setLocationFilter('All Locations')
+    setRiskFilter('All Risk Levels')
+    setWasteFilter('All Waste Types')
+    setDateRange('Today')
+  }
+
   return (
-    <section className="page-section">
+    <section className="page-section reports-page-section">
+      {/* Header Row */}
       <div className="section-title-row">
         <div>
-          <span className="section-label">Reports</span>
-          <h2>Reports</h2>
+          <span className="section-label">Executive Analytics & Compliance</span>
+          <h2>Campus Waste Intelligence Reports</h2>
+        </div>
+        <div className="reports-header-badge">
+          <Building2 size={16} />
+          <span>{selectedCampusState}</span>
         </div>
       </div>
-      <div className="report-grid">
-        <div className="report-card">
-          <div className="report-title">Daily Waste Report</div>
-          <div className="report-meta">Total bins monitored: {reportKpis.total_bins ?? 0}</div>
-          <div className="report-meta">High-risk bins: {reportKpis.high_risk ?? 0}</div>
-          <button className="secondary-button small-button">Download CSV</button>
-          <button className="secondary-button small-button">PDF (UI)</button>
+
+      {/* Filter Bar */}
+      <div className="reports-filter-bar">
+        <div className="reports-filter-group">
+          <label>
+            <Building2 size={13} /> Campus
+          </label>
+          <select
+            value={selectedCampusState}
+            onChange={(e) => setSelectedCampusState(e.target.value)}
+          >
+            {CAMPUS_OPTIONS.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="report-card">
-          <div className="report-title">Weekly Waste Report</div>
-          <div className="report-meta">Collections required: {reportKpis.collection_required ?? 0}</div>
-          <button className="secondary-button small-button">Download CSV</button>
+
+        <div className="reports-filter-group">
+          <label>
+            <MapPin size={13} /> Location
+          </label>
+          <select
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
+          >
+            {LOCATION_OPTIONS.map((loc) => (
+              <option key={loc} value={loc}>
+                {loc}
+              </option>
+            ))}
+          </select>
         </div>
-        <div className="report-card">
-          <div className="report-title">Monthly Waste Report</div>
-          <div className="report-meta">Average fill level: {(reportKpis.average_fill_level ?? 0).toFixed(1)}%</div>
-          <button className="secondary-button small-button">Download PDF</button>
+
+        <div className="reports-filter-group">
+          <label>
+            <AlertTriangle size={13} /> Risk Level
+          </label>
+          <select
+            value={riskFilter}
+            onChange={(e) => setRiskFilter(e.target.value)}
+          >
+            {RISK_OPTIONS.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="reports-filter-group">
+          <label>
+            <Trash2 size={13} /> Waste Type
+          </label>
+          <select
+            value={wasteFilter}
+            onChange={(e) => setWasteFilter(e.target.value)}
+          >
+            {WASTE_OPTIONS.map((w) => (
+              <option key={w} value={w}>
+                {w}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="reports-filter-group">
+          <label>
+            <CalendarDays size={13} /> Time Horizon
+          </label>
+          <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}>
+            <option value="Today">Today (Current Telemetry)</option>
+            <option value="Last 7 Days">Last 7 Days</option>
+            <option value="Last 30 Days">Last 30 Days</option>
+            <option value="All Data">All Simulated Records</option>
+          </select>
+        </div>
+
+        <button
+          className="secondary-button small-button reports-reset-btn"
+          onClick={resetFilters}
+          title="Reset all filters"
+        >
+          <RefreshCw size={13} /> Reset
+        </button>
+      </div>
+
+      {/* 1. Executive Summary KPI Section */}
+      <div className="reports-kpi-grid">
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-teal">
+            <Trash2 size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">Total Bins Monitored</span>
+            <div className="reports-kpi-value">{totalBins}</div>
+            <span className="reports-kpi-sub">
+              Active physical bins in scope
+            </span>
+          </div>
+        </div>
+
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-red">
+            <AlertTriangle size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">High-Risk Bins</span>
+            <div className="reports-kpi-value text-red">{highRiskCount}</div>
+            <span className="reports-kpi-sub">
+              {totalBins > 0 ? ((highRiskCount / totalBins) * 100).toFixed(0) : 0}% of scope requiring urgent clearance
+            </span>
+          </div>
+        </div>
+
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-amber">
+            <ClipboardCheck size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">Collections Required</span>
+            <div className="reports-kpi-value">{collectionsRequired}</div>
+            <span className="reports-kpi-sub">
+              P1 & P2 priority collection load
+            </span>
+          </div>
+        </div>
+
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-green">
+            <LineChart size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">Average Fill Level</span>
+            <div className="reports-kpi-value">{avgFill.toFixed(1)}%</div>
+            <span className="reports-kpi-sub">
+              Peak recorded fill: {maxFill.toFixed(1)}%
+            </span>
+          </div>
+        </div>
+
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-red">
+            <Clock size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">Overflow / Immediate</span>
+            <div className="reports-kpi-value text-red">{immediateBins}</div>
+            <span className="reports-kpi-sub">
+              Full or est. overflow &lt; 1.0 hr
+            </span>
+          </div>
+        </div>
+
+        <div className="reports-kpi-card">
+          <div className="reports-kpi-icon-wrap icon-teal">
+            <ShieldCheck size={20} />
+          </div>
+          <div className="reports-kpi-body">
+            <span className="reports-kpi-label">Priority Tiers</span>
+            <div className="reports-kpi-value">
+              {p1Count} <span className="reports-tier-sub">P1</span> / {p2Count} <span className="reports-tier-sub">P2</span>
+            </div>
+            <span className="reports-kpi-sub">
+              P3: {p3Count} | P4: {p4Count}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Key Management Insights Section */}
+      <div className="reports-insights-card">
+        <div className="reports-insights-head">
+          <TrendingUp size={18} />
+          <h3>Key Waste Management Insights</h3>
+        </div>
+        <div className="reports-insights-grid">
+          <div className="reports-insight-item">
+            <span className="insight-bullet"></span>
+            <div>
+              <strong>Risk Concentration:</strong>{' '}
+              {highRiskCount} of {totalBins} monitored bins ({totalBins > 0 ? ((highRiskCount / totalBins) * 100).toFixed(0) : 0}%) are currently classified as High Risk by Decision Tree ML analysis.
+            </div>
+          </div>
+          <div className="reports-insight-item">
+            <span className="insight-bullet"></span>
+            <div>
+              <strong>Critical Campus Zone:</strong>{' '}
+              <strong>{topLocation}</strong> exhibits the highest capacity utilization (average {topLocAvg.toFixed(1)}%), representing the primary priority for vehicle dispatch.
+            </div>
+          </div>
+          <div className="reports-insight-item">
+            <span className="insight-bullet"></span>
+            <div>
+              <strong>Overflow Prevention:</strong>{' '}
+              {immediateBins} bins require intervention within the hour or are currently at 100% capacity.
+            </div>
+          </div>
+          <div className="reports-insight-item">
+            <span className="insight-bullet"></span>
+            <div>
+              <strong>Dominant Stream:</strong>{' '}
+              <strong>{dominantWaste}</strong> accounts for {dominantWastePct}% of monitored waste bins in the active filter selection.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3. Detailed Periodic Reports Grid (Daily, Weekly, Monthly) */}
+      <div className="reports-period-grid">
+        {/* Daily Waste Report */}
+        <div className="reports-period-card card-daily">
+          <div className="period-card-head">
+            <div>
+              <span className="period-pill pill-daily">Daily Operations</span>
+              <h4>Daily Waste Report</h4>
+              <p className="period-desc">Current shift status and real-time telemetry snapshot</p>
+            </div>
+            <FileText className="period-watermark-icon" size={32} />
+          </div>
+
+          <div className="period-stats-table">
+            <div className="period-stat-row">
+              <span>Monitored Bins</span>
+              <strong>{totalBins}</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Risk Breakdown</span>
+              <span>
+                <strong className="text-red">{highRiskCount} High</strong> •{' '}
+                <strong className="text-amber">{medRiskCount} Med</strong> •{' '}
+                <strong className="text-green">{lowRiskCount} Low</strong>
+              </span>
+            </div>
+            <div className="period-stat-row">
+              <span>Immediate Collections</span>
+              <strong className="text-red">{p1Count} Bins</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Average Fill Level</span>
+              <strong>{avgFill.toFixed(1)}% (Max {maxFill.toFixed(1)}%)</strong>
+            </div>
+          </div>
+
+          <div className="period-action-row">
+            <button
+              className="secondary-button small-button"
+              onClick={() => downloadReportCSV('daily')}
+            >
+              <Download size={14} /> Download CSV
+            </button>
+            <button
+              className="primary-button small-button"
+              onClick={() => downloadReportPDF('daily')}
+            >
+              <Printer size={14} /> Print / Save PDF
+            </button>
+          </div>
+        </div>
+
+        {/* Weekly Waste Report */}
+        <div className="reports-period-card card-weekly">
+          <div className="period-card-head">
+            <div>
+              <span className="period-pill pill-weekly">Weekly Planning</span>
+              <h4>Weekly Waste Report</h4>
+              <p className="period-desc">Aggregated demand forecast and collection logistics</p>
+            </div>
+            <CalendarDays className="period-watermark-icon" size={32} />
+          </div>
+
+          <div className="period-stats-table">
+            <div className="period-stat-row">
+              <span>Collections Required</span>
+              <strong>{collectionsRequired} Bins</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Priority Allocation</span>
+              <span>
+                <strong>{p1Count} P1</strong> • <strong>{p2Count} P2</strong> • {p3Count} P3
+              </span>
+            </div>
+            <div className="period-stat-row">
+              <span>Top Attention Area</span>
+              <strong>{topLocation} ({topLocAvg.toFixed(1)}%)</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Imminent Overflow</span>
+              <strong className="text-amber">{immediateBins} Points</strong>
+            </div>
+          </div>
+
+          <div className="period-sim-note">
+            Collection requirement based on current simulated telemetry
+          </div>
+
+          <div className="period-action-row">
+            <button
+              className="secondary-button small-button"
+              onClick={() => downloadReportCSV('weekly')}
+            >
+              <Download size={14} /> Download CSV
+            </button>
+            <button
+              className="primary-button small-button"
+              onClick={() => downloadReportPDF('weekly')}
+            >
+              <Printer size={14} /> Print / Save PDF
+            </button>
+          </div>
+        </div>
+
+        {/* Monthly Waste Report */}
+        <div className="reports-period-card card-monthly">
+          <div className="period-card-head">
+            <div>
+              <span className="period-pill pill-monthly">Monthly Strategic</span>
+              <h4>Monthly Waste Report</h4>
+              <p className="period-desc">Strategic infrastructure capacity & source overview</p>
+            </div>
+            <Layers className="period-watermark-icon" size={32} />
+          </div>
+
+          <div className="period-stats-table">
+            <div className="period-stat-row">
+              <span>Average Fill Level</span>
+              <strong>{avgFill.toFixed(1)}%</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>High Risk Proportion</span>
+              <strong className="text-red">
+                {totalBins > 0 ? ((highRiskCount / totalBins) * 100).toFixed(1) : 0}%
+              </strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Dominant Waste Stream</span>
+              <strong>{dominantWaste} ({dominantWastePct}%)</strong>
+            </div>
+            <div className="period-stat-row">
+              <span>Highest Risk Location</span>
+              <strong>{topLocation} ({topLocHighRisk} high-risk)</strong>
+            </div>
+          </div>
+
+          <div className="period-sim-note">
+            Monthly summary based on available simulated sensor data.
+          </div>
+
+          <div className="period-action-row">
+            <button
+              className="secondary-button small-button"
+              onClick={() => downloadReportCSV('monthly')}
+            >
+              <Download size={14} /> Download CSV
+            </button>
+            <button
+              className="primary-button small-button"
+              onClick={() => downloadReportPDF('monthly')}
+            >
+              <Printer size={14} /> Print / Save PDF
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* 4. Visual Analytics Section */}
+      <div className="reports-section-title-row">
+        <div>
+          <span className="section-label">Visual Telemetry Breakdown</span>
+          <h3>Interactive Report Analytics</h3>
+        </div>
+      </div>
+
+      <div className="reports-charts-grid">
+        {/* Risk Distribution */}
+        <div className="reports-chart-card">
+          <div className="chart-head">
+            <div>
+              <h4>Risk Classification Distribution</h4>
+              <p>Proportion of bins categorized by ML risk engine</p>
+            </div>
+          </div>
+          <div className="chart-canvas-wrap">
+            <ResponsiveContainer width="100%" height={230}>
+              <PieChart>
+                <Pie
+                  data={riskChartData}
+                  dataKey="value"
+                  nameKey="name"
+                  innerRadius={45}
+                  outerRadius={75}
+                  paddingAngle={3}
+                  label={({ name, value }) => `${name} (${value})`}
+                >
+                  {riskChartData.map((entry, idx) => (
+                    <Cell key={`cell-${idx}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Waste Type Breakdown */}
+        <div className="reports-chart-card">
+          <div className="chart-head">
+            <div>
+              <h4>Waste Stream Distribution</h4>
+              <p>Number of bins monitored per waste type</p>
+            </div>
+          </div>
+          <div className="chart-canvas-wrap">
+            <ResponsiveContainer width="100%" height={230}>
+              <BarChart data={wasteChartData} margin={{ top: 10, right: 10, left: -20, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                <XAxis dataKey="name" angle={-15} textAnchor="end" interval={0} tick={{ fontSize: 10, fill: '#4b5563' }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b7280' }} allowDecimals={false} />
+                <Tooltip />
+                <Bar dataKey="count" fill="#0b6b58" radius={[4, 4, 0, 0]} name="Bins Monitored" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Location Risk & Fill Overview */}
+        <div className="reports-chart-card">
+          <div className="chart-head">
+            <div>
+              <h4>Location Capacity & High-Risk Overview</h4>
+              <p>Average fill % and count of high-risk bins per zone</p>
+            </div>
+          </div>
+          <div className="chart-canvas-wrap">
+            <ResponsiveContainer width="100%" height={230}>
+              <BarChart data={locationChartData} margin={{ top: 10, right: 10, left: -15, bottom: 25 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                <XAxis dataKey="location" angle={-15} textAnchor="end" interval={0} tick={{ fontSize: 10, fill: '#4b5563' }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b7280' }} />
+                <Tooltip />
+                <Bar dataKey="avgFill" fill="#0b6b58" radius={[4, 4, 0, 0]} name="Avg Fill (%)" />
+                <Bar dataKey="highRisk" fill="#e05656" radius={[4, 4, 0, 0]} name="High-Risk Bins" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
+        {/* Collection Priority Tiers */}
+        <div className="reports-chart-card">
+          <div className="chart-head">
+            <div>
+              <h4>Collection Priority Distribution</h4>
+              <p>Bins categorized by P1–P4 collection urgency scoring</p>
+            </div>
+          </div>
+          <div className="chart-canvas-wrap">
+            <ResponsiveContainer width="100%" height={230}>
+              <BarChart data={priorityChartData} margin={{ top: 10, right: 10, left: -20, bottom: 20 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e5e7eb" />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#4b5563' }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b7280' }} allowDecimals={false} />
+                <Tooltip />
+                <Bar dataKey="count" radius={[4, 4, 0, 0]} name="Bins">
+                  {priorityChartData.map((entry, idx) => (
+                    <Cell key={`pcell-${idx}`} fill={entry.color} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+      </div>
+
+      {/* 5. Responsible AI Note Banner */}
+      <div className="reports-responsible-ai-banner">
+        <ShieldCheck size={24} className="banner-shield-icon" />
+        <div>
+          <strong>Data Source:</strong> Simulated campus waste sensor dataset used for prototype demonstration.
+          <p>
+            Predictions and collection priorities are AI-assisted recommendations based on simulated data and should be reviewed by authorized campus personnel before operational action.
+          </p>
         </div>
       </div>
     </section>
   )
 }
 
-function SettingsPage() {
+function SettingsPage({
+  riskThreshold = 70,
+  onRiskThresholdChange,
+  notificationPrefs = {
+    emailAlerts: true,
+    highRiskAlerts: true,
+    overflowAlerts: true,
+    priorityAlerts: true,
+  },
+  onNotificationPrefsChange,
+  selectedCampus = 'Spoorthy Engineering College',
+}) {
+  const [saveToast, setSaveToast] = useState(false)
+
+  const handleToggle = (key) => {
+    onNotificationPrefsChange((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }))
+    showSavedFeedback()
+  }
+
+  const handleThresholdChange = (e) => {
+    const val = Number(e.target.value)
+    onRiskThresholdChange(val)
+    showSavedFeedback()
+  }
+
+  const showSavedFeedback = () => {
+    setSaveToast(true)
+    setTimeout(() => setSaveToast(false), 2400)
+  }
+
   return (
-    <section className="page-section">
-      <div className="section-title-row">
+    <section className="page-section settings-module-view">
+      <div className="section-title-row settings-header-row">
         <div>
-          <span className="section-label">Settings</span>
-          <h2>Settings</h2>
+          <span className="section-label">Preferences & Governance</span>
+          <h2>System Settings & AI Controls</h2>
+          <p className="sub-title">
+            Configure telemetry risk thresholds, operational alert preferences, and review Responsible AI governance policies.
+          </p>
+        </div>
+        {saveToast && (
+          <div className="settings-saved-toast">
+            <CheckCircle2 size={16} /> Preferences updated & saved
+          </div>
+        )}
+      </div>
+
+      <div className="settings-cards-grid">
+        {/* Card 1: System Settings */}
+        <div className="settings-card system-settings-card">
+          <div className="settings-card-header">
+            <div className="settings-card-icon-wrap">
+              <Sliders size={20} />
+            </div>
+            <div>
+              <h3>System Settings</h3>
+              <p className="card-sub-desc">Core ML threshold and operational deployment status</p>
+            </div>
+          </div>
+
+          <div className="settings-card-content">
+            {/* AI System Status */}
+            <div className="settings-row status-highlight-row">
+              <div className="settings-row-label">
+                <span className="setting-title">AI System Status</span>
+                <span className="setting-desc">Status of the ML Risk Classifier and Collection Priority Engine</span>
+              </div>
+              <div className="system-status-indicator online">
+                <span className="status-indicator-dot pulse"></span>
+                <span className="status-indicator-text">Online & Operational</span>
+              </div>
+            </div>
+
+            {/* Risk Threshold Slider */}
+            <div className="settings-row threshold-row">
+              <div className="threshold-head">
+                <div className="settings-row-label">
+                  <span className="setting-title">Risk Threshold</span>
+                  <span className="setting-desc">
+                    Threshold percentage for classifying bins into High-Risk tier and triggering priority dispatches.
+                  </span>
+                </div>
+                <div className="threshold-badge-wrap">
+                  <span className="threshold-val-badge">{riskThreshold}%</span>
+                </div>
+              </div>
+
+              <div className="threshold-slider-container">
+                <input
+                  type="range"
+                  min="50"
+                  max="100"
+                  step="5"
+                  value={riskThreshold}
+                  onChange={handleThresholdChange}
+                  className="settings-range-slider"
+                  aria-label="Risk Threshold Percentage"
+                />
+                <div className="threshold-scale-marks">
+                  <span>50% (Strict)</span>
+                  <span>70% (Standard)</span>
+                  <span>85%</span>
+                  <span>100% (Lenient)</span>
+                </div>
+              </div>
+
+              <div className="threshold-explanation">
+                <Info size={14} className="info-icon" />
+                <span>
+                  Bins with fill level &ge; <strong>{riskThreshold}%</strong> or predicted high fill-velocity will trigger priority alerts and be marked for immediate dispatch.
+                </span>
+              </div>
+            </div>
+
+            {/* Active Campus Display */}
+            <div className="settings-row campus-display-row">
+              <div className="settings-row-label">
+                <span className="setting-title">Active Campus Deployment</span>
+                <span className="setting-desc">Target campus facility currently receiving simulated telemetry monitoring</span>
+              </div>
+              <div className="campus-badge-group">
+                <div className="active-campus-pill">
+                  <Building2 size={14} />
+                  <strong>{selectedCampus}</strong>
+                  <span className="prototype-badge">Active Prototype</span>
+                </div>
+                <div className="future-campuses-hint">
+                  <span>Other campus locations: <em className="coming-soon-label">Coming Soon in v2.0</em></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 2: Notification Settings */}
+        <div className="settings-card notification-settings-card">
+          <div className="settings-card-header">
+            <div className="settings-card-icon-wrap">
+              <Bell size={20} />
+            </div>
+            <div>
+              <h3>Notification Settings</h3>
+              <p className="card-sub-desc">Real-time alerts for critical capacity, overflow risk, and collections</p>
+            </div>
+          </div>
+
+          <div className="settings-card-content">
+            {/* Email Alerts Toggle */}
+            <div className="settings-toggle-row">
+              <div className="settings-toggle-label">
+                <div className="toggle-title-row">
+                  <Mail size={16} className="toggle-icon" />
+                  <span className="setting-title">Email Alerts</span>
+                </div>
+                <span className="setting-desc">
+                  Deliver periodic digests and high-urgency notifications to operational campus facilities email.
+                </span>
+                <div className="email-disclaimer-note">
+                  <AlertTriangle size={13} />
+                  <span>
+                    Email delivery requires notification service configuration. Currently operating in local in-app alert mode.
+                  </span>
+                </div>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.emailAlerts}
+                  onChange={() => handleToggle('emailAlerts')}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+
+            {/* High-Risk Bin Alerts */}
+            <div className="settings-toggle-row">
+              <div className="settings-toggle-label">
+                <div className="toggle-title-row">
+                  <AlertTriangle size={16} className="toggle-icon text-amber" />
+                  <span className="setting-title">High-Risk Bin Alerts</span>
+                </div>
+                <span className="setting-desc">
+                  Notify when bins reach or exceed the active risk threshold ({riskThreshold}%) or are flagged High Risk by ML.
+                </span>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.highRiskAlerts}
+                  onChange={() => handleToggle('highRiskAlerts')}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+
+            {/* Overflow Alerts */}
+            <div className="settings-toggle-row">
+              <div className="settings-toggle-label">
+                <div className="toggle-title-row">
+                  <AlertTriangle size={16} className="toggle-icon text-red" />
+                  <span className="setting-title">Critical Overflow Alerts</span>
+                </div>
+                <span className="setting-desc">
+                  Notify when bins reach critical capacity (&ge; 98%) or estimated time to overflow is under 1.0 hour.
+                </span>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.overflowAlerts}
+                  onChange={() => handleToggle('overflowAlerts')}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+
+            {/* Collection Priority Alerts */}
+            <div className="settings-toggle-row">
+              <div className="settings-toggle-label">
+                <div className="toggle-title-row">
+                  <ClipboardCheck size={16} className="toggle-icon text-primary" />
+                  <span className="setting-title">Collection Priority Alerts</span>
+                </div>
+                <span className="setting-desc">
+                  Notify when bins are queued into P1 (Immediate Dispatch) or P2 (High Priority) collection tiers.
+                </span>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={notificationPrefs.priorityAlerts}
+                  onChange={() => handleToggle('priorityAlerts')}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
       </div>
-      <div className="settings-grid">
-        <div className="settings-card">
-          <h3>System Settings</h3>
-          <div><span>AI System Online</span></div>
-          <div><span>Risk Threshold: 70%</span></div>
+
+      {/* Card 3: Responsible AI Governance */}
+      <div className="settings-card responsible-ai-card">
+        <div className="settings-card-header">
+          <div className="settings-card-icon-wrap shield-wrap">
+            <ShieldCheck size={22} />
+          </div>
+          <div>
+            <h3>Responsible AI & Ethical Decision Framework</h3>
+            <p className="card-sub-desc">
+              Core architectural principles ensuring human-in-the-loop oversight and trustworthy AI operation.
+            </p>
+          </div>
         </div>
-        <div className="settings-card">
-          <h3>Notification Settings</h3>
-          <div><span>Email alerts: Enabled</span></div>
+
+        <div className="responsible-ai-grid">
+          <div className="responsible-ai-pillar">
+            <div className="pillar-header">
+              <span className="pillar-number">01</span>
+              <h4>Human Oversight</h4>
+            </div>
+            <p>
+              Campus sanitation staff and facilities managers maintain ultimate operational decision-making authority over all collection routes and schedule execution.
+            </p>
+          </div>
+
+          <div className="responsible-ai-pillar">
+            <div className="pillar-header">
+              <span className="pillar-number">02</span>
+              <h4>Explainable Prioritization</h4>
+            </div>
+            <p>
+              Every collection recommendation is backed by clear, understandable telemetry factors: fill level, fill rate velocity, waste stream, and zone location.
+            </p>
+          </div>
+
+          <div className="responsible-ai-pillar">
+            <div className="pillar-header">
+              <span className="pillar-number">03</span>
+              <h4>Transparent Scoring</h4>
+            </div>
+            <p>
+              Open, auditable classification rules and P1–P4 priority thresholds eliminate black-box unpredictability and allow operators to verify AI reasoning.
+            </p>
+          </div>
+
+          <div className="responsible-ai-pillar">
+            <div className="pillar-header">
+              <span className="pillar-number">04</span>
+              <h4>Data Privacy</h4>
+            </div>
+            <p>
+              The platform operates solely on anonymous bin fill levels and simulated sensor metrics. No personal, student, faculty, or surveillance data is gathered or stored.
+            </p>
+          </div>
+
+          <div className="responsible-ai-pillar">
+            <div className="pillar-header">
+              <span className="pillar-number">05</span>
+              <h4>No Autonomous Collection Decisions</h4>
+            </div>
+            <p>
+              The system functions strictly as a decision-support advisory tool, preventing unverified automated physical dispatches or unchecked resource allocations.
+            </p>
+          </div>
         </div>
-        <div className="settings-card">
-          <h3>Responsible AI</h3>
-          <ul>
-            <li>Human oversight</li>
-            <li>Explainable prioritization</li>
-            <li>Transparent scoring</li>
-            <li>Data privacy</li>
-            <li>No autonomous collection decisions</li>
-          </ul>
+
+        {/* Prototype Data Notice */}
+        <div className="settings-prototype-notice">
+          <Info size={18} className="notice-icon" />
+          <div>
+            <strong>Prototype Demonstration Notice:</strong>
+            <span>
+              {' '}Collection predictions and priority classifications are generated using simulated campus waste sensor telemetry. For live operational deployment, physical sensor calibration and site verification should be conducted.
+            </span>
+          </div>
         </div>
       </div>
     </section>
