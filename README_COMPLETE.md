@@ -303,3 +303,113 @@ The implemented example scenario is:
 At 10:00 AM, the system receives bin observations from the simulated campus dataset. Bin B27 appears with a current fill level of 72%, a high fill rate, and a high historical usage pattern. The ML model predicts High Overflow Risk, the priority engine assigns P1, and the agent workflow recommends that B27 should be inspected or collected first. When the supervisor asks “Why B27?”, the explanation layer identifies the evidence used by the system. When the supervisor asks how the waste from this bin should be handled, the RAG component replies with relevant local guidance from the knowledge base. The Streamlit dashboard then presents the current bin status, risk, priority score, explanation, and recommended action to the human supervisor.
 
 This scenario is a faithful demonstration of the implemented components. The project remains a simulated educational prototype and does not claim real deployment, real sensor integration, or measured environmental impact.
+# How to Run the Project Locally
+
+## 1. Open the project folder
+
+Open VS Code and open the project folder:
+
+C:\Users\alapa\Desktop\campus-waste-intelligence
+
+
+## 2. Open Terminal 1 – Backend
+
+Open a terminal in the project root and run:
+
+cd C:\Users\alapa\Desktop\campus-waste-intelligence
+
+python -m uvicorn backend.main:app --reload --port 8000
+
+The backend will run at:
+
+http://127.0.0.1:8000
+
+
+## 3. Open Terminal 2 – Frontend
+
+Open a second terminal in VS Code and run:
+
+cd C:\Users\alapa\Desktop\campus-waste-intelligence\frontend
+
+npm install
+
+npm run dev
+
+The frontend will run at:
+
+http://localhost:5173
+
+
+## 4. Open the Application
+
+Open the frontend URL in the browser:
+
+http://localhost:5173
+
+
+## 5. Login
+
+Use the login page and enter the available demo account credentials configured in the application.
+
+After login, the main dashboard will be available at:
+
+http://localhost:5173/dashboard
+
+
+## 6. Important
+
+Both servers must remain running while using the application.
+
+Backend:
+http://127.0.0.1:8000
+
+Frontend:
+http://localhost:5173
+
+Do not close either terminal while testing the application.
+
+
+## 7. Optional Backend API Check
+
+Open:
+
+http://127.0.0.1:8000/docs
+
+This opens the FastAPI Swagger documentation and can be used to verify that the backend API is running correctly.
+
+
+## 8. Project Architecture
+
+Frontend (React + Vite)
+        ↓
+Backend API (FastAPI)
+        ↓
+Data Processing
+        ↓
+Machine Learning Model
+        ↓
+Risk Prediction
+        ↓
+Collection Priority
+        ↓
+Dashboard / Analytics / Routes / AI Assistant
+
+
+## 9. Notes
+
+The current prototype uses simulated smart-bin sensor data.
+
+The project is configured for Spoorthy Engineering College.
+
+The system demonstrates:
+
+- Smart-bin monitoring
+- Overflow-risk prediction
+- Risk classification
+- Collection priority
+- Analytics
+- Collection routes
+- AI Waste Assistant
+- RAG-based waste-management guidance
+- Agentic AI workflow
+- Responsible AI and human oversight
